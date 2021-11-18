@@ -1,0 +1,50 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="../css/altaUsuarios.css" title="Color">
+
+    <title>Registro</title>
+</head>
+
+
+
+<body>
+    <div class="cuadroAlta">
+        <div class="titulo">
+            <p>Alta de Usuario</p>
+        </div>
+        <form action="altaUsuarios.php" method="post">
+            <div class="cajaCampos">
+                <p>Email</p>
+                <input type="text" style='width:200px;' name="mail" required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <p>Nombre</p>
+                <input type="text" style='width:200px;' name="nombre" pattern="[A-Za-z]{1,30}" />
+                <p>Apellidos</p>
+                <input type="text" style='width:200px;' name="apellidos" pattern="[A-Za-z]{1,30}">
+                <p>Contraseña</p>
+                <input type="password" style='width:200px;' name="passwd"
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}" title="minimo 6 caracteres" />
+                <p>Fecha de nacimiento</p>
+                <input type="date" style='width:200px;' name="fechaNac" required/>
+                <p>Rol</p>
+                <select name="rol" required>
+                    <option value="" selected>Seleccione una opción</option>
+                    <option value="PROFESOR">PROFESOR</option>
+                    <option value="ALUMNO">ALUMNO</option>
+                </select>
+                <br><br>
+                <div class="botonSubmit">
+                  <input type="submit" style='width:70px;' name="alta"></input>
+                </div>
+            </div>
+        </form>
+</body>
+
+
+</html>
+
+
+
+<!-- oder_by_id_limit 40,10 -->
