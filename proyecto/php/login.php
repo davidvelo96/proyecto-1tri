@@ -28,7 +28,7 @@ if (isset($_POST["login"])) {
     else {
         $usuario = DB::existeusuario($mail, $password);
         if (!empty($usuario)) {
-            header('Location: registroUsuarios.html');
+            // header('Location: registroUsuarios.html');
         } else {
             $error = "Este usuario no existe";
         }
@@ -68,8 +68,8 @@ if (isset($_POST["login"])) {
                 <div class="enlaces">
                     <a href="">¿Has olvidado tu password?</a><br /><br />
                     <?php
-        echo "<span style='color:red;'>" . $error . "</span>";
-        ?>
+                        echo "<span style='color:red;'>" . $error . "</span>";
+                        ?>
                 </div>
                
             </form>

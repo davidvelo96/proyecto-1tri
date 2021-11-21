@@ -1,9 +1,19 @@
 <?php
 
-foreach (glob("./*.php") as $filename)
-{
-    require_once $filename;
-}
+// foreach (glob("./*.php") as $filename) cell(sd/sd)
+// {
+//     require_once $filename;
+// }
+
+require_once "DB.php";
+require_once "usuarios.php";
+require_once "tematicas.php";
+require_once "preguntas.php";
+require_once "respuestas.php";
+
+
+
+
 
 class DB {
 
@@ -14,10 +24,49 @@ class DB {
        self::$con = new PDO('mysql:host=localhost;dbname=proyecto', 'root', '');
     }
 
+
+    public static function newTematica($desc){
+
+        $tem = new tematicas("default",$desc);
+        return $tem;
+    }
+
     // FUNCION QUE NOS DEVUELVE TODAS LAS TEMATICAS
 
     public static function obtienetematicas(){
         $resultado = self::$con->query("SELECT * FROM tematicas");
+
+        $t=[];
+        while ($registro = $resultado->fetchObject()) {
+            $t[] = new tematicas($registro->id,$registro->descripcion);
+        }
+        return $t;
+    }
+
+    public static function cuentatematicas(){
+        $resultado = self::$con->query("SELECT COUNT(*) FROM tematicas");
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+    }
+
+    public static function cuentaRespuestas(){
+        $resultado = self::$con->query("SELECT COUNT(*) FROM respuestas");
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+    }
+
+    public static function cuentaPreguntas(){
+        $resultado = self::$con->query("SELECT COUNT(*) FROM preguntas");
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+    }
+
+
+    public static function existeTematica($tema){
+        $resultado = self::$con->query("SELECT * FROM tematicas where descripcion like '".$tema."'");
 
         $t="";
         while ($registro = $resultado->fetchObject()) {
@@ -26,6 +75,56 @@ class DB {
         return $t;
     }
     
+    public static function altaTematica ($t)
+    {
+        // $sql = "INSERT INTO usuarios (`email`, `nombre`, `apellidos`, `passwd`, `fecha_nacimiento`, `rol`, `activo`) VALUES ('$correo','$nom','$apellidos','$passwd','$fechaNac','$rol','$activo')";
+
+        $consulta = self::$con->prepare("INSERT INTO tematicas ( descripcion) VALUES (?)");
+       
+        // $id="default";
+        $descrip=$t->getDesc();
+
+
+        // $consulta->bindParam(1,$id);
+        $consulta->bindParam(1,$descrip);
+  
+
+        $consulta->execute();
+
+    }
+
+    public static function altaPregunta ($p)
+    {
+        $consulta = self::$con->prepare("INSERT INTO preguntas (enunciado, resp_correcta,tematicas_id) VALUES (?,?,?)");
+       
+        $enunciado=$p->getEnunciado();
+        $resp_correct=$p->getResp_correcta();
+        $tem_id=$p->getTematica();
+
+        $consulta->bindParam(1,$enunciado);
+        $consulta->bindParam(2,$resp_correct);
+        $consulta->bindParam(3,$tem_id);
+
+        $consulta->execute();
+
+    }
+
+    public static function altaRespuestas ($r)
+    {
+        $consulta = self::$con->prepare("INSERT INTO respuestas (id,enunciado, preguntas_id) VALUES (?,?,?)");
+       
+        $id=$r->getId();
+        $enunciado=$r->getEnunciado();
+        $preguntas_id=$r->getPreguntas_id();
+
+        $consulta->bindParam(1,$id);
+        $consulta->bindParam(2,$enunciado);
+        $consulta->bindParam(3,$preguntas_id);
+
+        $consulta->execute();
+
+    }
+
     // METODO QUE DEVUELVE UN ALUMNO
 
     public static function obtieneUsuario($correo){
@@ -86,6 +185,19 @@ class DB {
         $consulta->execute();
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+    
 
     // public static function existeusuario($usuario,$password)
     // {
