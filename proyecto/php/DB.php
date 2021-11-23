@@ -93,6 +93,12 @@ class DB {
 
     }
 
+    public static function obtienePreguntasEx(){
+        $resultado= self::$con->query("SELECT preguntas.id,preguntas.enunciado,tematicas.descripcion FROM preguntas JOIN tematicas ON preguntas.tematicas_id = tematicas.id");
+
+        return $resultado;
+    }
+
     public static function altaPregunta ($p)
     {
         $consulta = self::$con->prepare("INSERT INTO preguntas (enunciado, resp_correcta,tematicas_id) VALUES (?,?,?)");
