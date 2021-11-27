@@ -16,6 +16,7 @@ float: right;
 }
 .titulo{
     text-align: left;
+    margin-left: 10%;
 }
 footer div{
     font-size: 100%;

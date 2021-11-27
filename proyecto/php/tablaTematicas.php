@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../css/tablasBD.css" title="Color">
+    <link rel="stylesheet" href="../css/tablaTem.css" title="Color">
     <link rel="stylesheet" href="../css/comun.css" title="Color">
 
     <title>Registro</title>
@@ -25,13 +25,13 @@
         <div class="nav">
             <nav id="menu">
                 <ul>
-                <li><a href="tablaUsuarios.php">Usuarios</a>
+                    <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
                             <li><a href="altaUsuarios.php">Alta usuarios</a></li>
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Tematicas</a>
+                    <li><a href="tablaTematicas.php">Tematicas</a>
                         <ul>
                             <li><a href="altaTematica.php">Alta tematicas</a></li>
                         </ul>
@@ -57,7 +57,7 @@
 
     <div class="cuadroAlta">
         <div class="titulo">
-            <h1>Preguntas </h1>
+            <h1>Tematicas </h1>
         </div>
         <div class="search">
             <input type="text">
@@ -65,8 +65,6 @@
         <table border="1" class="t1">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Enunciado</th>
                     <th>Tematica</th>
                     <th>Acciones</th>
                 </tr>
@@ -77,13 +75,11 @@
                     DB::conecta();
                     $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
                     $filas=3;
-                    $lista = DB::obtienePreguntasPaginadas($pagina, $filas);
+                    $lista = DB::obtieneTematicasPaginadas($pagina, $filas);
                     for ($i = 0; $i < count($lista); $i++) {
                         echo "<tr>";
-                        echo "<td>" . $lista[$i]['id'] . "</td>";
-                        echo "<td>" . $lista[$i]['enunciado'] . "</td>";
                         echo "<td>" . $lista[$i]['descripcion'] . "</td>";
-                        echo "<td><a href='editaPregunta.php?id=".$lista[$i]['id']."'>Editar</a><a href='tablaPreguntas.php?borrar=".$lista[$i]['id']."'>Borrar</a></td>";
+                        echo "<td><a href='editaTematica.php?id=".$lista[$i]['id']."'>Editar</a></td>";
                         echo "</tr>";
                     }
                 ?>
@@ -95,7 +91,7 @@
                 <?php
                     $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
                     DB::conecta();
-                    $paginas = ceil(DB::cuentaPreguntas() / $filas);
+                    $paginas = ceil(DB::cuentatematicas() / $filas);
 
                     //ENLACES HTML DE LA PAGINA
                     if ($pagina != 0) {
@@ -138,25 +134,3 @@
 
 
 </html>
-
-
-<?php 
-require_once "DB.php";
-
-    if (isset($_GET['borrar'])) {
-        echo "<script>
-        if(confirm('Estas seguro que quieres borrar la pregunta ".$_GET['borrar']." ?')){
-
-           ".DB::borraPregunta($_GET['borrar']).";
-            alert('Operacion aceptada');   
-            document.location='tablaPreguntas.php';
- 
-        } 
-        else  
-        {         
-            alert('Operacion Cancelada');    
-        }
-        </script> ";
-    }
-
-?>

@@ -5,7 +5,7 @@ $error = "";
 
 if (isset($_POST["alta"])) {
     $resul = validar();
-    if ($resul == "") {
+    if (empty($resul)) {
         DB::conecta();
         if (DB::obtieneUsuario($_POST["mail"])) {
             $error = "Este usuario ya existe";
@@ -23,7 +23,7 @@ if (isset($_POST["alta"])) {
 
 function validar()
 {
-    $err = "";
+    $error = [];
     if (!preg_match("/^[a-zA-Z-'\s]+$/", $_POST["nombre"])) {
         $error['name'] = "Solo letras y espacios";
     }
@@ -31,7 +31,7 @@ function validar()
         $error['mail'] = "Formato email invalido";
     }
 
-    return $err;
+    return $error;
 }
 
 ?>
@@ -60,20 +60,20 @@ function validar()
         <div class="nav">
             <nav id="menu">
                 <ul>
-                    <li><a href="">Usuarios</a>
+                <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
-                            <li><a href="">Alta usuarios</a></li>
+                            <li><a href="altaUsuarios.php">Alta usuarios</a></li>
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Tematicas</a>
+                    <li><a href="tablaTematicas.php">Tematicas</a>
                         <ul>
-                            <li><a href="">Alta tematicas</a></li>
+                            <li><a href="altaTematica.php">Alta tematicas</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Preguntas</a>
+                    <li><a href="tablaPreguntas.php">Preguntas</a>
                         <ul>
-                            <li><a href="">Alta preguntas</a></li>
+                            <li><a href="altaPregunta.php">Alta preguntas</a></li>
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>

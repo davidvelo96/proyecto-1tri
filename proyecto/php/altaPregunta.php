@@ -9,18 +9,20 @@ require_once "respuestas.php";
         
         DB::conecta();
         $CRespuestas = DB::cuentaRespuestas();
-        $cuentaPreguntas = DB::cuentaPreguntas();
+      
+
         $resul=validar($CRespuestas);
-        if ($resul=="") {
+        if (empty($resul)) {
             $correc = $_POST["respuesta"];
-            // ,$_POST[$correc]
             $respuestas = [$_POST[$CRespuestas + 1], $_POST[$CRespuestas + 2], $_POST[$CRespuestas + 3], $_POST[$CRespuestas + 4]];
 
             $pregunta = new preguntas("default", $_POST["enun"], $correc, "null", $_POST["tematica"], $respuestas);
             DB::altaPregunta($pregunta);
+
+            $cuentaPreguntas = DB::ultiPreguntas();
             $i = 1;
             while ($i <= 4) {
-                $respuestas = new respuestas("default", $_POST[$CRespuestas + $i], ($cuentaPreguntas + 1));
+                $respuestas = new respuestas("default", $_POST[$CRespuestas + $i], ($cuentaPreguntas));
                 DB::altaRespuestas($respuestas);
                 $i++;
            }
@@ -28,7 +30,7 @@ require_once "respuestas.php";
     }
 
     function validar($CRespuestas){
-
+        $error=[];
         if (!preg_match("/^[a-zA-Z-'\s]+$/",$_POST["enun"])) {
             $error['enun'] = "Solo letras y espacios";
         }
@@ -69,9 +71,9 @@ require_once "respuestas.php";
         <div class="nav">
             <nav id="menu">
                 <ul>
-                    <li><a href="">Usuarios</a>
+                <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
-                            <li><a href="">Alta usuarios</a></li>
+                            <li><a href="altaUsuarios.php">Alta usuarios</a></li>
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
@@ -96,7 +98,7 @@ require_once "respuestas.php";
             </nav>
         </div>
 
-    </header>
+</header>
 
     <div class="cuadroAlta">
         <div class="titulo">

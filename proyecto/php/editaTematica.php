@@ -3,7 +3,7 @@ require_once "DB.php";
 
 $error = "";
 
-if (isset($_POST["enviar"])) {
+if (isset($_POST["edita"])) {
 
     DB::conecta();
     $tematica = $_POST['tematica'];
@@ -15,32 +15,31 @@ if (isset($_POST["enviar"])) {
         if (DB::existeTematica($tematica)) {
             $error = "Tematica ya existe";
         } else {
-            DB::altaTematica($t);
+            DB::editaTematica($t,$_GET["id"]);
+            header('Location: tablaTematicas.php');
+
         }
     }
 }
 
-
 ?>
-
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <title>PRUEBA</title>
     <link rel="stylesheet" href="../css/login.css" title="Color">
     <link rel="stylesheet" href="../css/comun.css" title="Color">
 
+    <title>Registro</title>
 </head>
 
 <body>
-    <header>
-        <div class="perfil">
-            <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
-        </div>
+<header>
+    <div class="perfil">
+        <img src="../img/batman.png" width="100px" height="100px">
+        <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+    </div>
 
 
         <div class="nav">
@@ -67,7 +66,7 @@ if (isset($_POST["enviar"])) {
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
                             <li><a href="">Historico</a></li>
-                        </ul>
+                        </ul>   
                     </li>
                 </ul>
             </nav>
@@ -81,9 +80,14 @@ if (isset($_POST["enviar"])) {
 
                 <div class="usuario">
                     <p class="tituloCajas">Descripcion</p>
-                    <input class="inputCaja" type="text" pattern="[A-Za-z ]{1,30}" placeholder="Marcador de Posicion" name="tematica" title="Maximo 30 caracteres, solo letras y espacios" />
+                    <?php
+                      DB::conecta();
+                      $pregunta=DB::obtieneTematica($_GET["id"]);
+
+                     echo "<input class='inputCaja' type='text' value='".$pregunta->descripcion."' pattern='[A-Za-z ]{1,30}' placeholder='Marcador de Posicion' name='tematica' title='Maximo 30 caracteres, solo letras y espacios' />"
+                    ?>
                 </div>
-                <input class="botonSubmit" type="submit" value="Aceptar" name="enviar" />
+                <input class="botonSubmit" type="submit" value="Aceptar" name="edita" />
                 <br>
                 <?php
                 echo "<span style='color:red;'>" . $error . "</span>";
@@ -92,31 +96,30 @@ if (isset($_POST["enviar"])) {
         </div>
 
     </div>
-
-    <footer>
+    
+        <footer>
         <hr>
-        <div>
-            <br>
-            <p><a href="#">Guia de estilo</a></p>
-            <p><a href="#">Mapa del sitio web</a></p>
-        </div>
-        <div>
-            <p>Enlaces relacionados</p>
-            <p><a href="#">DGT</a></p>
-            <p><a href="#">Solicitud oficial de examen</a></p>
-            <p><a href="#">Normativa de examen</a></p>
-        </div>
-        <div>
-            <p>Contacto</p>
-            <p>Telefono: 9531111111</p>
-            <p>Email: info@ewfsd.com</p>
-            <p>Redes sociales</p>
-        </div>
+            <div>
+               <br>
+                <p><a href="#">Guia de estilo</a></p>
+                <p><a href="#">Mapa del sitio web</a></p>
+            </div>
+            <div>
+                <p>Enlaces relacionados</p>
+                <p><a href="#">DGT</a></p>
+                <p><a href="#">Solicitud oficial de examen</a></p>
+                <p><a href="#">Normativa de examen</a></p>
+            </div>
+            <div>
+                <p>Contacto</p>
+                <p>Telefono: 9531111111</p>
+                <p>Email: info@ewfsd.com</p>
+                <p>Redes sociales</p>
+            </div>
 
     </footer>
 
 </body>
-
 
 
 </html>

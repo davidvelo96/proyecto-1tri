@@ -10,9 +10,8 @@
         private $fechaNac;
         private $rol;
         private $foto;
-        private $activo;
 
-        public function __construct($id,$correo,$nombre,$apellidos,$passwd,$fechaNac,$foto,$rol,$activo)
+        public function __construct($id,$correo,$nombre,$apellidos,$passwd,$fechaNac,$foto,$rol)
         {
             $this->id=$id;
             $this->nombre=$nombre;
@@ -22,7 +21,6 @@
             $this->fechaNac=$fechaNac;
             $this->rol=$rol;     
             $this->foto=$foto;     
-            $this->activo=$activo;     
         }
 
         public function getId(){return $this->id;}
@@ -33,7 +31,6 @@
         public function getFechaNac(){return $this->fechaNac;}
         public function getRol(){return $this->rol;}
         public function getFoto(){return $this->foto;}
-        public function isActivo(){return $this->activo;}
 
 
         public static function muestraDatos($user){
