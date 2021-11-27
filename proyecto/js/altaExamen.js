@@ -5,9 +5,14 @@ window.addEventListener("load", function () {
     var izquierda=document.getElementById("izquierda")
     var derecha=document.getElementById("derecha")
     var checkBox = document.getElementsByName("sel");
+    var duracion=document.getElementById("duracion");
+    var desc_examen=document.getElementById("descripcion");
+
+    var enviar = document.getElementById("enviar");
 
     pedirPregunas();
 
+    
 
     function pedirPregunas() {
         const ajax = new XMLHttpRequest();
@@ -115,8 +120,49 @@ window.addEventListener("load", function () {
     }
 
 
+    function convertirMinAhorasMin(mins){
+        let h = Math.floor(mins / 60);
+        let m = mins % 60;
+        h = h < 10 ? '0' + h : h;
+        m = m < 10 ? '0' + m : m;
+        return `${h}:${m}`;
+      }
 
 
 
+      function EnviarEx() {
+        var n_preguntas=tabla2.children.length;
+        var ids_preg=[];
+        for (let i = 0; i < n_preguntas; i++) {
+            ids_preg.push(tablaPost.children[i].id);            
+        }
+        var miObjeto = new Object();
+
+        miObjeto.desc = desc_examen.value;
+        miObjeto.duracion = convertirMinAhorasMin(duracion.value);
+        miObjeto.n_preguntas = n_preguntas;
+        miObjeto.id_preguntas=ids_preg; 
+         
+        var myString = JSON.stringify(miObjeto);
+        var f=new FormData();
+        f.append("datos",myString);
+         const ajax = new XMLHttpRequest();
+
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                var respuesta = ajax.responseText;
+                if (respuesta == "OK") {
+                    desc_examen.focus();
+                }
+            }
+        }
+        ajax.open("POST", "../php/insertaExamen.php");
+        ajax.send(f);
+        
+    }
+
+    enviar.onclick=function(){
+        EnviarEx();
+    }
 
 })

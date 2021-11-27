@@ -34,7 +34,7 @@ class DB {
     // FUNCION QUE NOS DEVUELVE TODAS LAS TEMATICAS
 
     public static function obtienetematicas(){
-        $resultado = self::$con->query("SELECT * FROM tematicas");
+        $resultado = self::$con->query("SELECT * FROM tematicas order by id");
 
         $t=[];
         while ($registro = $resultado->fetchObject()) {
@@ -59,6 +59,13 @@ class DB {
 
     public static function cuentaPreguntas(){
         $resultado = self::$con->query("SELECT COUNT(*) FROM preguntas");
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+    }
+
+    public static function cuentaExamenes(){
+        $resultado = self::$con->query("SELECT COUNT(*) FROM examenes");
         $result = $resultado->fetch();
         $count = $result[0];
         return $count;
@@ -162,9 +169,7 @@ class DB {
     public static function altaUsuario ($u)
     {
 
-
         // $sql = "INSERT INTO usuarios (`email`, `nombre`, `apellidos`, `passwd`, `fecha_nacimiento`, `rol`, `activo`) VALUES ('$correo','$nom','$apellidos','$passwd','$fechaNac','$rol','$activo')";
-
 
         $consulta = self::$con->prepare("INSERT INTO usuarios (id, email,nombre, apellidos,passwd, fecha_nacimiento, rol, activo) VALUES (?,?,?,?,?,?,?,?)");
        
@@ -193,10 +198,119 @@ class DB {
     }
 
 
+    public static function altaExamen ($u)
+    {
+
+        $consulta = self::$con->prepare("INSERT INTO examenes (id, descripcion,duracion,n_preguntas, activo) VALUES (?,?,?,?,?)");
+       
+        $id="default";
+        $desc=$u->getDesc();
+        $duracion=$u->getDuracion();
+        $n_preguntas=$u->getN_preguntas();
+        $activo="0";
+
+        $consulta->bindParam(1,$id);
+        $consulta->bindParam(2,$desc);
+        $consulta->bindParam(3,$duracion);
+        $consulta->bindParam(4,$n_preguntas);
+        $consulta->bindParam(5,$activo);
+
+        $consulta->execute();
+
+    }
+
+    public static function altaExamen_preg ($ep)
+    {
+
+        $consulta = self::$con->prepare("INSERT INTO examenes_preguntas (preguntas_id,examenes_id) VALUES (?,?)");
+       
+        $id=$ep->getPreguntas_id();
+        $desc=$ep->getexamenes_id();
+
+        $consulta->bindParam(1,$id);
+        $consulta->bindParam(2,$desc);
+
+        $consulta->execute();
+
+    }
 
 
+    public static function obtienePreguntasPaginadas(int $pagina, int $filas):array
+    {
+        $registros = array();
+        $res = self::$con->query("select * from preguntas");
+        $registros =$res->fetchAll();
+        $total = count($registros);
+        $paginas = ceil($total /$filas);
+        $registros = array();
+        if ($pagina <= $paginas)
+        {
+            $pagina==0 ? $inicio = ($pagina) * $filas : $inicio = ($pagina) * $filas;
+
+            $res= self::$con->query("SELECT preguntas.id, preguntas.enunciado,tematicas.descripcion
+                                        FROM   preguntas
+                                            JOIN tematicas
+                                            ON preguntas.tematicas_id = tematicas.id
+                                        WHERE  preguntas.tematicas_id = tematicas.id limit $inicio, $filas");
+            $registros = $res->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $registros;
+    }
 
 
+    public static function obtienePregunta($id){
+        $resultado = self::$con->query("SELECT * FROM preguntas where id = $id");
+        $re="";
+        $re=$resultado->fetchObject();
+        return $re;
+    }
+
+    public static function obtieneRespuestas($id){
+        $resultado = self::$con->query("select * from respuestas where preguntas_id=$id");
+        $re=[];
+
+        while ($registro = $resultado->fetchObject()) 
+        {
+            $re[]=$registro;
+        }
+        return $re;
+    }
+
+
+    public static function editaPregunta ($p,$id)
+    {
+        $consulta = self::$con->prepare("UPDATE preguntas
+                    SET enunciado = ?,
+                    resp_correcta = ?,
+                    tematicas_id = ?
+                    WHERE id = $id");
+       
+        $enunciado=$p->getEnunciado();
+        $resp_correct=$p->getResp_correcta();
+        $tem_id=$p->getTematica();
+
+        $consulta->bindParam(1,$enunciado);
+        $consulta->bindParam(2,$resp_correct);
+        $consulta->bindParam(3,$tem_id);
+
+        $consulta->execute();
+
+    }
+
+    public static function editaRespuesta ($r,$id)
+    {
+        $consulta = self::$con->prepare("UPDATE respuestas
+                    SET enunciado = ?
+                    WHERE id = $id ");
+       
+       $enunciado=$r->getEnunciado();
+
+       $consulta->bindParam(1,$enunciado);
+
+       $consulta->execute();
+
+    }
+   
 
 
 

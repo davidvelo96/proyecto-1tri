@@ -1,8 +1,7 @@
+
 .cuadroAlta{
-    width: 350px;
-    height: 40%;
-    margin-top: 2%;
-    margin-left: 35%;
+    margin: 5% 35% 5% 35%;
+    width: 350px;  
 }
 .titulo{
     text-align: center;
