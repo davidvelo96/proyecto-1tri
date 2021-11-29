@@ -14,34 +14,37 @@ require_once "respuestas.php";
         $resul=validar($CRespuestas);
         if (empty($resul)) {
             $correc = $_POST["respuesta"];
-            $respuestas = [$_POST[$CRespuestas + 1], $_POST[$CRespuestas + 2], $_POST[$CRespuestas + 3], $_POST[$CRespuestas + 4]];
+            $respuestas = [$_POST['1'], $_POST['2'], $_POST['3'], $_POST['4']];
 
-            $pregunta = new preguntas("default", $_POST["enun"], $correc, "null", $_POST["tematica"], $respuestas);
+            $pregunta = new preguntas("default", $_POST["enun"], "null", "null", $_POST["tematica"], $respuestas);
             DB::altaPregunta($pregunta);
 
             $cuentaPreguntas = DB::ultiPreguntas();
             $i = 1;
             while ($i <= 4) {
-                $respuestas = new respuestas("default", $_POST[$CRespuestas + $i], ($cuentaPreguntas));
+                $respuestas = new respuestas("default", $_POST[0+$i], ($cuentaPreguntas));
                 DB::altaRespuestas($respuestas);
+                if ($i==$correc) {
+                    DB::updateCorrecta($cuentaPreguntas);
+                }
                 $i++;
            }
         }
     }
 
-    function validar($CRespuestas){
+    function validar(){
         $error=[];
         if (!preg_match("/^[a-zA-Z-'\s]+$/",$_POST["enun"])) {
             $error['enun'] = "Solo letras y espacios";
         }
-        if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST[$CRespuestas + 1])) {
-            $error['$CRespuestas + 1'] = "Solo letras y espacios";
-        } if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST[$CRespuestas + 2])) {
-            $error['$CRespuestas + 2'] = "Solo letras y espacios";
-        } if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST[$CRespuestas + 3])) {
-            $error['$CRespuestas + 3'] = "Solo letras y espacios";
-        } if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST[$CRespuestas + 4])) {
-            $error['$CRespuestas + 4'] = "Solo letras y espacios";
+        if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST['1'])) {
+            $error['1'] = "Solo letras y espacios";
+        } if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST['2'])) {
+            $error['2'] = "Solo letras y espacios";
+        } if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST['3'])) {
+            $error['3'] = "Solo letras y espacios";
+        } if (!preg_match("/^[a-zA-Z-'\s\,]+$/",$_POST['4'])) {
+            $error['4'] = "Solo letras y espacios";
         }
        
     
@@ -77,7 +80,7 @@ require_once "respuestas.php";
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Tematicas</a>
+                    <li><a href="tablaTematicas.php">Tematicas</a>
                         <ul>
                             <li><a href="altaTematica.php">Alta tematicas</a></li>
                         </ul>
@@ -88,7 +91,7 @@ require_once "respuestas.php";
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Examenes</a>
+                    <li><a href="tablaExamen.php">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
                             <li><a href="">Historico</a></li>
@@ -127,17 +130,17 @@ require_once "respuestas.php";
                 DB::conecta();
                 $CRespuestas = DB::cuentaRespuestas();
                 echo "<p>Opcion 1</p>";
-                echo "<input type='text' style='width:200px;' name='" . ($CRespuestas + 1) . "' pattern='[A-Za-z 0-9\,]{1,30}''  required/>";
-                echo "<input type='radio' id='" . ($CRespuestas + 1) . "' name='respuesta' value='" . ($CRespuestas + 1) . "' required/>correcta";
+                echo "<input type='text' style='width:200px;' name='1' pattern='[A-Za-z 0-9\,]{1,30}''  required/>";
+                echo "<input type='radio' id='1' name='respuesta' value='1' required/>correcta";
                 echo "<p>Opcion 2</p>";
-                echo "<input type='text' style='width:200px;' name='" . ($CRespuestas + 2) . "' pattern='[A-Za-z 0-9\,]{1,30}'' required />";
-                echo "<input type='radio' id='" . ($CRespuestas + 2) . "'name='respuesta' value='" . ($CRespuestas + 2) . "' required/>correcta";
+                echo "<input type='text' style='width:200px;' name='2' pattern='[A-Za-z 0-9\,]{1,30}'' required />";
+                echo "<input type='radio' id='2'name='respuesta' value='2' required/>correcta";
                 echo "<p>Opcion 3</p>";
-                echo "<input type='text' style='width:200px;' name='" . ($CRespuestas + 3) . "' pattern='[A-Za-z 0-9\,]{1,30}''  required/>";
-                echo "<input type='radio' id='" . ($CRespuestas + 3) . "'name='respuesta' value='" . ($CRespuestas + 3) . "' required/>correcta";
+                echo "<input type='text' style='width:200px;' name='3' pattern='[A-Za-z 0-9\,]{1,30}''  required/>";
+                echo "<input type='radio' id='3'name='respuesta' value='3' required/>correcta";
                 echo "<p>Opcion 4</p>";
-                echo "<input type='text' style='width:200px;' name='" . ($CRespuestas + 4) . "' pattern='[A-Za-z 0-9\,]{1,30}'' required />";
-                echo "<input type='radio' id='" . ($CRespuestas + 4) . "'name='respuesta' value='" . ($CRespuestas + 4) . "' required/>correcta";
+                echo "<input type='text' style='width:200px;' name='4' pattern='[A-Za-z 0-9\,]{1,30}'' required />";
+                echo "<input type='radio' id='4'name='respuesta' value='4' required/>correcta";
                 ?>
 
                 <br><br>

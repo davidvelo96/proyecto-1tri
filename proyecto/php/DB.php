@@ -128,19 +128,27 @@ class DB
         $resultado = self::$con->query("SELECT preguntas.id,preguntas.enunciado,tematicas.descripcion FROM preguntas JOIN tematicas ON preguntas.tematicas_id = tematicas.id order by preguntas.id");
 
         return $resultado;
+
+ 
+    }
+
+    public static function obtieneExamen($id){
+        $resul=self::$con->query("SELECT id,descripcion,duracion,n_preguntas
+                                    FROM   examenes
+                                    WHERE  id = $id ;"
+                                    );
+        return $resul;                                    
     }
 
     public static function altaPregunta($p)
     {
-        $consulta = self::$con->prepare("INSERT INTO preguntas (enunciado, resp_correcta,tematicas_id) VALUES (?,?,?)");
+        $consulta = self::$con->prepare("INSERT INTO preguntas (enunciado,tematicas_id) VALUES (?,?)");
 
         $enunciado = $p->getEnunciado();
-        $resp_correct = $p->getResp_correcta();
         $tem_id = $p->getTematica();
 
         $consulta->bindParam(1, $enunciado);
-        $consulta->bindParam(2, $resp_correct);
-        $consulta->bindParam(3, $tem_id);
+        $consulta->bindParam(2, $tem_id);
 
         $consulta->execute();
     }
@@ -301,6 +309,21 @@ class DB
         return $re;
     }
 
+    public static function obtienePreguntaExamen($id)
+    {
+        $resultado = self::$con->query("SELECT preguntas.enunciado,preguntas.id as id_preg
+                                        FROM   preguntas
+                                        join examenes_preguntas on examenes_preguntas.preguntas_id = preguntas.id
+                                        WHERE  examenes_preguntas.examenes_id = $id ;");
+            while ($registro = $resultado->fetchObject()) {
+            $re[] = $registro;
+            }
+        // $re = "";
+        // $re = $resultado->fetchObject();
+        return $re;
+    }
+
+
     public static function obtieneRespuestas($id)
     {
         $resultado = self::$con->query("select * from respuestas where preguntas_id=$id");
@@ -408,6 +431,21 @@ class DB
         }
         return $registros;
     }
+
+    public static function updateCorrecta($id)
+    {
+        $correc=self::cuentaRespuestas();
+        $consulta = self::$con->prepare("UPDATE preguntas
+        SET resp_correcta = ?
+        WHERE id = ?");
+
+        $consulta->bindParam(1, $correc);
+        $consulta->bindParam(2, $id);
+
+        $consulta->execute();
+       
+    }
+
 
 
 
