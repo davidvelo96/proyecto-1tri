@@ -378,7 +378,8 @@ class DB
 
     public static function borraPregunta($id)
     {
-        self::$con->exec("DELETE from preguntas WHERE id = $id ");
+        $re =  self::$con->exec("DELETE from preguntas WHERE id = $id ");
+        return $re;
     }
 
     public static function editaTematica($t,$id)

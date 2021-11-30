@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../css/tablaTem.css" title="Color">
+    <link rel="stylesheet" href="../css/realizaExa.css" title="Color">
     <link rel="stylesheet" href="../css/comun.css" title="Color">
     <script type="text/javascript" src="../js/realizaExamen.js"></script>
 
@@ -58,18 +58,20 @@
 
 
     <div class="cuadroAlta">
-        <div id="titulo">
-            <h1>Pregunta tal</h1>
-        </div>
-       
-        <div id="contenido">
-            <p>desc pregunta</p>
-
-        </div>
-       
-
-        <div class="n_preguntas">
+        <div id="pregunta">
+            <div id="titulo">
+                <h1 id="titulo_preg">Pregunta tal</h1>
+                <h1 id="duracion"></h1>
+            </div>
            
+        </div>
+        <div class="n_preguntas">
+
+            <table>
+                <tbody id="n_preguntas">
+
+                </tbody>
+            </table>
         </div>
 
     </div>

@@ -1,0 +1,16 @@
+.cuadroAlta{
+    margin: 5% 5%;
+}
+#titulo {
+    width: 100%;
+}
+#titulo h1{
+    display: inline;
+}
+#titulo #duracion{
+    padding-left: 50%;
+
+}
+#contenido{
+    margin: 0% 20%;
+}
