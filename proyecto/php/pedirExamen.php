@@ -11,7 +11,7 @@ $examen=DB::obtieneExamen(2);
 $respuestas=[];
 
     for ($i=0; $i < count($preguntas_examen); $i++) { 
-        $respuestas[$i]=[$preguntas_examen[$i]->id_preg,$preguntas_examen[$i]->enunciado,DB::obtieneRespuestas($preguntas_examen[$i]->id_preg)];
+        $respuestas[$i]=[$preguntas_examen[$i]->id_preg,$preguntas_examen[$i]->enunciado,DB::obtieneRespuestas($preguntas_examen[$i]->id_preg),$preguntas_examen[$i]->recurso];
     }
 
 

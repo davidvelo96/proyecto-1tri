@@ -3,14 +3,11 @@ window.addEventListener("load", function () {
 
 
     // var contenido = document.getElementById("contenido");
-    // var titulo = document.getElementById("titulo_preg");
+    var titulo = document.getElementById("titulo_preg");
     // var enun = document.getElementById("enunciado");
     var n_preguntas = document.getElementById("n_preguntas");
     var duracion = document.getElementById("duracion");
-    var opcion1 = document.getElementById("opcion1");
-    var opcion2 = document.getElementById("opcion2");
-    var opcion3 = document.getElementById("opcion3");
-    var opcion4 = document.getElementById("opcion4");
+
 
 
     var current_level = 0;
@@ -29,8 +26,8 @@ window.addEventListener("load", function () {
                 desordenaArray(examen.exam[0].n_preguntas);
                 desRespuestas(examen);
                 creaPregunta(examen);
-                // cambiaPregunta(0, examen);
                 crearNumeros(examen);
+                cambiaPregunta(examen.exam[0].n_preguntas[0][0], examen,1);
 
                 var seg = parseInt(examen.exam[0].duracion.substr(0, 2)) * 3600;
                 var min = parseInt(examen.exam[0].duracion.substr(3, 2)) * 60;
@@ -64,17 +61,18 @@ window.addEventListener("load", function () {
 
         var totalfilas = Math.ceil(pregunta.exam[0].n_preguntas.length / 10)
 
-        for (let i = 0; i < totalfilas; i++) {
+        for (let i = 0; i < totalfilas; i++) { 
             var tr = document.createElement("tr");
 
             for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
 
                 var td = document.createElement("td");
-                td.setAttribute("href", "#");
                 td.setAttribute("id", pregunta.exam[0].n_preguntas[i][0]);
+                td.setAttribute("class","");           
+
                 td.innerText = i + 1;
                 td.onclick = function () {
-                    cambiaPregunta(this.id,pregunta);
+                    cambiaPregunta(this.id,pregunta,this.innerText);
                 }
 
                 tr.appendChild(td);
@@ -83,21 +81,30 @@ window.addEventListener("load", function () {
         }
     }
 
-    // sort(function() { return Math.random() - 0.5 });
 
-    function cambiaPregunta(id,pregunta) {
+    function cambiaPregunta(id,pregunta,tituloP) {
         for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
             var preg = document.getElementById("preg"+pregunta.exam[0].n_preguntas[i][0]);
-            preg.setAttribute("style","display:none;");           
+            preg.setAttribute("style","display:none;");
+
+            var num = document.getElementsByTagName("td")[i];
+            num.setAttribute("class","");           
         }
+
+       
+        titulo.innerText="Pregunta "+tituloP;
         var preg = document.getElementById("preg"+id);
+        preg.setAttribute("style","");
+        for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
+            if (document.getElementsByTagName("td")[i].id==id) {
+                var num = document.getElementsByTagName("td")[i];
+                num.setAttribute("class","marcado"); 
+            }
+            
+        }
+                 
 
-        preg.setAttribute("style","display:;");
-
-    
-
-        // contenido.setAttribute("style","display:block;");
-
+        // document.getElementById("preg"+pregunta.exam[0].n_preguntas[i][0]).style["display"];
 
     }
 
@@ -110,29 +117,43 @@ window.addEventListener("load", function () {
 
 
             var contenido = document.createElement("div");
+            var imag = document.createElement("div");
+            var resp = document.createElement("div");
+
+            imag.setAttribute("id","imagen_preg");
             var enunciado = document.createElement("p");
-            enunciado.setAttribute("id", "enunciado")
+            var imagen = document.createElement("img");
+
+            imagen.setAttribute("width", "400px");
+            imagen.setAttribute("height", "300px");
+            imagen.setAttribute("src", pregunta.exam[0].n_preguntas[i][3]);
+
+            enunciado.setAttribute("id", "enunciado");
             enunciado.innerText = pregunta.exam[0].n_preguntas[i][1];
 
-            contenido.appendChild(enunciado);
+            imag.appendChild(imagen);
+            contenido.appendChild(imag);
+
+            resp.appendChild(enunciado);
 
             for (let j = 0; j < 4; j++) {
                 var radio = document.createElement("input");
                 radio.setAttribute("type", "radio");
-                radio.setAttribute("id", "opcion" + (j + 1));
+                radio.setAttribute("id",pregunta.exam[0].n_preguntas[i][2][j].id);
                 radio.setAttribute("name", "radio" + i);
                 var span = document.createElement("span");
-                span.setAttribute("id", j);
+                span.setAttribute("id", pregunta.exam[0].n_preguntas[i][2][j].id);
                 span.innerText = pregunta.exam[0].n_preguntas[i][2][j].enunciado;
                 var br = document.createElement("br");
 
-                contenido.appendChild(radio);
-                contenido.appendChild(span);
-                contenido.appendChild(br);
+                resp.setAttribute("id","resp_preg");
+                resp.appendChild(radio);
+                resp.appendChild(span);
+                resp.appendChild(br);
 
                 contenido.setAttribute("id","preg"+pregunta.exam[0].n_preguntas[i][0])
                 contenido.setAttribute("style","display:none;")
-
+                contenido.appendChild(resp);
 
             }
 
@@ -140,7 +161,6 @@ window.addEventListener("load", function () {
             pre.appendChild(todo);
 
 
-           
 
         }
         
@@ -174,6 +194,15 @@ window.addEventListener("load", function () {
 
         var seconds = remainingMinutes;
 
+        if (hours<10) {
+            hours="0"+hours;
+        }
+        if (minutes<10) {
+            minutes="0"+minutes;
+        }
+        if (seconds<10) {
+            seconds="0"+seconds;
+        }
         duracion.innerHTML = hours + ":" + minutes + ":" + seconds;
 
         //if (seconds == 0) {

@@ -60,11 +60,20 @@
     <div class="cuadroAlta">
         <div id="pregunta">
             <div id="titulo">
-                <h1 id="titulo_preg">Pregunta tal</h1>
+                <h1 id="titulo_preg">Pregunta 1</h1>
                 <h1 id="duracion"></h1>
             </div>
            
         </div>
+
+        <div class="botones">
+
+            <input type="button" value="Atras">
+            <input type="button" value="Siguiente">
+            <input type="button" value="Finalizar">
+
+        </div>
+
         <div class="n_preguntas">
 
             <table>

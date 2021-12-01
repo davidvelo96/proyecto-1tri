@@ -1,6 +1,10 @@
 body{
     margin: 0px 2%;
 }
+input[type=submit],input[type=radio]{
+  cursor: pointer;
+}
+
 .seleccion{
 float: right;
 }

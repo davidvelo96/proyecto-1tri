@@ -142,13 +142,15 @@ class DB
 
     public static function altaPregunta($p)
     {
-        $consulta = self::$con->prepare("INSERT INTO preguntas (enunciado,tematicas_id) VALUES (?,?)");
+        $consulta = self::$con->prepare("INSERT INTO preguntas (enunciado,tematicas_id,recurso) VALUES (?,?,?)");
 
         $enunciado = $p->getEnunciado();
         $tem_id = $p->getTematica();
+        $image = $p->getRecurso();
 
         $consulta->bindParam(1, $enunciado);
         $consulta->bindParam(2, $tem_id);
+        $consulta->bindParam(3, $image);
 
         $consulta->execute();
     }
@@ -311,7 +313,7 @@ class DB
 
     public static function obtienePreguntaExamen($id)
     {
-        $resultado = self::$con->query("SELECT preguntas.enunciado,preguntas.id as id_preg
+        $resultado = self::$con->query("SELECT preguntas.enunciado,preguntas.id as id_preg,preguntas.recurso
                                         FROM   preguntas
                                         join examenes_preguntas on examenes_preguntas.preguntas_id = preguntas.id
                                         WHERE  examenes_preguntas.examenes_id = $id ;");
@@ -433,15 +435,17 @@ class DB
         return $registros;
     }
 
-    public static function updateCorrecta($id)
+    public static function updateCorrecta($id,$imag)
     {
         $correc=self::cuentaRespuestas();
         $consulta = self::$con->prepare("UPDATE preguntas
-        SET resp_correcta = ?
+        SET resp_correcta = ?,
+        recurso = ?
         WHERE id = ?");
 
         $consulta->bindParam(1, $correc);
-        $consulta->bindParam(2, $id);
+        $consulta->bindParam(2, $imag);
+        $consulta->bindParam(3, $id);
 
         $consulta->execute();
        
