@@ -70,7 +70,7 @@
 
             <input type="button" value="Atras">
             <input type="button" value="Siguiente">
-            <input type="button" value="Finalizar">
+            <input type="button" id="finExamen" value="Finalizar">
 
         </div>
 

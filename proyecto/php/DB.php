@@ -114,11 +114,8 @@ class DB
 
         // $id="default";
         $descrip = $t->getDesc();
-
-
         // $consulta->bindParam(1,$id);
         $consulta->bindParam(1, $descrip);
-
 
         $consulta->execute();
     }
@@ -129,7 +126,6 @@ class DB
 
         return $resultado;
 
- 
     }
 
     public static function obtieneExamen($id){
@@ -452,6 +448,25 @@ class DB
     }
 
 
+    // public static function altaExamen_Hecho($examen){
+        
+    //     $consulta = self::$con->prepare("INSERT INTO examenes_hechos (id_examen, id_alumno,fecha,ejecucion) VALUES (?,?,?,?)");
+
+    //     $id = "default";
+    //     $desc = $u->getDesc();
+    //     $duracion = $u->getDuracion();
+    //     $n_preguntas = $u->getN_preguntas();
+    //     $activo = "0";
+
+    //     $consulta->bindParam(1, $id);
+    //     $consulta->bindParam(2, $desc);
+    //     $consulta->bindParam(3, $duracion);
+    //     $consulta->bindParam(4, $n_preguntas);
+    //     $consulta->bindParam(5, $activo);
+
+    //     $consulta->execute();
+
+    // }
 
 
 

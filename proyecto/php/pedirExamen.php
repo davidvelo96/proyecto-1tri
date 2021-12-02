@@ -23,6 +23,7 @@ while ($fila = $examen->fetch()) {
     $objexamen->duracion=$fila[2];
     $objexamen->n_preguntas=$fila[3];
     $objexamen->n_preguntas=$respuestas;
+    $objexamen->respuestas_seleccionadas=[];
 
 
     $object->exam[]=$objexamen;

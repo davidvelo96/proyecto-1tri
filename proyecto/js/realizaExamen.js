@@ -7,8 +7,9 @@ window.addEventListener("load", function () {
     // var enun = document.getElementById("enunciado");
     var n_preguntas = document.getElementById("n_preguntas");
     var duracion = document.getElementById("duracion");
+    var finExamen = document.getElementById("finExamen");
 
-
+  
 
     var current_level = 0;
 
@@ -29,6 +30,10 @@ window.addEventListener("load", function () {
                 crearNumeros(examen);
                 cambiaPregunta(examen.exam[0].n_preguntas[0][0], examen,1);
 
+                finExamen.onclick=function() {
+                    finalizarExamen(examen);
+                }
+
                 var seg = parseInt(examen.exam[0].duracion.substr(0, 2)) * 3600;
                 var min = parseInt(examen.exam[0].duracion.substr(3, 2)) * 60;
                 var tiempo = seg + min;
@@ -36,7 +41,7 @@ window.addEventListener("load", function () {
 
             }
         }
-        ajax.open("POST", "../php/pedirExamen.php?exa=2");
+        ajax.open("GET", "../php/pedirExamen.php?exa=2");
         ajax.send();
     }
 
@@ -166,6 +171,31 @@ window.addEventListener("load", function () {
         
     }
 
+    function finalizarExamen(pregunta) {
+        var respuesta="";
+        var respuestasContestadas=pregunta.exam[0].respuestas_seleccionadas;
+        for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
+            for (let j = 0; j < 4; j++) {
+                if (!document.getElementsByName("radio"+i)[j].checked) {
+                    respuesta="";
+                }
+                if (document.getElementsByName("radio"+i)[j].checked) {
+                    respuesta=document.getElementsByName("radio"+i)[j].id;
+                    j=3;
+                } 
+               
+            }
+            respuestasContestadas.push(respuesta);
+        }
+
+        var exaFin = JSON.stringify(pregunta);
+        var f=new FormData();
+        f.append("datos",exaFin);
+        const ajax = new XMLHttpRequest();
+
+        ajax.open("POST", "../php/entregar_examen_realizado.php");
+        ajax.send(f);
+    }
 
 
 
