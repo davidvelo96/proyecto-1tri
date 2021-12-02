@@ -42,7 +42,7 @@
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Examenes</a>
+                    <li><a href="tablaExamen">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
                             <li><a href="">Historico</a></li>
@@ -57,7 +57,7 @@
 
     <div class="cuadroAlta">
         <div class="titulo">
-            <h1>Usuarios </h1>
+            <h1>Examenes</h1>
         </div>
         <div class="search">
             <input type="text">

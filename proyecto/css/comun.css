@@ -1,7 +1,7 @@
 body{
     margin: 0px 2%;
 }
-input[type=submit],input[type=radio]{
+input[type=submit],input[type=radio],a{
   cursor: pointer;
 }
 

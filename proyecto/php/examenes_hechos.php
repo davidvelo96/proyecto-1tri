@@ -18,17 +18,10 @@
         }
 
         public function getId(){return $this->id;}
-        public function getDesc(){return $this->id_examen;}
+        public function getId_examen(){return $this->id_examen;}
         public function getid_alumno(){return $this->id_alumno;}
         public function getfecha(){return $this->fecha;}
-        public function isejecucion(){return $this->ejecucion;}
-
-
-
-        // public static function muestraDatos($user){
-        //     echo $user->getNombre()."-".$user->getCorreo()."-".$user->getPasswd()."-".$user->getRol()."<img src='data:image/png;base64,".$user->getFoto()."'><br>";
-
-        // }
+        public function getEjecucion(){return $this->ejecucion;}
 
     }
 

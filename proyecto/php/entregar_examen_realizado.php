@@ -1,29 +1,24 @@
-<?php 
+<?php
 
 require_once "DB.php";
 require_once "examenes_hechos.php";
 
 if (isset($_POST["datos"])) {
 
-$datos=json_decode($_POST["datos"]);
+    $datos = json_decode($_POST["datos"]);
 
 
-$descripcion=$datos->desc;
-$numero_p=$datos->n_preguntas;
-$duracion=$datos->duracion.":00";
-$id_preg=$datos->id_preguntas;
+    $id_examen = $datos->id;
+    $id_alumno = 1; // CAMBIAR CUANDO TENGA LAS SESIONES
+    $fecha = date("Y-m-d H:i:s");
+    $ejecucion = $_POST["datos"];
 
 
-    DB::conecta();
-    $examen=new examenes("default",$descripcion,$duracion,$numero_p,0);
-    DB::altaExamen($examen);
-    $cuenta_Examenes=DB::cuentaExamenes();
-    for ($i=0; $i < count($id_preg); $i++) { 
-        $ex_preg=new examenes_preguntas($id_preg[$i],($cuenta_Examenes));
-        DB::altaExamen_preg($ex_preg);
-    }
+    // DB::conecta();
+    $examen = new examenes_hechos("default", $id_examen, $id_alumno, $fecha, json_encode($ejecucion));
+    // DB::altaExamen_Hecho($examen);
+    header("Location: tablaExamen.php");
 
-}
-else {
+} else {
     header("Location: altaExamen.php");
 }

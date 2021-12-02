@@ -448,25 +448,23 @@ class DB
     }
 
 
-    // public static function altaExamen_Hecho($examen){
+    public static function altaExamen_Hecho($examen){
         
-    //     $consulta = self::$con->prepare("INSERT INTO examenes_hechos (id_examen, id_alumno,fecha,ejecucion) VALUES (?,?,?,?)");
+        $consulta = self::$con->prepare("INSERT INTO examenes_hechos (id_examen, id_alumno,fecha,ejecucion) VALUES (?,?,?,?)");
 
-    //     $id = "default";
-    //     $desc = $u->getDesc();
-    //     $duracion = $u->getDuracion();
-    //     $n_preguntas = $u->getN_preguntas();
-    //     $activo = "0";
+        $id_examen = $examen->getId_examen();
+        $id_alumno = $examen->getid_alumno();
+        $fecha = $examen->getfecha();
+        $ejecucion = $examen->getEjecucion();
 
-    //     $consulta->bindParam(1, $id);
-    //     $consulta->bindParam(2, $desc);
-    //     $consulta->bindParam(3, $duracion);
-    //     $consulta->bindParam(4, $n_preguntas);
-    //     $consulta->bindParam(5, $activo);
+        $consulta->bindParam(1, $id_examen);
+        $consulta->bindParam(2, $id_alumno);
+        $consulta->bindParam(3, $fecha);
+        $consulta->bindParam(4, $ejecucion);
 
-    //     $consulta->execute();
+        $consulta->execute();
 
-    // }
+    }
 
 
 

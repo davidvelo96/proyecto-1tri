@@ -45,9 +45,9 @@ if (isset($_POST["edita"])) {
         <div class="nav">
             <nav id="menu">
                 <ul>
-                    <li><a href="">Usuarios</a>
+                <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
-                            <li><a href="">Alta usuarios</a></li>
+                            <li><a href="altaUsuarios.php">Alta usuarios</a></li>
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
@@ -62,11 +62,11 @@ if (isset($_POST["edita"])) {
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Examenes</a>
+                    <li><a href="tablaExamen.php">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
                             <li><a href="">Historico</a></li>
-                        </ul>   
+                        </ul>
                     </li>
                 </ul>
             </nav>

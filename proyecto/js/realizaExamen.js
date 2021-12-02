@@ -1,7 +1,6 @@
 window.addEventListener("load", function () {
     var pre = document.getElementById("pregunta");
 
-
     // var contenido = document.getElementById("contenido");
     var titulo = document.getElementById("titulo_preg");
     // var enun = document.getElementById("enunciado");
@@ -9,21 +8,21 @@ window.addEventListener("load", function () {
     var duracion = document.getElementById("duracion");
     var finExamen = document.getElementById("finExamen");
 
-  
-
     var current_level = 0;
+    var JSON_examen = JSON;
+    var n_preguntas;
 
-
-    var countdownTimer = setInterval(timer, 1000);
 
     pideExamen();
+
+    var countdownTimer = setInterval(timer, 1000);
 
 
     function pideExamen() {
         const ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function () {
             if (ajax.readyState == 4 && ajax.status == 200) {
-                var examen = JSON.parse(ajax.responseText);
+                examen = JSON.parse(ajax.responseText);
                 desordenaArray(examen.exam[0].n_preguntas);
                 desRespuestas(examen);
                 creaPregunta(examen);
@@ -39,6 +38,8 @@ window.addEventListener("load", function () {
                 var tiempo = seg + min;
                 current_level = tiempo;
 
+                JSON_examen = JSON.stringify(examen.exam[0]);
+                n_preguntas=examen.exam[0].n_preguntas.length;
             }
         }
         ajax.open("GET", "../php/pedirExamen.php?exa=2");
@@ -57,10 +58,6 @@ window.addEventListener("load", function () {
         return desor;
     }
 
-    // function crearPregunta(pregunta) {
-    //     // titulo.innerText=pr;
-
-    // }
 
     function crearNumeros(pregunta) {
 
@@ -129,8 +126,8 @@ window.addEventListener("load", function () {
             var enunciado = document.createElement("p");
             var imagen = document.createElement("img");
 
-            imagen.setAttribute("width", "400px");
-            imagen.setAttribute("height", "300px");
+            imagen.setAttribute("width", "500px");
+            imagen.setAttribute("height", "350px");
             imagen.setAttribute("src", pregunta.exam[0].n_preguntas[i][3]);
 
             enunciado.setAttribute("id", "enunciado");
@@ -171,10 +168,11 @@ window.addEventListener("load", function () {
         
     }
 
-    function finalizarExamen(pregunta) {
+    function finalizarExamen() {
+        var obj_examen=JSON.parse(JSON_examen);
         var respuesta="";
-        var respuestasContestadas=pregunta.exam[0].respuestas_seleccionadas;
-        for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
+        // var respuestasContestadas=pregunta.exam[0].respuestas_seleccionadas;
+        for (let i = 0; i < n_preguntas; i++) {
             for (let j = 0; j < 4; j++) {
                 if (!document.getElementsByName("radio"+i)[j].checked) {
                     respuesta="";
@@ -185,10 +183,11 @@ window.addEventListener("load", function () {
                 } 
                
             }
-            respuestasContestadas.push(respuesta);
+            obj_examen.respuestas_seleccionadas.push(respuesta);
+            // respuestasContestadas.push(respuesta);
         }
 
-        var exaFin = JSON.stringify(pregunta);
+        var exaFin = JSON.stringify(obj_examen);
         var f=new FormData();
         f.append("datos",exaFin);
         const ajax = new XMLHttpRequest();
@@ -201,6 +200,7 @@ window.addEventListener("load", function () {
 
     function timer() {
 
+       
         var days = Math.floor(current_level / 86400);
         var remainingDays = current_level - (days * 86400);
 
@@ -243,9 +243,10 @@ window.addEventListener("load", function () {
         current_level--;
 
         if (current_level < 1) {
-            // alert("FIN");
-            // document.location = '../php/tablaExamen.php';
+            finalizarExamen();
         }
+
+      
     }
 
 })

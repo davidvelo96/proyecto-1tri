@@ -28,7 +28,7 @@ if (isset($_POST["login"])) {
     else {
         $usuario = DB::existeusuario($mail, $password);
         if (!empty($usuario)) {
-            // header('Location: registroUsuarios.html');
+            header('Location: altaUsuarios.php');
         } else {
             $error = "Este usuario no existe";
         }
