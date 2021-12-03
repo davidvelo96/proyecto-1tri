@@ -1,5 +1,15 @@
 <!--tabla usuario por dar alta ----- id usuario, id, fecha -->
 
+<?php
+require_once "sesion.php";
+require_once "usuarios.php";
+
+sesion::iniciar();
+$usuario = sesion::leer("usuario");
+if ($usuario->getRol() != "PROFESOR") {
+    header('Location: datosPersonales.php');
+}
+?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -15,18 +25,18 @@
 
 <body>
     <header>
-    <div class="perfil">
-        <img src="../img/batman.png" width="100px" height="100px">
-        <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
-    </div>
+        <div class="perfil">
+            <img src="../img/batman.png" width="100px" height="100px">
+            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+        </div>
 
 
         <div class="nav">
             <nav id="menu">
                 <ul>
-                    <li><a href="">Usuarios</a>
+                    <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
-                            <li><a href="">Alta usuarios</a></li>
+                            <li><a href="altaUsuarios.php">Alta usuarios</a></li>
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
@@ -41,11 +51,11 @@
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Examenes</a>
+                    <li><a href="tablaExamen.php">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
                             <li><a href="">Historico</a></li>
-                        </ul>   
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -68,9 +78,9 @@
             </p>
             <div class="cajaCampos">
 
-            <div class="titulos">
-                <span>Preguntas posibles</span>   <span class="seleccion">Preguntas seleccionadas</span>
-            </div>
+                <div class="titulos">
+                    <span>Preguntas posibles</span> <span class="seleccion">Preguntas seleccionadas</span>
+                </div>
                 <div id="tabla1">
                     <table border="1" class="t1">
                         <thead>
@@ -86,8 +96,8 @@
                 </div>
 
                 <div class="botones">
-                    <input type="button" value=&#9668== id="izquierda">
-                    <br> 
+                    <input type="button" value=&#9668==id="izquierda">
+                    <br>
                     <input type="button" value===&#9658 id="derecha">
                 </div>
 
@@ -116,23 +126,23 @@
 
     <footer>
         <hr>
-            <div>
-               <br>
-                <p><a href="#">Guia de estilo</a></p>
-                <p><a href="#">Mapa del sitio web</a></p>
-            </div>
-            <div>
-                <p>Enlaces relacionados</p>
-                <p><a href="#">DGT</a></p>
-                <p><a href="#">Solicitud oficial de examen</a></p>
-                <p><a href="#">Normativa de examen</a></p>
-            </div>
-            <div>
-                <p>Contacto</p>
-                <p>Telefono: 9531111111</p>
-                <p>Email: info@ewfsd.com</p>
-                <p>Redes sociales</p>
-            </div>
+        <div>
+            <br>
+            <p><a href="#">Guia de estilo</a></p>
+            <p><a href="#">Mapa del sitio web</a></p>
+        </div>
+        <div>
+            <p>Enlaces relacionados</p>
+            <p><a href="#">DGT</a></p>
+            <p><a href="#">Solicitud oficial de examen</a></p>
+            <p><a href="#">Normativa de examen</a></p>
+        </div>
+        <div>
+            <p>Contacto</p>
+            <p>Telefono: 9531111111</p>
+            <p>Email: info@ewfsd.com</p>
+            <p>Redes sociales</p>
+        </div>
 
     </footer>
 </body>

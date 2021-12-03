@@ -1,5 +1,6 @@
 <?php
 require_once "DB.php";
+require_once "sesion.php";
 
 
 // require_once "sesion.php";
@@ -14,27 +15,36 @@ require_once "DB.php";
 //     // echo $_COOKIE["user"];
 //     // echo $_COOKIE["passwd"];
 // }
+sesion::iniciar();
 
-$error = "";
+if (sesion::existe("usuario")) {
 
-if (isset($_POST["login"])) {
+    header('Location: tablaUsuarios.php');
 
-    DB::conecta();
-    $mail = $_POST['mail'];
-    $password = md5($_POST['passwd']);
+} else {
 
-    if (empty($mail) || empty($password))
-        $error = "Debes introducir un nombre de usuario y una contraseña";
-    else {
-        $usuario = DB::existeusuario($mail, $password);
-        if (!empty($usuario)) {
-            header('Location: altaUsuarios.php');
-        } else {
-            $error = "Este usuario no existe";
+
+    $error = "";
+
+    if (isset($_POST["login"])) {
+
+        DB::conecta();
+        $mail = $_POST['mail'];
+        $password = md5($_POST['passwd']);
+
+        if (empty($mail) || empty($password))
+            $error = "Debes introducir un nombre de usuario y una contraseña";
+        else {
+            $usuario = DB::existeusuario($mail, $password);
+            if (!empty($usuario)) {
+                sesion::escribir("usuario",$usuario);
+                header('Location: tablaUsuarios.php');
+            } else {
+                $error = "Este usuario no existe";
+            }
         }
     }
 }
-
 
 ?>
 
@@ -58,26 +68,26 @@ if (isset($_POST["login"])) {
 
                 <div class="usuario">
                     <p class="tituloCajas">Usuario/email</p>
-                    <input class="inputCaja" type="text" placeholder="Marcador de Posicion" name="mail"/>
+                    <input class="inputCaja" type="text" placeholder="Marcador de Posicion" name="mail" />
                 </div>
                 <div class="password">
                     <p class="tituloCajas">Password</p>
-                    <input class="inputCaja" type="password" placeholder="Marcador de Posicion" name="passwd"/>
+                    <input class="inputCaja" type="password" placeholder="Marcador de Posicion" name="passwd" />
                 </div>
                 <input class="botonSubmit" type="submit" value="Aceptar" name="login" />
                 <div class="enlaces">
                     <a href="">¿Has olvidado tu password?</a><br /><br />
                     <?php
-                        echo "<span style='color:red;'>" . $error . "</span>";
-                        ?>
+                    echo "<span style='color:red;'>" . $error . "</span>";
+                    ?>
                 </div>
-               
+
             </form>
         </div>
-      
+
     </div>
 
-       
+
 </body>
 
 

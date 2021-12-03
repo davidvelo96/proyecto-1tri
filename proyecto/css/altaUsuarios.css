@@ -1,14 +1,17 @@
 
 .cuadroAlta{
-    margin: 5% 35% 5% 35%;
-    width: 350px;  
+    margin: 5% 0% 5% 0%;
+    width: 100%;  
 }
 .titulo{
+    width: 100%;
     text-align: center;
 }
 .cajaCampos{
-    margin-top: 50px;
-    margin-left: 60px;
+    /* padding-left: 40%; */
+    margin: 0% 40%;
+    /* margin-top: 50px;
+    margin-left: 60px; */
 }
 .botonSubmit{
     margin-top: 5%;
@@ -20,7 +23,7 @@
 input{
     height: 25px;
 }
-input[type=text]{
+input[type=text],input[type=password]{
     border: 2px solid;
     border-radius: 5px;
     width: 200px;

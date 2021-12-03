@@ -1,4 +1,15 @@
 <!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
+<?php
+require_once "usuarios.php";
+require_once "sesion.php";
+
+    sesion::iniciar();
+    $usuario=sesion::leer("usuario");
+    if ($usuario->getRol()!="PROFESOR") {
+        header('Location: datosPersonales.php');
+    } 
+
+?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -18,7 +29,7 @@
 <header>
     <div class="perfil">
         <img src="../img/batman.png" width="100px" height="100px">
-        <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+        <a href="datosPersonales.php"> <img src="../img/batman.png" width="100px" height="100px"></a>
     </div>
 
 

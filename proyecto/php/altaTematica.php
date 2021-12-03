@@ -1,21 +1,30 @@
 <?php
 require_once "DB.php";
+require_once "sesion.php";
+require_once "usuarios.php";
+
 
 $error = "";
 
-if (isset($_POST["enviar"])) {
+sesion::iniciar();
+$usuario = sesion::leer("usuario");
+if ($usuario->getRol() != "PROFESOR") {
+    header('Location: datosPersonales.php');
+} else {
+    if (isset($_POST["enviar"])) {
 
-    DB::conecta();
-    $tematica = $_POST['tematica'];
+        DB::conecta();
+        $tematica = mb_strtoupper($_POST['tematica']);
 
-    if (empty($tematica))
-        $error = "Introduce una descripcion";
-    else {
-        $t = DB::newTematica($tematica);
-        if (DB::existeTematica($tematica)) {
-            $error = "Tematica ya existe";
-        } else {
-            DB::altaTematica($t);
+        if (empty($tematica))
+            $error = "Introduce una descripcion";
+        else {
+            $t = DB::newTematica($tematica);
+            if (DB::existeTematica($tematica)) {
+                $error = "Tematica ya existe";
+            } else {
+                DB::altaTematica($t);
+            }
         }
     }
 }
@@ -81,7 +90,7 @@ if (isset($_POST["enviar"])) {
 
                 <div class="usuario">
                     <p class="tituloCajas">Descripcion</p>
-                    <input class="inputCaja" type="text" pattern="[A-Za-z ]{1,30}" placeholder="Marcador de Posicion" name="tematica" title="Maximo 30 caracteres, solo letras y espacios" />
+                    <input class="inputCaja" type="text" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${1,30}" placeholder="Marcador de Posicion" name="tematica" title="Maximo 30 caracteres, solo letras y espacios" />
                 </div>
                 <input class="botonSubmit" type="submit" value="Aceptar" name="enviar" />
                 <br>

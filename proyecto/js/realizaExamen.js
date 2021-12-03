@@ -191,7 +191,16 @@ window.addEventListener("load", function () {
         var f=new FormData();
         f.append("datos",exaFin);
         const ajax = new XMLHttpRequest();
+        ajax.onreadystatechange = function () {
+            if (ajax.readyState == 4 && ajax.status == 200) {
+                window.location="http://localhost/proyecto-1tri/proyecto/php/tablaExamen.php";
+            }
+            if (ajax.status == 403) {
+                alert("No se pudo entregar el examen");
+                window.location="http://localhost/proyecto-1tri/proyecto/php/tablaExamen.php";
+            }
 
+        }
         ajax.open("POST", "../php/entregar_examen_realizado.php");
         ajax.send(f);
     }

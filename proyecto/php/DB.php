@@ -25,6 +25,11 @@ class DB
         self::$con = new PDO('mysql:host=localhost;dbname=proyecto', 'root', '');
     }
 
+    public static function getConex()
+    {
+        return self::$con;
+    }
+
 
     public static function newTematica($desc)
     {
@@ -199,13 +204,13 @@ class DB
 
         // $sql = "INSERT INTO usuarios (`email`, `nombre`, `apellidos`, `passwd`, `fecha_nacimiento`, `rol`, `activo`) VALUES ('$correo','$nom','$apellidos','$passwd','$fechaNac','$rol','$activo')";
 
-        $consulta = self::$con->prepare("INSERT INTO usuarios (id, email,nombre, apellidos,passwd, fecha_nacimiento, rol) VALUES (?,?,?,?,?,?,?)");
+        $consulta = self::$con->prepare("INSERT INTO usuarios (id, email,nombre, apellidos, fecha_nacimiento, rol) VALUES (?,?,?,?,?,?)");
 
         $id = "default";
         $correo = $u->getCorreo();
         $nom = $u->getNombre();
         $apellidos = $u->getApellidos();
-        $passwd = $u->getPasswd();
+        // $passwd = $u->getPasswd();
         $fechaNac = $u->getFechaNac();
         // $foto="?";
         $rol = $u->getRol();
@@ -214,10 +219,35 @@ class DB
         $consulta->bindParam(2, $correo);
         $consulta->bindParam(3, $nom);
         $consulta->bindParam(4, $apellidos);
-        $consulta->bindParam(5, $passwd);
-        $consulta->bindParam(6, $fechaNac);
+        // $consulta->bindParam(5, $passwd);
+        $consulta->bindParam(5, $fechaNac);
         // $consulta->bindParam(7,$foto);
-        $consulta->bindParam(7, $rol);
+        $consulta->bindParam(6, $rol);
+
+        $consulta->execute();
+    }
+
+    public static function editaUsuario($u)
+    {
+
+        $consulta = self::$con->prepare("UPDATE usuarios 
+                                        SET nombre = ?,
+                                        apellidos = ?,
+                                        passwd = ?,
+                                        fecha_nacimiento = ?
+                                        WHERE email = ?)");
+        $id = $u->getId();
+        $nom = $u->getNombre();
+        $apellidos = $u->getApellidos();
+        $passwd = $u->getPasswd();
+        $fechaNac = $u->getFechaNac();
+
+        $consulta->bindParam(1, $nom);
+        $consulta->bindParam(2, $apellidos);
+        $consulta->bindParam(3, $passwd);
+        $consulta->bindParam(4, $fechaNac);
+        $consulta->bindParam(5, $id);
+    
 
         $consulta->execute();
     }
