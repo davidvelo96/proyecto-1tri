@@ -19,10 +19,32 @@ if (isset($_POST["datos"])) {
         $fecha = date("Y-m-d H:i:s");
         $ejecucion = $_POST["datos"];
 
+        $correg=[];
+        for ($i=0; $i < count($datos->n_preguntas); $i++) { 
+            $contest=$datos->respuestas_seleccionadas[$i];
+            $correcta=DB::obtieneRespuesta_correc($datos->n_preguntas[$i][0]);
+            if ($contest==$correcta) {
+                $correg[$i]="1";
+            }
+            else{
+                $correg[$i]="";
+            }
+        }
+
+        $valor_resp=ceil(100/count($datos->n_preguntas));
+        for ($i=0; $i < count($datos->n_preguntas); $i++) { 
+            if (!empty($correg[$i])) {
+                $finsuma+=1;
+            }
+        }
+        $total= $finsuma*$valor_resp;
+
+        // $datos->n_preguntas[i][0]; // sacamos el id de la pregunta para coger su respuesta correcta
+        // $datos->respuestas_seleccionadas; //respuestas 
 
         // DB::conecta();
         $examen = new examenes_hechos("default", $id_examen, $id_alumno, $fecha, json_encode($ejecucion));
-        DB::altaExamen_Hecho($examen);
+        // DB::altaExamen_Hecho($examen);
         // header("Location: tablaExamen.php");
 
 

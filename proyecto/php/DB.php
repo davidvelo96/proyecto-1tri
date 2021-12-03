@@ -496,6 +496,15 @@ class DB
 
     }
 
+    public static function obtieneRespuesta_correc($id_preg){
+        $resultado = self::$con->query("select resp_correcta from preguntas where id=$id_preg");
+
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+        
+    }
+
 
 
 
