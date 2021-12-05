@@ -12,9 +12,6 @@ require_once "preguntas.php";
 require_once "respuestas.php";
 
 
-
-
-
 class DB
 {
 
@@ -83,6 +80,15 @@ class DB
         return $count;
     }
 
+    public static function cuentaExamenesAlum($id)
+    {
+        $resultado = self::$con->query("select count(*) from examenes_hechos where id_alumno = $id");
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+    }
+
+
     public static function ultiPreguntas()
     {
         $resultado = self::$con->query("SELECT id FROM preguntas ORDER BY id DESC LIMIT 1");
@@ -130,15 +136,16 @@ class DB
         $resultado = self::$con->query("SELECT preguntas.id,preguntas.enunciado,tematicas.descripcion FROM preguntas JOIN tematicas ON preguntas.tematicas_id = tematicas.id order by preguntas.id");
 
         return $resultado;
-
     }
 
-    public static function obtieneExamen($id){
-        $resul=self::$con->query("SELECT id,descripcion,duracion,n_preguntas
+    public static function obtieneExamen($id)
+    {
+        $resul = self::$con->query(
+            "SELECT id,descripcion,duracion,n_preguntas
                                     FROM   examenes
                                     WHERE  id = $id ;"
-                                    );
-        return $resul;                                    
+        );
+        return $resul;
     }
 
     public static function altaPregunta($p)
@@ -247,7 +254,7 @@ class DB
         $consulta->bindParam(3, $passwd);
         $consulta->bindParam(4, $fechaNac);
         $consulta->bindParam(5, $id);
-    
+
 
         $consulta->execute();
     }
@@ -343,9 +350,9 @@ class DB
                                         FROM   preguntas
                                         join examenes_preguntas on examenes_preguntas.preguntas_id = preguntas.id
                                         WHERE  examenes_preguntas.examenes_id = $id ;");
-            while ($registro = $resultado->fetchObject()) {
+        while ($registro = $resultado->fetchObject()) {
             $re[] = $registro;
-            }
+        }
         // $re = "";
         // $re = $resultado->fetchObject();
         return $re;
@@ -410,7 +417,7 @@ class DB
         return $re;
     }
 
-    public static function editaTematica($t,$id)
+    public static function editaTematica($t, $id)
     {
         $consulta = self::$con->prepare("UPDATE tematicas
         SET descripcion = ?
@@ -423,7 +430,7 @@ class DB
     }
 
 
-    public static function obtieneUsuarioPaginados(int $pagina, int $filas):array
+    public static function obtieneUsuarioPaginados(int $pagina, int $filas): array
     {
         $registros = array();
         $res = self::$con->query("select * from usuarios");
@@ -461,9 +468,9 @@ class DB
         return $registros;
     }
 
-    public static function updateCorrecta($id,$imag)
+    public static function updateCorrecta($id, $imag)
     {
-        $correc=self::cuentaRespuestas();
+        $correc = self::cuentaRespuestas();
         $consulta = self::$con->prepare("UPDATE preguntas
         SET resp_correcta = ?,
         recurso = ?
@@ -474,12 +481,12 @@ class DB
         $consulta->bindParam(3, $id);
 
         $consulta->execute();
-       
     }
 
 
-    public static function altaExamen_Hecho($examen){
-        
+    public static function altaExamen_Hecho($examen)
+    {
+
         $consulta = self::$con->prepare("INSERT INTO examenes_hechos (id_examen, id_alumno,fecha,ejecucion) VALUES (?,?,?,?)");
 
         $id_examen = $examen->getId_examen();
@@ -493,22 +500,96 @@ class DB
         $consulta->bindParam(4, $ejecucion);
 
         $consulta->execute();
-
     }
 
-    public static function obtieneRespuesta_correc($id_preg){
+    public static function obtieneRespuesta_correc($id_preg)
+    {
         $resultado = self::$con->query("select resp_correcta from preguntas where id=$id_preg");
 
         $result = $resultado->fetch();
         $count = $result[0];
         return $count;
-        
     }
 
 
+    public static function obtieneExamenesHechosPag(int $pagina, int $filas): array
+    {
+        $registros = array();
+        $res = self::$con->query("select * from examenes_hechos");
+        $registros = $res->fetchAll();
+        $total = count($registros);
+        $paginas = ceil($total / $filas);
+        $registros = array();
+        if ($pagina <= $paginas) {
+            $pagina == 0 ? $inicio = ($pagina) * $filas : $inicio = ($pagina) * $filas;
 
+            $res = self::$con->query("SELECT examenes_hechos.fecha,usuarios.nombre,examenes_hechos.ejecucion 
+			                            from examenes_hechos join usuarios
+			                            on examenes_hechos.id_alumno = usuarios.id
+                                        order by examenes_hechos.id limit $inicio, $filas");
+            $registros = $res->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $registros;
+    }
 
+    public static function obtieneExamenesHechosPagAlumno(int $pagina, int $filas,$id): array
+    {
+        $registros = array();
+        $res = self::$con->query("select * from examenes_hechos where id_alumno = $id ");
+        $registros = $res->fetchAll();
+        $total = count($registros);
+        $paginas = ceil($total / $filas);
+        $registros = array();
+        if ($pagina <= $paginas) {
+            $pagina == 0 ? $inicio = ($pagina) * $filas : $inicio = ($pagina) * $filas;
 
+            $res = self::$con->query("SELECT examenes_hechos.fecha,examenes_hechos.ejecucion 
+                                        from examenes_hechos join usuarios
+                                        on examenes_hechos.id_alumno = usuarios.id
+                                        where usuarios.id = $id
+                                        order by examenes_hechos.id limit $inicio, $filas");
+            $registros = $res->fetchAll(PDO::FETCH_ASSOC);
+        }
+        return $registros;
+    }
+
+    public static function obtieneExamenesHecho_Alumno($id)
+    {
+            $res = self::$con->query("SELECT examenes_hechos.fecha,examenes_hechos.ejecucion 
+                                        from examenes_hechos join usuarios
+                                        on examenes_hechos.id_alumno = usuarios.id
+                                        where usuarios.id = $id
+                                        order by examenes_hechos.id");
+            $registros = $res->fetchAll(PDO::FETCH_ASSOC);
+        
+        return $registros;
+    }
+
+    public static function obtienePuntuacion($datos)
+    {
+
+        $correg = [];
+        $finsuma=0;
+
+        for ($i = 0; $i < count($datos->n_preguntas); $i++) {
+            $contest = $datos->respuestas_seleccionadas[$i];
+            $correcta = DB::obtieneRespuesta_correc($datos->n_preguntas[$i][0]);
+            if ($contest == $correcta) {
+                $correg[$i] = "1";
+            } else {
+                $correg[$i] = "";
+            }
+        }
+
+        $valor_resp = ceil(100 / count($datos->n_preguntas));
+        for ($i = 0; $i < count($datos->n_preguntas); $i++) {
+            if (!empty($correg[$i])) {
+                $finsuma += 1;
+            }
+        }
+        $total = $finsuma * $valor_resp;
+        return $total;
+    }
 
 
     // public static function existeusuario($usuario,$password)

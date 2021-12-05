@@ -4,11 +4,11 @@ require_once "sesion.php";
 require_once "usuarios.php";
 
 sesion::iniciar();
-$usuario=sesion::leer("usuario");
+$usuario = sesion::leer("usuario");
 
-    if (!sesion::existe("usuario")) {
-        header('Location: login.php');
-    }
+if (!sesion::existe("usuario")) {
+    header('Location: login.php');
+}
 
 $error = "";
 
@@ -29,7 +29,6 @@ if (isset($_POST["alta"])) {
             }
         }
     }
-
 }
 
 
@@ -65,7 +64,12 @@ function validar()
     <header>
         <div class="perfil">
             <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+            <a href="#">
+                <?php
+                $usuario = sesion::leer("usuario");
+                echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='100px' height='100px'> ";
+                ?>
+            </a>
         </div>
 
 
@@ -106,29 +110,29 @@ function validar()
         </div>
         <form action="" method="post">
             <div class="cajaCampos">
-                <?php 
-                    sesion::iniciar();
+                <?php
+                sesion::iniciar();
 
-                    $usuario=sesion::leer("usuario");
+                $usuario = sesion::leer("usuario");
 
                 echo "    <p>Email</p>";
-                echo "    <input type='text' style='width:200px; ' disabled name='mail' value='".$usuario->getCorreo()."' required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'>";
+                echo "    <input type='text' style='width:200px; ' disabled name='mail' value='" . $usuario->getCorreo() . "' required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'>";
                 echo "    <p>Nombre</p>";
-                echo "    <input type='text' style='width:200px;'  name='nombre' value='".$usuario->getNombre()."' pattern='[A-Za-z ]{1,30}' />";
+                echo "    <input type='text' style='width:200px;'  name='nombre' value='" . $usuario->getNombre() . "' pattern='[A-Za-z ]{1,30}' />";
                 echo "    <p>Apellidos</p>";
-                echo "    <input type='text' style='width:200px;' name='apellidos' value='".$usuario->getApellidos()."' pattern='[A-Za-z ]{1,30}'>";
+                echo "    <input type='text' style='width:200px;' name='apellidos' value='" . $usuario->getApellidos() . "' pattern='[A-Za-z ]{1,30}'>";
                 echo "    <p>Contraseña</p>";
-                echo "    <input type='password' style='width:200px;' name='passwd' value='".$usuario->getPasswd()."' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' required/>";
+                echo "    <input type='password' style='width:200px;' name='passwd' value='" . $usuario->getPasswd() . "' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' required/>";
                 echo "    <p>Confirmar contraseña</p>";
                 echo "    <input type='password' style='width:200px;' name='conf_passwd' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' />";
                 echo "    <p>Fecha de nacimiento</p>";
-                echo "    <input type='date' style='width:200px;' value='".$usuario->getFechaNac()."' name='fechaNac' required />";
+                echo "    <input type='date' style='width:200px;' value='" . $usuario->getFechaNac() . "' name='fechaNac' required />";
                 ?>
                 <div class="botonSubmit">
                     <input type="submit" style='width:70px;' name="alta"></input>
                 </div>
                 <?php
-                    echo "<span style='color:red;'>" . $error . "</span>";
+                echo "<span style='color:red;'>" . $error . "</span>";
                 ?>
             </div>
         </form>
@@ -139,10 +143,10 @@ function validar()
             <br>
             <p><a href="#">Guia de estilo</a></p>
             <p><a href="#">Mapa del sitio web</a></p>
-            <?php 
-               if (sesion::existe("usuario")) {
-                echo "<p><a href='logoff.php'>Logoff</a></p>";               
-            } 
+            <?php
+            if (sesion::existe("usuario")) {
+                echo "<p><a href='logoff.php'>Logoff</a></p>";
+            }
             ?>
         </div>
         <div>

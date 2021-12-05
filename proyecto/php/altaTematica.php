@@ -75,7 +75,7 @@ if ($usuario->getRol() != "PROFESOR") {
                     <li><a href="">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
-                            <li><a href="">Historico</a></li>
+                            <li><a href="historicoExamenes.php">Historico</a></li>
                         </ul>
                     </li>
                 </ul>

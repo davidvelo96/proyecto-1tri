@@ -29,7 +29,12 @@ require_once "sesion.php";
 <header>
     <div class="perfil">
         <img src="../img/batman.png" width="100px" height="100px">
-        <a href="datosPersonales.php"> <img src="../img/batman.png" width="100px" height="100px"></a>
+        <a href="datosPersonales.php"> 
+        <?php 
+        $usuario=sesion::leer("usuario");
+            echo $usuario->getFoto()==null ? " <img src='../img/iconoperfil.jpg' width='100px' height='100px'> ": " <img src='".$usuario->getFoto()."' width='100px' height='100px'> "  ;
+        ?> 
+       </a>
     </div>
 
 
@@ -53,10 +58,10 @@ require_once "sesion.php";
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Examenes</a>
+                    <li><a href="tablaExamen.php">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
-                            <li><a href="">Historico</a></li>
+                            <li><a href="historicoExamenes.php">Historico</a></li>
                         </ul>   
                     </li>
                 </ul>

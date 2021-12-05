@@ -1,4 +1,10 @@
 window.addEventListener("load", function () {
+
+    var queryString = window.location.search;
+    var urlParams = new URLSearchParams(queryString);
+    var exam = urlParams.get('exam');
+
+
     var pre = document.getElementById("pregunta");
 
     // var contenido = document.getElementById("contenido");
@@ -27,9 +33,9 @@ window.addEventListener("load", function () {
                 desRespuestas(examen);
                 creaPregunta(examen);
                 crearNumeros(examen);
-                cambiaPregunta(examen.exam[0].n_preguntas[0][0], examen,1);
+                cambiaPregunta(examen.exam[0].n_preguntas[0][0], examen, 1);
 
-                finExamen.onclick=function() {
+                finExamen.onclick = function () {
                     finalizarExamen(examen);
                 }
 
@@ -39,10 +45,10 @@ window.addEventListener("load", function () {
                 current_level = tiempo;
 
                 JSON_examen = JSON.stringify(examen.exam[0]);
-                n_preguntas=examen.exam[0].n_preguntas.length;
+                n_preguntas = examen.exam[0].n_preguntas.length;
             }
         }
-        ajax.open("GET", "../php/pedirExamen.php?exa=2");
+        ajax.open("GET", "../php/pedirExamen.php?exa=" + exam);
         ajax.send();
     }
 
@@ -63,18 +69,18 @@ window.addEventListener("load", function () {
 
         var totalfilas = Math.ceil(pregunta.exam[0].n_preguntas.length / 10)
 
-        for (let i = 0; i < totalfilas; i++) { 
+        for (let i = 0; i < totalfilas; i++) {
             var tr = document.createElement("tr");
 
             for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
 
                 var td = document.createElement("td");
                 td.setAttribute("id", pregunta.exam[0].n_preguntas[i][0]);
-                td.setAttribute("class","");           
+                td.setAttribute("class", "");
 
                 td.innerText = i + 1;
                 td.onclick = function () {
-                    cambiaPregunta(this.id,pregunta,this.innerText);
+                    cambiaPregunta(this.id, pregunta, this.innerText);
                 }
 
                 tr.appendChild(td);
@@ -84,27 +90,27 @@ window.addEventListener("load", function () {
     }
 
 
-    function cambiaPregunta(id,pregunta,tituloP) {
+    function cambiaPregunta(id, pregunta, tituloP) {
         for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
-            var preg = document.getElementById("preg"+pregunta.exam[0].n_preguntas[i][0]);
-            preg.setAttribute("style","display:none;");
+            var preg = document.getElementById("preg" + pregunta.exam[0].n_preguntas[i][0]);
+            preg.setAttribute("style", "display:none;");
 
             var num = document.getElementsByTagName("td")[i];
-            num.setAttribute("class","");           
+            num.setAttribute("class", "");
         }
 
-       
-        titulo.innerText="Pregunta "+tituloP;
-        var preg = document.getElementById("preg"+id);
-        preg.setAttribute("style","");
+
+        titulo.innerText = "Pregunta " + tituloP;
+        var preg = document.getElementById("preg" + id);
+        preg.setAttribute("style", "");
         for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
-            if (document.getElementsByTagName("td")[i].id==id) {
+            if (document.getElementsByTagName("td")[i].id == id) {
                 var num = document.getElementsByTagName("td")[i];
-                num.setAttribute("class","marcado"); 
+                num.setAttribute("class", "marcado");
             }
-            
+
         }
-                 
+
 
         // document.getElementById("preg"+pregunta.exam[0].n_preguntas[i][0]).style["display"];
 
@@ -122,7 +128,7 @@ window.addEventListener("load", function () {
             var imag = document.createElement("div");
             var resp = document.createElement("div");
 
-            imag.setAttribute("id","imagen_preg");
+            imag.setAttribute("id", "imagen_preg");
             var enunciado = document.createElement("p");
             var imagen = document.createElement("img");
 
@@ -141,20 +147,20 @@ window.addEventListener("load", function () {
             for (let j = 0; j < 4; j++) {
                 var radio = document.createElement("input");
                 radio.setAttribute("type", "radio");
-                radio.setAttribute("id",pregunta.exam[0].n_preguntas[i][2][j].id);
+                radio.setAttribute("id", pregunta.exam[0].n_preguntas[i][2][j].id);
                 radio.setAttribute("name", "radio" + i);
                 var span = document.createElement("span");
                 span.setAttribute("id", pregunta.exam[0].n_preguntas[i][2][j].id);
                 span.innerText = pregunta.exam[0].n_preguntas[i][2][j].enunciado;
                 var br = document.createElement("br");
 
-                resp.setAttribute("id","resp_preg");
+                resp.setAttribute("id", "resp_preg");
                 resp.appendChild(radio);
                 resp.appendChild(span);
                 resp.appendChild(br);
 
-                contenido.setAttribute("id","preg"+pregunta.exam[0].n_preguntas[i][0])
-                contenido.setAttribute("style","display:none;")
+                contenido.setAttribute("id", "preg" + pregunta.exam[0].n_preguntas[i][0])
+                contenido.setAttribute("style", "display:none;")
                 contenido.appendChild(resp);
 
             }
@@ -165,39 +171,39 @@ window.addEventListener("load", function () {
 
 
         }
-        
+
     }
 
     function finalizarExamen() {
-        var obj_examen=JSON.parse(JSON_examen);
-        var respuesta="";
+        var obj_examen = JSON.parse(JSON_examen);
+        var respuesta = "";
         // var respuestasContestadas=pregunta.exam[0].respuestas_seleccionadas;
         for (let i = 0; i < n_preguntas; i++) {
             for (let j = 0; j < 4; j++) {
-                if (!document.getElementsByName("radio"+i)[j].checked) {
-                    respuesta="";
+                if (!document.getElementsByName("radio" + i)[j].checked) {
+                    respuesta = "";
                 }
-                if (document.getElementsByName("radio"+i)[j].checked) {
-                    respuesta=document.getElementsByName("radio"+i)[j].id;
-                    j=3;
-                } 
-               
+                if (document.getElementsByName("radio" + i)[j].checked) {
+                    respuesta = document.getElementsByName("radio" + i)[j].id;
+                    j = 3;
+                }
+
             }
             obj_examen.respuestas_seleccionadas.push(respuesta);
             // respuestasContestadas.push(respuesta);
         }
 
         var exaFin = JSON.stringify(obj_examen);
-        var f=new FormData();
-        f.append("datos",exaFin);
+        var f = new FormData();
+        f.append("datos", exaFin);
         const ajax = new XMLHttpRequest();
         ajax.onreadystatechange = function () {
             if (ajax.readyState == 4 && ajax.status == 200) {
-                window.location="http://localhost/proyecto-1tri/proyecto/php/tablaExamen.php";
+                window.location = "http://localhost/proyecto-1tri/proyecto/php/zona_alumno/historico_ex_alumno.php";
             }
             if (ajax.status == 403) {
                 alert("No se pudo entregar el examen");
-                window.location="http://localhost/proyecto-1tri/proyecto/php/tablaExamen.php";
+                window.location = "http://localhost/proyecto-1tri/proyecto/php/tablaExamen.php";
             }
 
         }
@@ -209,7 +215,7 @@ window.addEventListener("load", function () {
 
     function timer() {
 
-       
+
         var days = Math.floor(current_level / 86400);
         var remainingDays = current_level - (days * 86400);
 
@@ -233,14 +239,14 @@ window.addEventListener("load", function () {
 
         var seconds = remainingMinutes;
 
-        if (hours<10) {
-            hours="0"+hours;
+        if (hours < 10) {
+            hours = "0" + hours;
         }
-        if (minutes<10) {
-            minutes="0"+minutes;
+        if (minutes < 10) {
+            minutes = "0" + minutes;
         }
-        if (seconds<10) {
-            seconds="0"+seconds;
+        if (seconds < 10) {
+            seconds = "0" + seconds;
         }
         duracion.innerHTML = hours + ":" + minutes + ":" + seconds;
 
@@ -255,7 +261,7 @@ window.addEventListener("load", function () {
             finalizarExamen();
         }
 
-      
+
     }
 
 })

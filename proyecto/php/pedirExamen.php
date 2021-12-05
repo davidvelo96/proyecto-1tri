@@ -6,7 +6,7 @@ DB::conecta();
 $preguntas_examen=DB::obtienePreguntaExamen($_GET["exa"]);
 $object= new stdClass();
 $object -> exam=[];
-$examen=DB::obtieneExamen(2);
+$examen=DB::obtieneExamen($_GET["exa"]);
 
 $respuestas=[];
 

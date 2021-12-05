@@ -1,16 +1,5 @@
 <!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
 
-<?php
-require_once "usuarios.php";
-require_once "sesion.php";
-
-    sesion::iniciar();
-    $usuario=sesion::leer("usuario");
-    if ($usuario->getRol()!="PROFESOR") {
-        header('Location: datosPersonales.php');
-    } 
-
-?>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
