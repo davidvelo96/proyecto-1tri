@@ -6,9 +6,9 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../css/realizaExa.css" title="Color">
-    <link rel="stylesheet" href="../css/comun.css" title="Color">
-    <script type="text/javascript" src="../js/realizaExamen.js"></script>
+    <link rel="stylesheet" href="../../css/realizaExa.css" title="Color">
+    <link rel="stylesheet" href="../../css/comun.css" title="Color">
+    <script type="text/javascript" src="../../js/realizaExamen.js"></script>
 
 
     <title>Registro</title>
@@ -21,37 +21,17 @@
 
     <header>
         <div class="perfil">
-            <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+            <img src="../../img/batman.png" width="100px" height="100px">
+            <a href="#"> <img src="../../img/batman.png" width="100px" height="100px"></a>
         </div>
 
 
         <div class="nav">
-            <nav id="menu">
+        <nav id="menu">
                 <ul>
-                    <li><a href="tablaUsuarios.php">Usuarios</a>
-                        <ul>
-                            <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="">Alta masiva</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="tablaTematicas.php">Tematicas</a>
-                        <ul>
-                            <li><a href="altaTematica.php">Alta tematicas</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="tablaPreguntas.php">Preguntas</a>
-                        <ul>
-                            <li><a href="altaPregunta.php">Alta preguntas</a></li>
-                            <li><a href="">Alta masiva</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="">Examenes</a>
-                        <ul>
-                            <li><a href="altaExamen.php">Alta examen</a></li>
-                            <li><a href="">Historico</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="historico_ex_alumno.php">Historico de examenes</a></li>
+                    <li><a href="examenes_predefinidos.php">Examen predefinido</a></li>
+                    <li><a href="examen_aleatorio.php">Examen aleatorio</a></li>
                 </ul>
             </nav>
         </div>
@@ -74,7 +54,6 @@
             <input type="button" value="Siguiente">
             <input type="button" id="finExamen" value="Finalizar"></form>
            
-
         </div>
 
         <div class="n_preguntas">

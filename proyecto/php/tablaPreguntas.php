@@ -3,11 +3,11 @@
 require_once "usuarios.php";
 require_once "sesion.php";
 
-    sesion::iniciar();
-    $usuario=sesion::leer("usuario");
-    if ($usuario->getRol()!="PROFESOR") {
-        header('Location: datosPersonales.php');
-    } 
+sesion::iniciar();
+$usuario = sesion::leer("usuario");
+if ($usuario->getRol() != "PROFESOR") {
+    header('Location: datosPersonales.php');
+}
 
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -28,7 +28,12 @@ require_once "sesion.php";
     <header>
         <div class="perfil">
             <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+            <a href="#">
+                <?php
+                $usuario = sesion::leer("usuario");
+                echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
+                ?>
+            </a>
         </div>
 
 

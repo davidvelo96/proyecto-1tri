@@ -48,7 +48,12 @@ if ($usuario->getRol() != "PROFESOR") {
     <header>
         <div class="perfil">
             <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+            <a href="#">
+                <?php
+                $usuario = sesion::leer("usuario");
+                echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='100px' height='100px'> " : " <img src='" . $usuario->getFoto() . "' width='100px' height='100px'> ";
+                ?>
+            </a>
         </div>
 
 

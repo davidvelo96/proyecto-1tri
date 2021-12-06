@@ -32,7 +32,7 @@ require_once "sesion.php";
         <a href="datosPersonales.php"> 
         <?php 
         $usuario=sesion::leer("usuario");
-            echo $usuario->getFoto()==null ? " <img src='../img/iconoperfil.jpg' width='100px' height='100px'> ": " <img src='".$usuario->getFoto()."' width='100px' height='100px'> "  ;
+            echo $usuario->getFoto()==null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> ": " <img src='".$usuario->getFoto()."' width='50px' height='50px' style='margin:20%;'> "  ;
         ?> 
        </a>
     </div>
@@ -98,7 +98,7 @@ require_once "sesion.php";
                         echo "<tr>";
                         echo "<td>" . $lista[$i]['nombre']." ". $lista[$i]['apellidos'] . "</td>";
                         echo "<td>" . $lista[$i]['rol'] . "</td>";
-                        echo "<td> Calcular cuando haga examenes </td>";
+                        echo "<td>" . DB::cuentaExamenesAlum($lista[$i]['id']) . "</td>";
                         echo "<td><a href='#'>Editar</a><a href='#'>Borrar</a></td>";
                         echo "</tr>";
                     }

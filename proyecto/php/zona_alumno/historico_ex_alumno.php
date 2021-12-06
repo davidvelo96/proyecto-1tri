@@ -9,27 +9,25 @@ if ($usuario->getRol() != "ALUMNO") {
     header('Location: ../tablaUsuarios.php');
 }
 
-
 DB::conecta();
 
 $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
-$filas = 3;
+$filas = 4;
 $lista = DB::obtieneExamenesHechosPagAlumno($pagina, $filas, $usuario->getId());
 $examenes_alum = DB::obtieneExamenesHecho_Alumno($usuario->getId());
 
 $suma = 0;
 $promedio = 0;
-$mayor=0;
+$mayor = 0;
 
 
 
 
 for ($i = 0; $i < ceil(DB::cuentaExamenesAlum($usuario->getId())); $i++) {
-    
-    $pun=DB::obtienePuntuacion(json_decode($examenes_alum[$i]['ejecucion']));
-    $suma += $pun;
-    $pun>$mayor ? $mayor=$pun:$mayor=$mayor;
 
+    $pun = DB::obtienePuntuacion(json_decode($examenes_alum[$i]['ejecucion']));
+    $suma += $pun;
+    $pun > $mayor ? $mayor = $pun : $mayor = $mayor;
 }
 $promedio = ceil($suma / $filas);
 
@@ -53,7 +51,12 @@ $promedio = ceil($suma / $filas);
     <header>
         <div class="perfil">
             <img src="../../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../../img/batman.png" width="100px" height="100px"></a>
+            <a href="../datosPersonales.php">
+                <?php
+                $usuario = sesion::leer("usuario");
+                echo $usuario->getFoto() == null ? " <img src='../../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='../" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
+                ?> 
+                </a>
         </div>
 
 
@@ -62,7 +65,9 @@ $promedio = ceil($suma / $filas);
                 <ul>
                     <li><a href="historico_ex_alumno.php">Historico de examenes</a></li>
                     <li><a href="examenes_predefinidos.php">Examen predefinido</a></li>
-                    <li><a href="examen_aleatorio.php">Examen aleatorio</a></li>
+                    <?php
+                    echo "<li><a href='realizarExamen.php?exam=" . DB::examenAleatorio() . "'>Examen aleatorio</a></li>"
+                    ?>
                 </ul>
             </nav>
         </div>
@@ -79,7 +84,7 @@ $promedio = ceil($suma / $filas);
                 <?php
                 DB::conecta();
                 echo "<p>Promedio de puntuaciones: " . $promedio . "/100</p>";
-                echo "<p>Mejor puntuación: ".$mayor."/100</p>";
+                echo "<p>Mejor puntuación: " . $mayor . "/100</p>";
                 echo "<p>Exámenes realizados: " . DB::cuentaExamenesAlum($usuario->getId()) . "</p>";
                 ?>
             </div>

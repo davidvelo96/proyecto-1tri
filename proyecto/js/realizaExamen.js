@@ -48,7 +48,7 @@ window.addEventListener("load", function () {
                 n_preguntas = examen.exam[0].n_preguntas.length;
             }
         }
-        ajax.open("GET", "../php/pedirExamen.php?exa=" + exam);
+        ajax.open("GET", "../zona_alumno/pedirExamen.php?exa=" + exam);
         ajax.send();
     }
 
@@ -134,7 +134,7 @@ window.addEventListener("load", function () {
 
             imagen.setAttribute("width", "500px");
             imagen.setAttribute("height", "350px");
-            imagen.setAttribute("src", pregunta.exam[0].n_preguntas[i][3]);
+            imagen.setAttribute("src", "../"+pregunta.exam[0].n_preguntas[i][3]);
 
             enunciado.setAttribute("id", "enunciado");
             enunciado.innerText = pregunta.exam[0].n_preguntas[i][1];
@@ -207,7 +207,7 @@ window.addEventListener("load", function () {
             }
 
         }
-        ajax.open("POST", "../php/entregar_examen_realizado.php");
+        ajax.open("POST", "../zona_alumno/entregar_examen_realizado.php");
         ajax.send(f);
     }
 

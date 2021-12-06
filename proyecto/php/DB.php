@@ -88,6 +88,14 @@ class DB
         return $count;
     }
 
+    public static function cuentaExamenesHechos()
+    {
+        $resultado = self::$con->query("select count(*) from examenes_hechos");
+        $result = $resultado->fetch();
+        $count = $result[0];
+        return $count;
+    }
+
 
     public static function ultiPreguntas()
     {
@@ -146,6 +154,21 @@ class DB
                                     WHERE  id = $id ;"
         );
         return $resul;
+    }
+
+    public static function examenAleatorio()
+    {
+        $e=[];
+
+        $resul = self::$con->query(
+            "SELECT id FROM  examenes;"
+        );
+        while ($registro = $resul->fetchObject()) {
+            $e[]=$registro->id;
+        }
+        shuffle($e);
+
+        return $e[0];
     }
 
     public static function altaPregunta($p)
@@ -441,7 +464,7 @@ class DB
         if ($pagina <= $paginas) {
             $pagina == 0 ? $inicio = ($pagina) * $filas : $inicio = ($pagina) * $filas;
 
-            $res = self::$con->query("SELECT nombre,apellidos,rol
+            $res = self::$con->query("SELECT nombre,apellidos,rol,id
                                         FROM   usuarios
                                         order by id limit $inicio, $filas");
             $registros = $res->fetchAll(PDO::FETCH_ASSOC);

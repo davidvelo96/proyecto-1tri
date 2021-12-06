@@ -28,7 +28,12 @@ require_once "sesion.php";
 <header>
     <div class="perfil">
         <img src="../img/batman.png" width="100px" height="100px">
-        <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+        <a href="#"> 
+        <?php 
+        $usuario=sesion::leer("usuario");
+            echo $usuario->getFoto()==null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> ": " <img src='".$usuario->getFoto()."' width='50px' height='50px' style='margin:20%;'> "  ;
+        ?>
+        </a>
     </div>
 
 

@@ -4,6 +4,8 @@ require_once "sesion.php";
 require_once "usuarios.php";
 
 sesion::iniciar();
+DB::conecta();
+
 $usuario = sesion::leer("usuario");
 
 if (!sesion::existe("usuario")) {
@@ -19,7 +21,6 @@ if (isset($_POST["alta"])) {
             $error = "Las contraseñas no coinciden";
         } else {
 
-            DB::conecta();
             if (DB::obtieneUsuario($_POST["mail"])) {
                 $error = "Este usuario ya existe";
             } else {
@@ -74,31 +75,13 @@ function validar()
 
 
         <div class="nav">
-            <nav id="menu">
+        <nav id="menu">
                 <ul>
-                    <li><a href="tablaUsuarios.php">Usuarios</a>
-                        <ul>
-                            <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="">Alta masiva</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="tablaTematicas.php">Tematicas</a>
-                        <ul>
-                            <li><a href="altaTematica.php">Alta tematicas</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="tablaPreguntas.php">Preguntas</a>
-                        <ul>
-                            <li><a href="altaPregunta.php">Alta preguntas</a></li>
-                            <li><a href="">Alta masiva</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="">Examenes</a>
-                        <ul>
-                            <li><a href="">Alta examen</a></li>
-                            <li><a href="">Historico</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="zona_alumno/historico_ex_alumno.php">Historico de examenes</a></li>
+                    <li><a href="zona_alumno/examenes_predefinidos.php">Examen predefinido</a></li>
+                    <?php
+                    echo "<li><a href='zona_alumno/realizarExamen.php?exam=" . DB::examenAleatorio() . "'>Examen aleatorio</a></li>"
+                    ?>
                 </ul>
             </nav>
         </div>
