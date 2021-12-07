@@ -1,14 +1,19 @@
 <!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
 <?php
-require_once "usuarios.php";
-require_once "sesion.php";
+require_once "clases/usuarios.php";
+require_once "clases/sesion.php";
+require_once "clases/DB.php";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "PROFESOR") {
-    header('Location: datosPersonales.php');
-}
+if (!empty($usuario)) {
 
+    if ($usuario->getRol() != "PROFESOR") {
+        header('Location: datosPersonales.php');
+    }
+} else {
+    header('Location: login.php');
+}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -88,7 +93,8 @@ if ($usuario->getRol() != "PROFESOR") {
             </thead>
             <tbody id="tablaPre">
                 <?php
-                require_once("DB.php");
+              
+              
                 DB::conecta();
                 $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
                 $filas = 3;
@@ -155,7 +161,7 @@ if ($usuario->getRol() != "PROFESOR") {
 
 
 <?php
-require_once "DB.php";
+
 
 if (isset($_GET['borrar'])) {
     $resul = DB::borraPregunta($_GET['borrar']);

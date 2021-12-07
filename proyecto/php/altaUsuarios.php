@@ -1,39 +1,56 @@
 <?php
-require_once "DB.php";
-require_once "sesion.php";
-require_once "usuarios.php";
+require_once "clases/DB.php";
+require_once "clases/sesion.php";
+require_once "clases/usuarios.php";
+require_once "clases/correo.php";
 
 $error = "";
-
+DB::conecta();
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "PROFESOR") {
-    header('Location: datosPersonales.php');
-} else {
+if (!empty($usuario)) {
 
-    if (isset($_POST["alta"])) {
-        $resul = validar();
-        if (empty($resul)) {
-            DB::conecta();
-            if (DB::obtieneUsuario($_POST["mail"])) {
-                $error = "Este usuario ya existe";
-            } else {
-                // $passwd = md5($_POST["passwd"]);
-                $usu = new usuarios("default", $_POST["mail"], $_POST["nombre"], $_POST["apellidos"], "", $_POST["fechaNac"], "null", $_POST["rol"], "0");
-                DB::altaUsuario($usu);
+    if ($usuario->getRol() != "PROFESOR") {
+        header('Location: datosPersonales.php');
+    } else {
+
+        if (isset($_POST["alta"])) {
+            $resul = validar();
+            if (empty($resul)) {
+                if (DB::obtieneUsuario($_POST["mail"])) {
+                    $error = "Este usuario ya existe";
+                } else {
+
+                    try {
+
+                        $con = DB::getConex();
+                        $con->beginTransaction();
+
+                        $usu = new usuarios("default", $_POST["mail"], $_POST["nombre"], "", "", $_POST["fechaNac"], "null", $_POST["rol"], "0");
+                        DB::altaUsuario($usu);
+                        $id_usu = DB::ultiUsuario();
+                        DB::altaUsuarioPendiente($id_usu);
+                        mail::correo($id_usu);
+
+                        $con->commit();
+                    } catch (PDOException $e) {
+                        $con->rollBack();
+                    }
+                    // header('Location: altaUsuarios.php');
+                }
             }
         }
-        // else {
-        //     header('Location: altaUsuarios.php');
-        // }
     }
+}
+else {
+    header('Location: login.php');
 }
 
 
 function validar()
 {
     $error = [];
-    if (!preg_match("/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/", $_POST["nombre"])) {
+    if (!preg_match("/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/", $_POST["nombre"])) {
         $error['name'] = "Solo letras y espacios";
     }
     if (!preg_match("/[a-z0-9._%+-\u00f1\u00d1]+@[a-z0-9.-]+\.[a-z]{2,4}$/", $_POST["mail"])) {
@@ -111,9 +128,7 @@ function validar()
                 <p>Email</p>
                 <input type="text" style='width:200px;' name="mail" required pattern="[a-z0-9._%+-\u00f1\u00d1]+@[a-z0-9.-]+\.[a-z]{2,4}$">
                 <p>Nombre</p>
-                <input type="text" style='width:200px;' name="nombre" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" />
-                <p>Apellidos</p>
-                <input type="text" style='width:200px;' name="apellidos" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$">
+                <input type="text" style='width:200px;' name="nombre" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$" />
                 <!-- <p>Contraseña</p>
                 <input type="password" style='width:200px;' name="passwd" pattern="(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z \u00d1]).{6,25}" title="min 6 caracteres, min 1 mayus" /> -->
                 <p>Fecha de nacimiento</p>
@@ -159,7 +174,3 @@ function validar()
 </body>
 
 </html>
-
-
-
-<!-- SELECT * FROM preguntas order by id limit 2(por donde empieza),5(valores que muestra) -->

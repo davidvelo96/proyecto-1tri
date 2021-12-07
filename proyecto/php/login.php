@@ -1,6 +1,6 @@
 <?php
-require_once "DB.php";
-require_once "sesion.php";
+require_once "clases/DB.php";
+require_once "clases/sesion.php";
 
 
 // require_once "sesion.php";

@@ -1,35 +1,39 @@
 <?php
-require_once "DB.php";
-require_once "sesion.php";
-require_once "usuarios.php";
+require_once "clases/DB.php";
+require_once "clases/sesion.php";
+require_once "clases/usuarios.php";
 
 sesion::iniciar();
 DB::conecta();
 
 $usuario = sesion::leer("usuario");
+if (!empty($usuario)) {
 
-if (!sesion::existe("usuario")) {
-    header('Location: login.php');
-}
+    if (!sesion::existe("usuario")) {
+        header('Location: login.php');
+    }
 
-$error = "";
+    $error = "";
 
-if (isset($_POST["alta"])) {
-    $resul = validar();
-    if (empty($resul)) {
-        if ($_POST["passwd"] != $_POST["conf_passwd"]) {
-            $error = "Las contraseñas no coinciden";
-        } else {
-
-            if (DB::obtieneUsuario($_POST["mail"])) {
-                $error = "Este usuario ya existe";
+    if (isset($_POST["alta"])) {
+        $resul = validar();
+        if (empty($resul)) {
+            if ($_POST["passwd"] != $_POST["conf_passwd"]) {
+                $error = "Las contraseñas no coinciden";
             } else {
-                $passwd = md5($_POST["passwd"]);
-                $usu = new usuarios("default", $_POST["mail"], $_POST["nombre"], $_POST["apellidos"], $passwd, $_POST["fechaNac"], "null", $_POST["rol"], "0");
-                DB::editaUsuario($usu);
+
+                if (DB::obtieneUsuario($_POST["mail"])) {
+                    $error = "Este usuario ya existe";
+                } else {
+                    $passwd = md5($_POST["passwd"]);
+                    $usu = new usuarios("default", $_POST["mail"], $_POST["nombre"], $_POST["apellidos"], $passwd, $_POST["fechaNac"], "null", $_POST["rol"], "0");
+                    DB::editaUsuario($usu);
+                }
             }
         }
     }
+} else {
+    header('Location: login.php');
 }
 
 
@@ -75,7 +79,7 @@ function validar()
 
 
         <div class="nav">
-        <nav id="menu">
+            <nav id="menu">
                 <ul>
                     <li><a href="zona_alumno/historico_ex_alumno.php">Historico de examenes</a></li>
                     <li><a href="zona_alumno/examenes_predefinidos.php">Examen predefinido</a></li>

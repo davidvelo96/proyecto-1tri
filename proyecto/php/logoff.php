@@ -1,9 +1,12 @@
 <?php
-require_once "sesion.php";
+require_once "clases/sesion.php";
 
 sesion::iniciar();
-
-Sesion::eliminar('usuario');
-Sesion::destruir();
-
-header("Location:login.php");
+$usuario = sesion::leer("usuario");
+if (!empty($usuario)) {
+    Sesion::eliminar('usuario');
+    Sesion::destruir();
+    header("Location:login.php");
+} else {
+    header("Location:login.php");
+}

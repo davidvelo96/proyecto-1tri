@@ -1,5 +1,5 @@
 <?php
-require_once "DB.php";
+require_once "clases/DB.php";
 
 
 DB::conecta();

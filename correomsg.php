@@ -17,7 +17,7 @@
     $mail->Password   = "David123daw.";       
     $mail->SetFrom('djvdaw@gmail.com', 'Correo de prueba');
     // asunto
-    $mail->Subject    = "Correo con imagen";
+    $mail->Subject = "Correo con imagen";
     // cuerpo
     $mail->IsHTML(true);
     $mail->AddEmbeddedImage("img.png","imagen","file/imagen.jpg","base64");

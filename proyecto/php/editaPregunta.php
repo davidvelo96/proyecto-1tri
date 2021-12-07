@@ -1,39 +1,46 @@
 <?php
-require_once "DB.php";
-require_once "preguntas.php";
-require_once "respuestas.php";
-require_once "usuarios.php";
+require_once "clases/DB.php";
+require_once "clases/preguntas.php";
+require_once "clases/respuestas.php";
+require_once "clases/usuarios.php";
+require_once "clases/sesion.php";
+
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "PROFESOR") {
-    header('Location: datosPersonales.php');
-} else {
-    if (!isset($_GET["id"])) {
-        header('Location: altaPregunta.php');
-    }
+if (!empty($usuario)) {
 
-    if (isset($_POST["edita"])) {
-
-        DB::conecta();
-        $respuestas = DB::obtieneRespuestas($_GET["id"]);
-        $resul = validar($respuestas);
-        if (empty($resul)) {
-            $correc = $_POST["respuesta"];
-            $respuesta = [$_POST[$respuestas[0]->id], $_POST[$respuestas[1]->id], $_POST[$respuestas[2]->id], $_POST[$respuestas[3]->id]];
-
-            $pregunta = new preguntas("default", $_POST["enun"], $correc, "null", $_POST["tematica"], $respuesta);
-            DB::editaPregunta($pregunta, $_GET["id"]);
-
-            $i = 0;
-            while ($i <= 3) {
-                $respuesta = new respuestas("default", $_POST[$respuestas[$i]->id], "null");
-                DB::editaRespuesta($respuesta, $respuestas[$i]->id);
-                $i++;
-            }
+    if ($usuario->getRol() != "PROFESOR") {
+        header('Location: datosPersonales.php');
+    } else {
+        if (!isset($_GET["id"])) {
+            header('Location: altaPregunta.php');
         }
-        header('Location: tablaPreguntas.php');
+
+        if (isset($_POST["edita"])) {
+
+            DB::conecta();
+            $respuestas = DB::obtieneRespuestas($_GET["id"]);
+            $resul = validar($respuestas);
+            if (empty($resul)) {
+                $correc = $_POST["respuesta"];
+                $respuesta = [$_POST[$respuestas[0]->id], $_POST[$respuestas[1]->id], $_POST[$respuestas[2]->id], $_POST[$respuestas[3]->id]];
+
+                $pregunta = new preguntas("default", $_POST["enun"], $correc, "null", $_POST["tematica"], $respuesta);
+                DB::editaPregunta($pregunta, $_GET["id"]);
+
+                $i = 0;
+                while ($i <= 3) {
+                    $respuesta = new respuestas("default", $_POST[$respuestas[$i]->id], "null");
+                    DB::editaRespuesta($respuesta, $respuestas[$i]->id);
+                    $i++;
+                }
+            }
+            header('Location: tablaPreguntas.php');
+        }
     }
+} else {
+    header('Location: login.php');
 }
 
 

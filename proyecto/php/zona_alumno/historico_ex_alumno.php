@@ -1,36 +1,41 @@
 <?php
-require_once "../DB.php";
-require_once "../usuarios.php";
-require_once "../sesion.php";
+require_once "../clases/DB.php";
+require_once "../clases/usuarios.php";
+require_once "../clases/sesion.php";
+
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "ALUMNO") {
-    header('Location: ../tablaUsuarios.php');
+if (!empty($usuario)) {
+
+    if ($usuario->getRol() != "ALUMNO") {
+        header('Location: ../tablaUsuarios.php');
+    }
+
+    DB::conecta();
+
+    $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
+    $filas = 4;
+    $lista = DB::obtieneExamenesHechosPagAlumno($pagina, $filas, $usuario->getId());
+    $examenes_alum = DB::obtieneExamenesHecho_Alumno($usuario->getId());
+
+    $suma = 0;
+    $promedio = 0;
+    $mayor = 0;
+
+
+
+
+    for ($i = 0; $i < ceil(DB::cuentaExamenesAlum($usuario->getId())); $i++) {
+
+        $pun = DB::obtienePuntuacion(json_decode($examenes_alum[$i]['ejecucion']));
+        $suma += $pun;
+        $pun > $mayor ? $mayor = $pun : $mayor = $mayor;
+    }
+    $promedio = ceil($suma / $filas);
+}else {
+    header('Location: ../login.php');
 }
-
-DB::conecta();
-
-$pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
-$filas = 4;
-$lista = DB::obtieneExamenesHechosPagAlumno($pagina, $filas, $usuario->getId());
-$examenes_alum = DB::obtieneExamenesHecho_Alumno($usuario->getId());
-
-$suma = 0;
-$promedio = 0;
-$mayor = 0;
-
-
-
-
-for ($i = 0; $i < ceil(DB::cuentaExamenesAlum($usuario->getId())); $i++) {
-
-    $pun = DB::obtienePuntuacion(json_decode($examenes_alum[$i]['ejecucion']));
-    $suma += $pun;
-    $pun > $mayor ? $mayor = $pun : $mayor = $mayor;
-}
-$promedio = ceil($suma / $filas);
-
 ?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -55,8 +60,8 @@ $promedio = ceil($suma / $filas);
                 <?php
                 $usuario = sesion::leer("usuario");
                 echo $usuario->getFoto() == null ? " <img src='../../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='../" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
-                ?> 
-                </a>
+                ?>
+            </a>
         </div>
 
 

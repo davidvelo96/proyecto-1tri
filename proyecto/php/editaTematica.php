@@ -1,33 +1,38 @@
 <?php
-require_once "DB.php";
-require_once "sesion.php";
-require_once "usuarios.php";
+require_once "clases/DB.php";
+require_once "clases/sesion.php";
+require_once "clases/usuarios.php";
 
 $error = "";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "PROFESOR") {
-    header('Location: datosPersonales.php');
-} else {
+if (!empty($usuario)) {
 
-    if (isset($_POST["edita"])) {
+    if ($usuario->getRol() != "PROFESOR") {
+        header('Location: datosPersonales.php');
+    } else {
 
-        DB::conecta();
-        $tematica = $_POST['tematica'];
+        if (isset($_POST["edita"])) {
 
-        if (empty($tematica))
-            $error = "Introduce una descripcion";
-        else {
-            $t = DB::newTematica($tematica);
-            if (DB::existeTematica($tematica)) {
-                $error = "Tematica ya existe";
-            } else {
-                DB::editaTematica($t, $_GET["id"]);
-                header('Location: tablaTematicas.php');
+            DB::conecta();
+            $tematica = $_POST['tematica'];
+
+            if (empty($tematica))
+                $error = "Introduce una descripcion";
+            else {
+                $t = DB::newTematica($tematica);
+                if (DB::existeTematica($tematica)) {
+                    $error = "Tematica ya existe";
+                } else {
+                    DB::editaTematica($t, $_GET["id"]);
+                    header('Location: tablaTematicas.php');
+                }
             }
         }
     }
+} else {
+    header('Location: login.php');
 }
 ?>
 

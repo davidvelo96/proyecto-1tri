@@ -1,8 +1,8 @@
 <?php
 
-require_once "../DB.php";
-require_once "../examenes_hechos.php";
-require_once "../sesion.php";
+require_once "../clases/DB.php";
+require_once "../clases/examenes_hechos.php";
+require_once "../clases/sesion.php";
 
 
 if (isset($_POST["datos"])) {

@@ -1,16 +1,20 @@
 <!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
 <?php
-require_once("../DB.php");
-require_once "../usuarios.php";
-require_once "../sesion.php";
+require_once "../clases/DB.php";
+require_once "../clases/usuarios.php";
+require_once "../clases/sesion.php";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "ALUMNO") {
-    header('Location: ../tablaUsuarios.php');
-}
-DB::conecta();
+if (!empty($usuario)) {
 
+    if ($usuario->getRol() != "ALUMNO") {
+        header('Location: ../tablaUsuarios.php');
+    }
+    DB::conecta();
+} else {
+    header('Location: ../login.php');
+}
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 

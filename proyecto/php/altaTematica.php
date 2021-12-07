@@ -1,34 +1,38 @@
 <?php
-require_once "DB.php";
-require_once "sesion.php";
-require_once "usuarios.php";
+require_once "clases/DB.php";
+require_once "clases/sesion.php";
+require_once "clases/usuarios.php";
 
 
 $error = "";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "PROFESOR") {
-    header('Location: datosPersonales.php');
-} else {
-    if (isset($_POST["enviar"])) {
+if (!empty($usuario)) {
 
-        DB::conecta();
-        $tematica = mb_strtoupper($_POST['tematica']);
+    if ($usuario->getRol() != "PROFESOR") {
+        header('Location: datosPersonales.php');
+    } else {
+        if (isset($_POST["enviar"])) {
 
-        if (empty($tematica))
-            $error = "Introduce una descripcion";
-        else {
-            $t = DB::newTematica($tematica);
-            if (DB::existeTematica($tematica)) {
-                $error = "Tematica ya existe";
-            } else {
-                DB::altaTematica($t);
+            DB::conecta();
+            $tematica = mb_strtoupper($_POST['tematica']);
+
+            if (empty($tematica))
+                $error = "Introduce una descripcion";
+            else {
+                $t = DB::newTematica($tematica);
+                if (DB::existeTematica($tematica)) {
+                    $error = "Tematica ya existe";
+                } else {
+                    DB::altaTematica($t);
+                }
             }
         }
     }
+} else {
+    header('Location: login.php');
 }
-
 
 ?>
 

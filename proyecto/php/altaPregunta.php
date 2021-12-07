@@ -1,58 +1,61 @@
 <?php
-require_once "DB.php";
-require_once "preguntas.php";
-require_once "respuestas.php";
-require_once "sesion.php";
-
-// codigoExamen:null, enunciado:null,duracion:null, nPreguntas:null,bandoPreguntas:[id:tal,tematica:tematica,enunciado:blablabla,recurso:foto],preguntasIncluidas[1,2,4,5,7]
+require_once "clases/DB.php";
+require_once "clases/preguntas.php";
+require_once "clases/respuestas.php";
+require_once "clases/sesion.php";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
-if ($usuario->getRol() != "PROFESOR") {
-    header('Location: datosPersonales.php');
-} else {
-    if (isset($_POST["alta"])) {
-        try {
+if (!empty($usuario)) {
 
-            DB::conecta();
-            $con = DB::getConex();
-            $con->beginTransaction();
-            $CRespuestas = DB::cuentaRespuestas();
+    if ($usuario->getRol() != "PROFESOR") {
+        header('Location: datosPersonales.php');
+    } else {
+        if (isset($_POST["alta"])) {
+            try {
 
-            $imag = "";
+                DB::conecta();
+                $con = DB::getConex();
+                $con->beginTransaction();
+                $CRespuestas = DB::cuentaRespuestas();
 
-            $resul = validar($CRespuestas);
-            if (empty($resul)) {
+                $imag = "";
+
+                $resul = validar($CRespuestas);
+                if (empty($resul)) {
 
 
-                $correc = $_POST["respuesta"];
-                $respuestas = [$_POST['1'], $_POST['2'], $_POST['3'], $_POST['4']];
+                    $correc = $_POST["respuesta"];
+                    $respuestas = [$_POST['1'], $_POST['2'], $_POST['3'], $_POST['4']];
 
-                $pregunta = new preguntas("default", $_POST["enun"], "null", "null", $_POST["tematica"], $respuestas);
-                DB::altaPregunta($pregunta);
+                    $pregunta = new preguntas("default", $_POST["enun"], "null", "null", $_POST["tematica"], $respuestas);
+                    DB::altaPregunta($pregunta);
 
-                $cuentaPreguntas = DB::ultiPreguntas();
+                    $cuentaPreguntas = DB::ultiPreguntas();
 
-                if (isset($_FILES["imagen_preg"])) {
-                    $imag = "../img/imagen" . $cuentaPreguntas . ".jpg";
-                    move_uploaded_file($_FILES['imagen_preg']['tmp_name'], $imag);
-                }
-
-                $i = 1;
-                while ($i <= 4) {
-                    $respuestas = new respuestas("default", $_POST[0 + $i], ($cuentaPreguntas));
-                    DB::altaRespuestas($respuestas);
-                    if ($i == $correc) {
-                        DB::updateCorrecta($cuentaPreguntas, $imag);
+                    if (isset($_FILES["imagen_preg"])) {
+                        $imag = "../img/imagen" . $cuentaPreguntas . ".jpg";
+                        move_uploaded_file($_FILES['imagen_preg']['tmp_name'], $imag);
                     }
-                    $i++;
+
+                    $i = 1;
+                    while ($i <= 4) {
+                        $respuestas = new respuestas("default", $_POST[0 + $i], ($cuentaPreguntas));
+                        DB::altaRespuestas($respuestas);
+                        if ($i == $correc) {
+                            DB::updateCorrecta($cuentaPreguntas, $imag);
+                        }
+                        $i++;
+                    }
                 }
+                $con->commit();
+            } catch (PDOException $e) {
+                $con->rollBack();
             }
-            $con->commit();
-        } catch (PDOException $e) {
-            $con->rollBack();
         }
     }
+} else {
+    header('Location: login.php');
 }
 
 function validar()
