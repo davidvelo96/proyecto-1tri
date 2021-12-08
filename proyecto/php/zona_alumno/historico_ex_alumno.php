@@ -23,9 +23,6 @@ if (!empty($usuario)) {
     $promedio = 0;
     $mayor = 0;
 
-
-
-
     for ($i = 0; $i < ceil(DB::cuentaExamenesAlum($usuario->getId())); $i++) {
 
         $pun = DB::obtienePuntuacion(json_decode($examenes_alum[$i]['ejecucion']));
@@ -33,7 +30,7 @@ if (!empty($usuario)) {
         $pun > $mayor ? $mayor = $pun : $mayor = $mayor;
     }
     $promedio = ceil($suma / $filas);
-}else {
+} else {
     header('Location: ../login.php');
 }
 ?>

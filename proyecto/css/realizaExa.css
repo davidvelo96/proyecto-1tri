@@ -58,6 +58,9 @@ table{
     width: 320px;
 }
 
+.correcta{
+    color: rgb(33, 193, 33);
+}
 
 td{
     cursor: pointer;

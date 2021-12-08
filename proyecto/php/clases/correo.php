@@ -27,7 +27,8 @@ class mail
         $mail->Subject = "Correo de activacion de usuario";
         // cuerpo
         $mail->IsHTML(true);
-        $mail->Body = "Pincha en el siguiente enlace para activar su usuario: <br> http://localhost/proyecto-1tri/proyecto/php/confirmarPasswd.php?confirma=" . $usuario;
+        $mail->Body = "Pincha en el siguiente enlace para activar su cuenta de la autoescuela:
+        <br> http://localhost/proyecto-1tri/proyecto/php/confirmarPasswd.php?confirma=" . $usuario;
 
         $address = "djimvel554@g.educaand.es";
         $mail->AddAddress($address, "Test");

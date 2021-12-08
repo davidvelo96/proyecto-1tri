@@ -1,10 +1,9 @@
-<!--tabla usuario por dar alta ----- id usuario, id, fecha -->
-
 <?php
 require_once "clases/sesion.php";
 require_once "clases/usuarios.php";
+require_once "clases/DB.php";
 
-
+DB::conecta();
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
 if (!empty($usuario)) {
@@ -26,7 +25,7 @@ if (!empty($usuario)) {
     <link rel="stylesheet" href="../css/altaExamen.css" title="Color">
     <link rel="stylesheet" href="../css/comun.css" title="Color">
 
-    <script type="text/javascript" src="../js/altaExamen.js"></script>
+    <script type="text/javascript" src="../js/editaExamen.js"></script>
 
     <title>Registro</title>
 </head>
@@ -37,7 +36,6 @@ if (!empty($usuario)) {
             <img src="../img/batman.png" width="100px" height="100px">
             <a href="#">
                 <?php
-                $usuario = sesion::leer("usuario");
                 echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
                 ?>
             </a>
@@ -84,10 +82,17 @@ if (!empty($usuario)) {
         <form action="" method="post">
             <br>
             <p>
-                Descripcion del examen
-                <input type='text' style='width:200px; margin-right: 5%;' id='descripcion' pattern='[A-Za-z 0-9]{1,30}''  required/>
-                    Duracion (en minutos)
-                    <input type=' text' style='width:50px;' id='duracion' pattern='(\d|[1-9]\d|[1-9]\d{2}|1[0-3]\d{2}|14[0-3]\d)' maxlength="4" required />
+                <?php
+                $datos=DB::obtieneExamen_edit($_GET["exam"]);
+                $duracion = $datos->duracion;	
+                $duracionPartes = explode(":", $duracion);
+                $minutosTotales= ($duracionPartes[0] * 60) + $duracionPartes[1];
+
+                  echo  "Descripcion del examen ";
+                  echo  "<input type='text' value='".$datos->descripcion."' style='width:200px; margin-right: 5%;' id='descripcion' pattern='[A-Za-z 0-9]{1,30}''  required/>";
+                  echo     " Duracion (en minutos) ";
+                  echo  "<input type='text' value='".$minutosTotales."' style='width:50px;' id='duracion' pattern='(\d|[1-9]\d|[1-9]\d{2}|1[0-3]\d{2}|14[0-3]\d)' maxlength='4' required />";
+                ?> 
             </p>
             <div class="cajaCampos">
 

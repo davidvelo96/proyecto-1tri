@@ -106,7 +106,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['descripcion'] . "</td>";
                     echo "<td>" . $lista[$i]['n_preguntas'] . "</td>";
                     echo "<td>" . $lista[$i]['duracion'] . "</td>";
-                    echo "<td><a href='#'>Editar</a><a href='#'>Borrar</a></td>";
+                    echo "<td><a href='editaExamen.php?exam=".$lista[$i]['id']."'>Editar</a><a href='#'>Borrar</a></td>";
                     echo "</tr>";
                 }
                 ?>

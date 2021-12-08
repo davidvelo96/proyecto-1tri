@@ -2,6 +2,7 @@
 <?php
 require_once "clases/usuarios.php";
 require_once "clases/sesion.php";
+require_once("clases/DB.php");
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
@@ -93,7 +94,6 @@ if (!empty($usuario)) {
             </thead>
             <tbody id="tablaPre">
                 <?php
-                require_once("DB.php");
                 DB::conecta();
 
                 $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;

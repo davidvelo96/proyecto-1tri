@@ -82,7 +82,7 @@ function validar()
             <a href="#">
                 <?php
                 $usuario = sesion::leer("usuario");
-                echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='100px' height='100px'> " : " <img src='" . $usuario->getFoto() . "' width='100px' height='100px'> ";
+                echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
                 ?>
             </a>
         </div>

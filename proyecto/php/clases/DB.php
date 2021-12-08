@@ -165,6 +165,18 @@ class DB
         );
         return $resul;
     }
+    public static function obtieneExamen_edit($id)
+    {
+        $resul = self::$con->query(
+            "SELECT id,descripcion,duracion,n_preguntas
+                                    FROM   examenes
+                                    WHERE  id = $id ;"
+        );
+        $re = "";
+        $re = $resul->fetchObject();
+        return $re;
+    }
+    
 
     public static function examenAleatorio()
     {
@@ -326,6 +338,34 @@ class DB
         $consulta->execute();
     }
 
+    public static function editaExamen($u)
+    {
+
+        $consulta = self::$con->prepare("UPDATE examenes set 
+                                        descripcion = ?,
+                                        duracion = ?,
+                                        n_preguntas = ?
+                                        WHERE id = ?");
+
+        $id = $u->getId();
+        $desc = $u->getDesc();
+        $duracion = $u->getDuracion();
+        $n_preguntas = $u->getN_preguntas();
+
+        $consulta->bindParam(1, $desc);
+        $consulta->bindParam(2, $duracion);
+        $consulta->bindParam(3, $n_preguntas);
+        $consulta->bindParam(4, $id);
+
+        $consulta->execute();
+    }
+
+    public static function borraExamenPreg($id)
+    {
+        $re =  self::$con->exec("DELETE from examenes_preguntas WHERE examenes_id = $id ");
+        return $re;
+    }
+
     public static function altaExamen_preg($ep)
     {
 
@@ -399,11 +439,20 @@ class DB
         while ($registro = $resultado->fetchObject()) {
             $re[] = $registro;
         }
-        // $re = "";
-        // $re = $resultado->fetchObject();
         return $re;
     }
 
+    public static function obtienePreguntaExamenEdit($id)
+    {
+        $resultado = self::$con->query("  SELECT preguntas.id
+                                            FROM   preguntas
+                                            join examenes_preguntas on examenes_preguntas.preguntas_id = preguntas.id
+                                            WHERE  examenes_preguntas.examenes_id = $id ;");
+        while ($registro = $resultado->fetchObject()) {
+            $re[] = $registro;
+        }
+        return $re;
+    }
 
     public static function obtieneRespuestas($id)
     {
@@ -569,7 +618,7 @@ class DB
         if ($pagina <= $paginas) {
             $pagina == 0 ? $inicio = ($pagina) * $filas : $inicio = ($pagina) * $filas;
 
-            $res = self::$con->query("SELECT examenes_hechos.fecha,usuarios.nombre,examenes_hechos.ejecucion 
+            $res = self::$con->query("SELECT examenes_hechos.fecha,usuarios.nombre,examenes_hechos.ejecucion,examenes_hechos.id  
 			                            from examenes_hechos join usuarios
 			                            on examenes_hechos.id_alumno = usuarios.id
                                         order by examenes_hechos.id limit $inicio, $filas");
@@ -601,7 +650,7 @@ class DB
 
     public static function obtieneExamenesHecho_Alumno($id)
     {
-        $res = self::$con->query("SELECT examenes_hechos.fecha,examenes_hechos.ejecucion 
+        $res = self::$con->query("SELECT examenes_hechos.fecha,examenes_hechos.ejecucion,examenes_hechos.id 
                                         from examenes_hechos join usuarios
                                         on examenes_hechos.id_alumno = usuarios.id
                                         where usuarios.id = $id
@@ -611,9 +660,19 @@ class DB
         return $registros;
     }
 
+    public static function obtieneExamenesHecho_id($id)
+    {
+        $res = self::$con->query("SELECT ejecucion,id 
+                                        from examenes_hechos 
+                                        where id = $id
+                                        order by id");
+        $registros = $res->fetchAll(PDO::FETCH_ASSOC);
+
+        return $registros;
+    }
+
     public static function obtienePuntuacion($datos)
     {
-
         $correg = [];
         $finsuma = 0;
 
@@ -643,7 +702,7 @@ class DB
         return $re;
     }
 
-    public static function confirmaPasswdPendiente($passwd,$id_usu)
+    public static function confirmaPasswdPendiente($passwd, $id_usu)
     {
         $re =  self::$con->prepare("UPDATE usuarios SET passwd = ? WHERE id = ?");
 
@@ -651,7 +710,6 @@ class DB
         $re->bindParam(2, $id_usu);
 
         $re->execute();
-
     }
 
 

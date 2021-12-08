@@ -121,7 +121,7 @@ function validar($idresp)
 
     <div class="cuadroAlta">
         <div class="titulo">
-            <p>Alta de preguntas</p>
+            <h1>Edita preguntas</h1>
         </div>
         <form action="" method="post">
             <div class="cajaCampos">

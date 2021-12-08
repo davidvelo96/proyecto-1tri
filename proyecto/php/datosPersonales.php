@@ -109,7 +109,7 @@ function validar()
                 echo "    <p>Apellidos</p>";
                 echo "    <input type='text' style='width:200px;' name='apellidos' value='" . $usuario->getApellidos() . "' pattern='[A-Za-z ]{1,30}'>";
                 echo "    <p>Contraseña</p>";
-                echo "    <input type='password' style='width:200px;' name='passwd' value='" . $usuario->getPasswd() . "' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' required/>";
+                echo "    <input type='password' style='width:200px;' name='passwd' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' required/>";
                 echo "    <p>Confirmar contraseña</p>";
                 echo "    <input type='password' style='width:200px;' name='conf_passwd' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' />";
                 echo "    <p>Fecha de nacimiento</p>";

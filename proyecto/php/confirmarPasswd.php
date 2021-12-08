@@ -41,10 +41,10 @@ if (isset($_GET["confirma"])) {
 function validar()
 {
     $error = [];
-    if (!preg_match("/(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z \u00d1]).{6,25}/", $_POST["passwd"])) {
+    if (!preg_match("/(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z\u00d1]).{6,25}/", $_POST["passwd"])) {
         $error['pass1'] = "Contraseña de +6 caracteres, con un numero, una mayus minimo";
     }
-    if (!preg_match("/(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z \u00d1]).{6,25}/", $_POST["conf_passwd"])) {
+    if (!preg_match("/(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z\u00d1]).{6,25}/", $_POST["conf_passwd"])) {
         $error['pass2'] = "Contraseña de +6 caracteres, con un numero, una mayus minimo";
     }
 
