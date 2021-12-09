@@ -11,6 +11,7 @@ float: right;
 .titulos{
     margin-right: 25%;
     padding: 1%;
+
 }
 .perfil{
     width: auto;
@@ -20,7 +21,8 @@ float: right;
 }
 .titulo{
     text-align: left;
-    margin-left: 10%;
+    padding-left: 10%;
+    width: 90%;
 }
 footer div{
     font-size: 100%;

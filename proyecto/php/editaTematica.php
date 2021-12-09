@@ -60,7 +60,7 @@ if (!empty($usuario)) {
                     <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
                             <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="">Alta masiva</a></li>
+                            <li><a href="altaMasivaUsuarios.php">Alta masiva</a></li>
                         </ul>
                     </li>
                     <li><a href="tablaTematicas.php">Tematicas</a>
@@ -77,7 +77,7 @@ if (!empty($usuario)) {
                     <li><a href="tablaExamen.php">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
-                            <li><a href="">Historico</a></li>
+                            <li><a href="historicoExamenes.php">Historico</a></li>
                         </ul>
                     </li>
                 </ul>

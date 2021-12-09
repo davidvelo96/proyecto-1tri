@@ -26,7 +26,7 @@ if (!empty($usuario)) {
 
 
                     $correc = $_POST["respuesta"];
-                    $respuestas = [$_POST['1'], $_POST['2'], $_POST['3'], $_POST['4']];
+                    $respuestas = [$_POST['ra1'], $_POST['ra2'], $_POST['ra3'], $_POST['ra4']];
 
                     $pregunta = new preguntas("default", $_POST["enun"], "null", "null", $_POST["tematica"], $respuestas);
                     DB::altaPregunta($pregunta);
@@ -111,7 +111,7 @@ function validar()
                     <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
                             <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="">Alta masiva</a></li>
+                            <li><a href="altaMasivaUsuarios.php">Alta masiva</a></li>
                         </ul>
                     </li>
                     <li><a href="tablaTematicas.php">Tematicas</a>
@@ -160,23 +160,23 @@ function validar()
                 <p>Enunciado</p>
                 <textarea required pattern="[A-Za-z \,]{1,30}" style='width:200px; height:100px;' name="enun"></textarea>
                 <p>Imagen de la pregunta</p>
-                <input type='file' name='imagen_preg' id='imagen' />
+                <input type='file' name='imagen_preg' id='imagen' accept="image/*,video/*"/>
 
                 <?php
                 DB::conecta();
                 $CRespuestas = DB::cuentaRespuestas();
                 echo "<p>Opcion 1</p>";
                 echo "<input type='text' style='width:200px;' name='1' pattern='[A-Za-z 0-9\,]{1,30}''  required/>";
-                echo "<input type='radio' id='1' name='respuesta' value='1' required/>correcta";
+                echo "<input type='radio' id='ra1' name='respuesta' value='1' required/>correcta";
                 echo "<p>Opcion 2</p>";
                 echo "<input type='text' style='width:200px;' name='2' pattern='[A-Za-z 0-9\,]{1,30}'' required />";
-                echo "<input type='radio' id='2'name='respuesta' value='2' required/>correcta";
+                echo "<input type='radio' id='ra2' name='respuesta' value='2' required/>correcta";
                 echo "<p>Opcion 3</p>";
                 echo "<input type='text' style='width:200px;' name='3' pattern='[A-Za-z 0-9\,]{1,30}''  required/>";
-                echo "<input type='radio' id='3'name='respuesta' value='3' required/>correcta";
+                echo "<input type='radio' id='ra3' name='respuesta' value='3' required/>correcta";
                 echo "<p>Opcion 4</p>";
                 echo "<input type='text' style='width:200px;' name='4' pattern='[A-Za-z 0-9\,]{1,30}'' required />";
-                echo "<input type='radio' id='4'name='respuesta' value='4' required/>correcta";
+                echo "<input type='radio' id='ra4' name='respuesta' value='4' required/>correcta";
                 ?>
 
                 <br><br>

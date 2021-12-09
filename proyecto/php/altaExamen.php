@@ -50,7 +50,7 @@ if (!empty($usuario)) {
                     <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
                             <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="">Alta masiva</a></li>
+                            <li><a href="altaMasivaUsuarios.php">Alta masiva</a></li>
                         </ul>
                     </li>
                     <li><a href="">Tematicas</a>

@@ -176,7 +176,7 @@ class DB
         $re = $resul->fetchObject();
         return $re;
     }
-    
+
 
     public static function examenAleatorio()
     {
@@ -712,6 +712,16 @@ class DB
         $re->execute();
     }
 
+    public static function insertaMasiva($mail,$rol)
+    {
+        $consulta = self::$con->prepare("INSERT INTO usuarios (email,rol) VALUES (?,?)");
+       
+        $consulta->bindParam(1, $mail);
+        $consulta->bindParam(2, $rol);
+
+        $consulta->execute();
+
+    }
 
     // public static function existeusuario($usuario,$password)
     // {

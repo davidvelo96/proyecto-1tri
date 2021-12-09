@@ -94,7 +94,7 @@ function validar()
                     <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
                             <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="">Alta masiva</a></li>
+                            <li><a href="altaMasivaUsuarios">Alta masiva</a></li>
                         </ul>
                     </li>
                     <li><a href="tablaTematicas.php">Tematicas</a>

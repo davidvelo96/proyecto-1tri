@@ -1,8 +1,8 @@
-<!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
 <?php
-require_once "clases/usuarios.php";
+require_once "clases/DB.php";
+require_once "clases/preguntas.php";
+require_once "clases/respuestas.php";
 require_once "clases/sesion.php";
-require_once("clases/DB.php");
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
@@ -15,22 +15,24 @@ if (!empty($usuario)) {
     header('Location: login.php');
 }
 
+
+
+
 ?>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../css/tablaUsu.css" title="Color">
+    <link rel="stylesheet" href="../css/altaUsuarios.css" title="Color">
     <link rel="stylesheet" href="../css/comun.css" title="Color">
+    <script type="text/javascript" src="../js/altaMasivaUsuarios.js"></script>
 
-    <title>Historico</title>
 
+    <title>Registro</title>
 </head>
 
-
-
 <body>
-
     <header>
         <div class="perfil">
             <img src="../img/batman.png" width="100px" height="100px">
@@ -49,7 +51,7 @@ if (!empty($usuario)) {
                     <li><a href="tablaUsuarios.php">Usuarios</a>
                         <ul>
                             <li><a href="altaUsuarios.php">Alta usuarios</a></li>
-                            <li><a href="altaMasivaUsuarios.php">Alta masiva</a></li>
+                            <li><a href="altaMasivaUsuarios">Alta masiva</a></li>
                         </ul>
                     </li>
                     <li><a href="tablaTematicas.php">Tematicas</a>
@@ -63,7 +65,7 @@ if (!empty($usuario)) {
                             <li><a href="">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="tablaExamen">Examenes</a>
+                    <li><a href="tablaExamen.php">Examenes</a>
                         <ul>
                             <li><a href="altaExamen.php">Alta examen</a></li>
                             <li><a href="historicoExamenes.php">Historico</a></li>
@@ -75,65 +77,45 @@ if (!empty($usuario)) {
 
     </header>
 
-
     <div class="cuadroAlta">
         <div class="titulo">
-            <h1>Historico de examenes</h1>
+            <h1>Alta masiva de usuarios</h1>
         </div>
-        <div class="search">
-            <input type="text">
-        </div>
-        <table border="1" class="t1">
-            <thead>
-                <tr>
-                    <th>Fecha/Hora</th>
-                    <th>Alumno/a</th>
-                    <th>Puntuación</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="tablaPre">
+        <form action='' method='post' enctype='multipart/form-data'>
+            <div class="cajaCampos">
                 <?php
-                DB::conecta();
+                if (isset($_POST["carga"])) {
+                    $filename = $_FILES['imagen_preg']['tmp_name'];
+                    $handle = fopen($filename, "r");
+                    $q = [];
+                    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                        $q[] = ($data[0]);;
+                    }
 
-                $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
-                $filas = 3;
-                $lista = DB::obtieneExamenesHechosPag($pagina, $filas);
 
-                for ($i = 0; $i < count($lista); $i++) {
-                    echo "<tr>";
-                    echo "<td>" . $lista[$i]['fecha'] . "</td>";
-                    echo "<td>" . $lista[$i]['nombre'] . "</td>";
-                    echo "<td>" . DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion'])) . "/100</td>";
-                    echo "<td><a href='#'>Revisar</a></td>";
-                    echo "</tr>";
+                    echo "<textarea pattern='[A-Za-z \,]{1,30}' style='width:400px; height:200px;' name='usuarios' id='usuarios' placeholder='(Introduce los emails con saltos de linea)'>";
+
+                    for ($i = 0; $i < count($q); $i++) {
+                        echo $i == (count($q)-1) ? $q[$i] : $q[$i] . "\n";
+                    }
+                    echo  "</textarea>";
+                } else {
+                    echo "<textarea pattern='[A-Za-z \,]{1,30}' style='width:400px; height:200px;' name='usuarios' id='usuarios' placeholder='(Introduce los emails con saltos de linea)'></textarea>";
                 }
                 ?>
-            </tbody>
-        </table>
 
-        <div class="center">
-            <ul class="pagination">
-                <?php
-                $pagina = isset($_GET['pag']) ? $_GET['pag'] : 0;
-                DB::conecta();
-                $paginas = ceil(DB::cuentaExamenesHechos() / $filas);
+                <input type='file' name='imagen_preg' id='imagen' accept=".csv" />
 
-                //ENLACES HTML DE LA PAGINA
-                if ($pagina != 0) {
-                    echo "<li><a href='?pag=0' ><<</a></li>";
-                }
-                $primera = ($pagina - 2) > 1 ? $pagina - 2 : 0;
-                $ultima = ($pagina + 2) < $paginas ? $pagina + 2 : $paginas - 1;
-                for ($i = $primera; $i <= $ultima; $i++) {
-                    echo "<li ><a class='" . ($pagina == $i ? 'active' : '') . "' href='?pag=" . ($i) . "'>" . ($i + 1) . "</a></li>";
-                }
-                ?>
-            </ul>
-        </div>
+                <br><br>
+                <div class="botonSubmit">
+                    <input type="button" value="Guardar" style='width:70px;' name="alta" id="alta"></input>
+                    <input type="submit" value="Cargar csv" name="carga"></input>
 
+                </div>
+
+            </div>
+        </form>
     </div>
-
 
     <footer>
         <hr>
@@ -156,6 +138,8 @@ if (!empty($usuario)) {
         </div>
 
     </footer>
+
+
 </body>
 
 
