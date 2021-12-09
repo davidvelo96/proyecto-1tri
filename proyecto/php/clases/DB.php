@@ -638,7 +638,7 @@ class DB
         if ($pagina <= $paginas) {
             $pagina == 0 ? $inicio = ($pagina) * $filas : $inicio = ($pagina) * $filas;
 
-            $res = self::$con->query("SELECT examenes_hechos.fecha,examenes_hechos.ejecucion 
+            $res = self::$con->query("SELECT examenes_hechos.fecha,examenes_hechos.ejecucion,examenes_hechos.id 
                                         from examenes_hechos join usuarios
                                         on examenes_hechos.id_alumno = usuarios.id
                                         where usuarios.id = $id

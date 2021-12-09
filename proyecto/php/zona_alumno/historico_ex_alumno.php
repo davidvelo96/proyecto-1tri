@@ -110,7 +110,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['fecha'] . "</td>";
                     echo "<td>" . DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion'])) . "/100</td>";
                     $suma += DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion']));
-                    echo "<td><a href='#'>Revisar</a></td>";
+                    echo "<td><a href='revisarExamen.php?exa=".$lista[$i]['id']."'>Revisar</a></td>";
                     echo "</tr>";
                 }
 

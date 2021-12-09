@@ -3,10 +3,10 @@ require_once "../clases/DB.php";
 
 
 DB::conecta();
-$preguntas_examen=DB::obtienePreguntaExamen(2);
+$idex=$_GET["exa"];
 $object= new stdClass();
 $object -> exam=[];
-$examen=DB::obtieneExamenesHecho_id(5);
+$examen=DB::obtieneExamenesHecho_id($idex);
 $todo=json_decode($examen[0]["ejecucion"]);
 $object->exam[]=$todo;
 $resp_correc=[];

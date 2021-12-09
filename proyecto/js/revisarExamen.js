@@ -9,7 +9,7 @@ window.addEventListener("load", function () {
 
     var titulo = document.getElementById("titulo_preg");
     var n_preguntas = document.getElementById("n_preguntas");
- 
+
     var n_preguntas;
 
 
@@ -39,14 +39,13 @@ window.addEventListener("load", function () {
 
         var totalfilas = Math.ceil(pregunta.exam[0].n_preguntas.length / 10)
 
-        for (let i = 0; i < totalfilas; i++) {
+        for (let j = 0; j < totalfilas; j++) {
             var tr = document.createElement("tr");
 
             for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
 
                 var td = document.createElement("td");
                 td.setAttribute("id", pregunta.exam[0].n_preguntas[i][0]);
-                td.setAttribute("class", "");
 
                 td.innerText = i + 1;
                 td.onclick = function () {
@@ -66,7 +65,17 @@ window.addEventListener("load", function () {
             preg.setAttribute("style", "display:none;");
 
             var num = document.getElementsByTagName("td")[i];
-            num.setAttribute("class", "");
+            // num.setAttribute("class", "");
+            for (let k = 0; k < 4; k++) {
+                if (document.getElementsByName("radio" + i)[k].checked && document.getElementsByName("radio" + i)[k].id == pregunta.exam[1][i]) {
+                    num.setAttribute("class", "");
+                    k=3;
+                }
+                else {
+                    num.setAttribute("class", "mal");
+                }
+            }
+
         }
 
 
@@ -101,7 +110,7 @@ window.addEventListener("load", function () {
 
             imagen.setAttribute("width", "500px");
             imagen.setAttribute("height", "350px");
-            imagen.setAttribute("src", "../"+pregunta.exam[0].n_preguntas[i][3]);
+            imagen.setAttribute("src", "../" + pregunta.exam[0].n_preguntas[i][3]);
 
             enunciado.setAttribute("id", "enunciado");
             enunciado.innerText = pregunta.exam[0].n_preguntas[i][1];
@@ -116,18 +125,18 @@ window.addEventListener("load", function () {
                 radio.setAttribute("type", "radio");
                 radio.setAttribute("id", pregunta.exam[0].n_preguntas[i][2][j].id);
                 radio.setAttribute("name", "radio" + i);
-                if (pregunta.exam[0].respuestas_seleccionadas[i]==pregunta.exam[0].n_preguntas[i][2][j].id) {
-                    radio.checked=true;
+                if (pregunta.exam[0].respuestas_seleccionadas[i] == pregunta.exam[0].n_preguntas[i][2][j].id) {
+                    radio.checked = true;
                 }
-                radio.disabled=true;
+                radio.disabled = true;
                 var span = document.createElement("span");
-                
+
                 span.setAttribute("id", pregunta.exam[0].n_preguntas[i][2][j].id);
                 span.innerText = pregunta.exam[0].n_preguntas[i][2][j].enunciado;
                 var spancorrect = document.createElement("span");
-                if (pregunta.exam[0].n_preguntas[i][2][j].id==pregunta.exam[1][i]) {
+                if (pregunta.exam[0].n_preguntas[i][2][j].id == pregunta.exam[1][i]) {
                     spancorrect.innerText = " correcta";
-                    spancorrect.setAttribute("class","correcta");
+                    spancorrect.setAttribute("class", "correcta");
                 }
                 var br = document.createElement("br");
 
