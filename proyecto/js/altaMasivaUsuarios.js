@@ -22,7 +22,7 @@ window.addEventListener("load", function () {
             mostrar = error_mail.join("\n");
             alert("Los siguientes correos no tienen el formato correcto: \n" + mostrar);
         }
-        else{
+        else {
             var miObjeto = new Object();
             miObjeto.usuarios = csv_gen_usuarios;
 
@@ -33,20 +33,19 @@ window.addEventListener("load", function () {
             ajax.onreadystatechange = function () {
                 if (ajax.readyState == 4 && ajax.status == 200) {
                     var respuesta = JSON.parse(ajax.responseText);
-                    mostrar = respuesta.join("\n");
-                    alert("Los siguientes correos ya existen y no se han insertado: \n" + mostrar);
-                    document.getElementById("usuarios").value=mostrar;
+                    if (respuesta != "") {
+                        mostrar = respuesta.join("\n");
+                        alert("Los siguientes correos ya existen y no se han insertado: \n" + mostrar);
+                        document.getElementById("usuarios").value = mostrar;
+                    }
+                    else{window.location = "http://localhost/proyecto-1tri/proyecto/php/altaMasivaUsuarios.php"; }
                 }
-                // if (ajax.status == 403) {
-                //     alert("No se pudo entregar el examen");
-                //     window.location = "http://localhost/proyecto-1tri/proyecto/php/tablaExamen.php";
-                // }
-    
+              
             }
             ajax.open("POST", "../php/inserta_alta_masiva_usuarios.php");
             ajax.send(users);
         }
-        
+
 
     }
 

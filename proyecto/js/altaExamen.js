@@ -121,6 +121,9 @@ window.addEventListener("load", function () {
 
 
     function convertirMinAhorasMin(mins){
+        if (mins>1400) {
+            mins=1399;
+        }
         let h = Math.floor(mins / 60);
         let m = mins % 60;
         h = h < 10 ? '0' + h : h;

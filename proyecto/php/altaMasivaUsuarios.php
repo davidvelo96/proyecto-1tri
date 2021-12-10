@@ -36,7 +36,7 @@ if (!empty($usuario)) {
     <header>
         <div class="perfil">
             <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#">
+            <a href="datosPersonales.php">
                 <?php
                 $usuario = sesion::leer("usuario");
                 echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";

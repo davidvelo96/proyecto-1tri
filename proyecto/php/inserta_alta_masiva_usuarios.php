@@ -3,6 +3,9 @@
 require_once "clases/DB.php";
 require_once "clases/examenes.php";
 require_once "clases/examenes_preguntas.php";
+require_once "clases/correo.php";
+
+
 
 if (isset($_POST["datos"])) {
     try {
@@ -11,7 +14,7 @@ if (isset($_POST["datos"])) {
         $con = DB::getConex();
         $con->beginTransaction();
         $datos = json_decode($_POST["datos"]);
-
+        $error=[];
         for ($i=0; $i < count($datos->usuarios); $i++) { 
             if (DB::obtieneUsuario($datos->usuarios[$i])==true) {
                 $error[]=$datos->usuarios[$i];
@@ -20,6 +23,7 @@ if (isset($_POST["datos"])) {
                 DB::insertaMasiva($datos->usuarios[$i],"ALUMNO");
                 $id_usu=DB::ultiUsuario();
                 DB::altaUsuarioPendiente($id_usu);
+                mail::correo($id_usu);
             }
         }
 

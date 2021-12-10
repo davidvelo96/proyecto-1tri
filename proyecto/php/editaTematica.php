@@ -50,7 +50,7 @@ if (!empty($usuario)) {
     <header>
         <div class="perfil">
             <img src="../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../img/batman.png" width="100px" height="100px"></a>
+            <a href="datosPersonales.php"> <img src="../img/batman.png" width="100px" height="100px"></a>
         </div>
 
 

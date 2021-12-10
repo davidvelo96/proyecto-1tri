@@ -33,11 +33,11 @@ class mail
         $address = "djimvel554@g.educaand.es";
         $mail->AddAddress($address, "Test");
         // enviar
-        $resul = $mail->Send();
-        if (!$resul) {
-            echo "Error" . $mail->ErrorInfo;
-        } else {
-            echo " Correo enviado";
-        }
+        $mail->Send();
+        // if (!$resul) {
+        //     echo "Error" . $mail->ErrorInfo;
+        // } else {
+        //     echo " Correo enviado";
+        // }
     }
 }

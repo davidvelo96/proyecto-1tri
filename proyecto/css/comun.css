@@ -1,5 +1,7 @@
+
 body{
     margin: 0px 2%;
+    background-color: rgb(248, 248, 248);
 }
 input[type=submit],input[type=radio],a{
   cursor: pointer;
@@ -19,6 +21,17 @@ float: right;
 .perfil>a{
     float:right;
 }
+.perfil>a>img{
+  -webkit-transition: box-shadow 2s ease-out;
+  -moz-transition: box-shadow 2s ease-out;
+  -o-transition: box-shadow 2s ease-out;
+  transition: box-shadow 2s ease-out;
+}
+.perfil>a>img:hover{
+  box-shadow: 5px 5px 0 #515151;
+  cursor: pointer;
+}
+
 .titulo{
     text-align: left;
     padding-left: 10%;
@@ -49,6 +62,13 @@ footer div{
   padding:0;
 }
 
+#menu a:hover {
+  color: #fff;
+  background-color: rgb(181, 181, 181);
+  border-radius: 25px;
+  cursor: pointer;
+}
+
 #menu ul a {
   display:block;
   color:black;
@@ -66,7 +86,7 @@ footer div{
 }
 
 #menu ul li:hover {
-  background:#bfbfbf;
+  background:#c1c1c1;
 }
 
 #menu ul ul {
@@ -88,4 +108,58 @@ footer div{
 
 #menu ul li:hover > ul {
   display:block;
+
+}
+
+
+#menu a:hover{
+  background-color: rgb(145, 145, 145);
+  -webkit-transition: border-radius 2s ease-out;
+  -moz-transition: border-radius 2s ease-out;
+  -o-transition: border-radius 2s ease-out;
+  transition: border-radius 2s ease-out;
+}
+
+
+ul.pagination {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+ul.pagination li {
+  display: inline;
+}
+
+ul.pagination li a {
+  color: black;
+  float: left;
+  padding: 2px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+}
+
+ul.pagination li a.active {
+  background-color: #004de6;
+  color: white;
+  border: 1px solid #004de6;
+}
+
+ul.pagination li a:hover:not(.active) {
+  background-color: #ddd;
+}
+
+ul.pagination  li a:hover:not(.active){
+  -webkit-transition: background-color 2s ease-out;
+  -moz-transition: background-color 2s ease-out;
+  -o-transition: background-color 2s ease-out;
+  transition: background-color 2s ease-out;
+ 
+}
+
+ul.pagination:hover li a:hover:not(.active){
+  background-color: #004de6;
+  color: white;
+  cursor: pointer;
 }
