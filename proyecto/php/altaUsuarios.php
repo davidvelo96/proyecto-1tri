@@ -66,8 +66,9 @@ function validar()
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="../css/altaUsuarios.css" title="Color">
-    <link rel="stylesheet" href="../css/comun.css" title="Color">
+    <link rel="stylesheet" href="../scss/css/main.css">
+    <link rel="stylesheet" href="../css/altaUsuarios.css" >
+
 
 
     <title>Registro</title>
@@ -119,6 +120,7 @@ function validar()
         </div>
 
     </header>
+
     <div class="cuadroAlta">
         <div class="titulo">
             <h1>Alta de Usuario</h1>

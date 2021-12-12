@@ -55,7 +55,10 @@ if (sesion::existe("usuario")) {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <title>PRUEBA</title>
+    <link rel="stylesheet" href="../scss/css/main.css">
     <link rel="stylesheet" href="../css/login.css" title="Color">
+
+
 </head>
 
 <body>

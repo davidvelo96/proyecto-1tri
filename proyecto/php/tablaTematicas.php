@@ -20,7 +20,7 @@ if (!empty($usuario)) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../css/tablaTem.css" title="Color">
-    <link rel="stylesheet" href="../css/comun.css" title="Color">
+    <link rel="stylesheet" href="../scss/css/main.css">
 
     <title>Registro</title>
 

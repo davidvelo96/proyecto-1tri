@@ -1,0 +1,29 @@
+@mixin colorFondo($color) {
+    background-color: $color;
+}
+@mixin color($color) {
+    color: $color;
+}
+
+@mixin colorhover() {
+    background-color: $color-texto-hover;
+    color: $color-fondo-sobre;
+}
+
+@mixin boxsizing($param) {
+    box-sizing: $param;
+}
+
+@mixin transicion($proper, $dura, $timing: linear) {
+    transition-property: $proper;
+    transition-duration: $dura;
+    transition-timing-function: $timing;
+}
+
+@mixin animaciones($name, $dura, $timing: linear) {
+    animation-name: $name;
+    animation-duration: $dura;
+    animation-timing-function: $timing;
+}
+
+

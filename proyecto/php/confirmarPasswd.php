@@ -60,7 +60,7 @@ function validar()
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <title>CONFIRMA PASSWD</title>
-    <link rel="stylesheet" href="../css/login.css" title="Color">
+    <link rel="stylesheet" href="../scss/css/main.css">
 </head>
 
 <body>

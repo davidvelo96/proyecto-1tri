@@ -3,10 +3,7 @@
     margin: 5% 0% 5% 0%;
     width: 100%;  
 }
-.titulo{
-    width: 100%;
-    text-align: center;
-}
+
 .cajaCampos{
     /* padding-left: 40%; */
     margin: 0% 40%;
@@ -20,7 +17,7 @@
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-input{
+/* input{
     height: 25px;
 }
 input[type=text],input[type=password]{
@@ -41,4 +38,4 @@ input[type="radio"] {
     margin-left: 5%;
     margin-top: -1px;
     vertical-align: middle;
-  }
+  } */

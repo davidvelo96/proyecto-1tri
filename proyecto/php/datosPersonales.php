@@ -57,7 +57,7 @@ function validar()
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../css/altaUsuarios.css" title="Color">
-    <link rel="stylesheet" href="../css/comun.css" title="Color">
+    <link rel="stylesheet" href="../scss/css/main.css">
 
 
     <title>Datos personales</title>
@@ -93,7 +93,7 @@ function validar()
     </header>
     <div class="cuadroAlta">
         <div class="titulo">
-            <h2>Datos personales</h2>
+            <h1>Datos personales</h1>
         </div>
         <form action="" method="post">
             <div class="cajaCampos">

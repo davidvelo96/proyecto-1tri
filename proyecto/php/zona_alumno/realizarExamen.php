@@ -1,5 +1,21 @@
-<!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
+<?php
+require_once "../clases/DB.php";
+require_once "../clases/usuarios.php";
+require_once "../clases/sesion.php";
 
+
+sesion::iniciar();
+$usuario = sesion::leer("usuario");
+if (!empty($usuario)) {
+
+    if ($usuario->getRol() != "ALUMNO") {
+        header('Location: ../tablaUsuarios.php');
+    }
+
+} else {
+    header('Location: ../login.php');
+}
+?>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -7,7 +23,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../../css/realizaExa.css" title="Color">
-    <link rel="stylesheet" href="../../css/comun.css" title="Color">
+    <link rel="stylesheet" href="../../scss/css/main.css">
     <script type="text/javascript" src="../../js/realizaExamen.js"></script>
 
 
@@ -22,7 +38,12 @@
     <header>
         <div class="perfil">
             <img src="../../img/batman.png" width="100px" height="100px">
-            <a href="#"> <img src="../../img/batman.png" width="100px" height="100px"></a>
+            <a href="../datosPersonales.php">
+                <?php
+                $usuario = sesion::leer("usuario");
+                echo $usuario->getFoto() == null ? " <img src='../../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='../" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
+                ?>
+            </a>
         </div>
 
 

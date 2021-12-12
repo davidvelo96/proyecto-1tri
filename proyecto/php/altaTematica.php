@@ -13,7 +13,7 @@ if (!empty($usuario)) {
     if ($usuario->getRol() != "PROFESOR") {
         header('Location: datosPersonales.php');
     } else {
-        if (isset($_POST["enviar"])) {
+        if (isset($_POST["alta"])) {
 
             DB::conecta();
             $tematica = mb_strtoupper($_POST['tematica']);
@@ -43,8 +43,8 @@ if (!empty($usuario)) {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <title>PRUEBA</title>
-    <link rel="stylesheet" href="../css/login.css" title="Color">
-    <link rel="stylesheet" href="../css/comun.css" title="Color">
+    <link rel="stylesheet" href="../scss/css/main.css">
+    <link rel="stylesheet" href="../css/altaUsuarios.css" >
 
 </head>
 
@@ -93,22 +93,25 @@ if (!empty($usuario)) {
 
     </header>
 
-    <div class="cajaLogeo">
-        <div class="cajaCampos">
-            <form action="" method="post">
 
-                <div class="usuario">
-                    <p class="tituloCajas">Descripcion</p>
-                    <input class="inputCaja" type="text" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${1,30}" placeholder="Marcador de Posicion" name="tematica" title="Maximo 30 caracteres, solo letras y espacios" />
+    <div class="cuadroAlta">
+        <div class="titulo">
+            <h1>Alta Tematica</h1>
+        </div>
+        <form action="" method="post">
+            <div class="cajaCampos">
+                <p>Descripcion</p>
+                <input type="text" pattern="^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+${1,30}" placeholder="Marcador de Posicion" name="tematica" title="Maximo 30 caracteres, solo letras y espacios" />
+              
+                <br><br>
+                <div class="botonSubmit">
+                    <input type="submit" style='width:70px;' name="alta"></input>
                 </div>
-                <input class="botonSubmit" type="submit" value="Aceptar" name="enviar" />
-                <br>
                 <?php
                 echo "<span style='color:red;'>" . $error . "</span>";
                 ?>
-            </form>
-        </div>
-
+            </div>
+        </form>
     </div>
 
     <footer>

@@ -1,0 +1,33 @@
+body {
+  margin: 0px 2%;
+}
+input[type="radio"],
+input[type="submit"],
+input[type="file"],
+a {
+  cursor: pointer;
+}
+input {
+  height: 25px;
+}
+input[type="text"],
+input[type="submit"],
+input[type="password"],
+input[type="file"] {
+  border: 2px solid;
+  border-radius: 5px;
+}
+a {
+  text-decoration: none;
+}
+
+.titulos{
+    margin-right: 25%;
+    padding: 1%;
+
+}
+.titulo{
+  text-align: left;
+  padding-left: 10%;
+  width: 90%;
+}

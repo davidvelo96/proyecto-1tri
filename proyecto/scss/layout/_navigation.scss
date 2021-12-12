@@ -1,34 +1,103 @@
-ul.pagination {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
+#menu {
+    a {
+        &:hover {
+            @include color(#fff);
+            @include colorFondo(rgb(181, 181, 181));
+            border-radius: 25px;
+            cursor: pointer;
+        }
+        &:hover {
+            @include colorFondo(rgb(145, 145, 145));
+            -webkit-transition: border-radius 2s ease-out;
+            -moz-transition: border-radius 2s ease-out;
+            -o-transition: border-radius 2s ease-out;
+            transition: border-radius 2s ease-out;
+        }
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        a {
+            display: block;
+            @include color(black);
+            text-decoration: none;
+            padding: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        li {
+            border: 1px solid black;
+            @include colorFondo(#ffffff);
+            position: relative;
+            float: left;
+            margin: 0;
+            padding: 0;
+            &:hover {
+                background: #c1c1c1;
+            }
+            &:hover > ul {
+                display: block;
+            }
+        }
+        ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            padding: 0;
+            li {
+                float: none;
+                width: 150px;
+            }
+            a {
+                line-height: 120%;
+            }
+        }
+    }
 }
 
-ul.pagination li {
-    display: inline;
+ul {
+    &.pagination {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        li {
+            display: inline;
+            a {
+                @include color(black);
+                float: left;
+                padding: 2px 16px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+                border: 1px solid #ddd;
+                &.active {
+                    @include colorFondo(#004de6);
+                    @include color(white);
+                    border: 1px solid #004de6;
+                }
+                &:hover:not(.active) {
+                    @include colorFondo(#ddd);
+                    -webkit-transition: background-color 2s ease-out;
+                    -moz-transition: background-color 2s ease-out;
+                    -o-transition: background-color 2s ease-out;
+                    transition: background-color 2s ease-out;
+                }
+            }
+        }
+    }
+    &.pagination:hover li a:hover:not(.active){
+        background-color: #004de6;
+        color: white;
+        cursor: pointer;
+      }
 }
-
-ul.pagination li a {
-    color: black;
-    float: left;
-    padding: 2px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    border: 1px solid #ddd;
-}
-
-ul.pagination li a.active {
-    background-color: #004de6;
-    color: white;
-    border: 1px solid #004de6;
-}
-
-ul.pagination li a:hover:not(.active) {
-    background-color: #ddd;
-}
+  
+ 
 
 div.center {
     text-align: center;
     margin-top: 10%;
-    
 }

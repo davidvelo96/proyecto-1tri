@@ -25,7 +25,7 @@ if (!empty($usuario)) {
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../css/altaUsuarios.css" title="Color">
-    <link rel="stylesheet" href="../css/comun.css" title="Color">
+    <link rel="stylesheet" href="../scss/css/main.css">
     <script type="text/javascript" src="../js/altaMasivaUsuarios.js"></script>
 
 
@@ -85,20 +85,24 @@ if (!empty($usuario)) {
             <div class="cajaCampos">
                 <?php
                 if (isset($_POST["carga"])) {
-                    $filename = $_FILES['imagen_preg']['tmp_name'];
-                    $handle = fopen($filename, "r");
-                    $q = [];
-                    while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                        $q[] = ($data[0]);;
+                    if ($_FILES['imagen_preg']['tmp_name'] != "") {
+
+                        $filename = $_FILES['imagen_preg']['tmp_name'];
+                        $handle = fopen($filename, "r");
+                        $q = [];
+                        while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                            $q[] = ($data[0]);;
+                        }
+
+                        echo "<textarea pattern='[A-Za-z \,]{1,30}' style='width:400px; height:200px;' name='usuarios' id='usuarios' placeholder='(Introduce los emails con saltos de linea)'>";
+
+                        for ($i = 0; $i < count($q); $i++) {
+                            echo $i == (count($q) - 1) ? $q[$i] : $q[$i] . "\n";
+                        }
+                        echo  "</textarea>";
+                    }else {
+                        echo "<textarea pattern='[A-Za-z \,]{1,30}' style='width:400px; height:200px;' name='usuarios' id='usuarios' placeholder='(Introduce los emails con saltos de linea)'></textarea>";
                     }
-
-
-                    echo "<textarea pattern='[A-Za-z \,]{1,30}' style='width:400px; height:200px;' name='usuarios' id='usuarios' placeholder='(Introduce los emails con saltos de linea)'>";
-
-                    for ($i = 0; $i < count($q); $i++) {
-                        echo $i == (count($q)-1) ? $q[$i] : $q[$i] . "\n";
-                    }
-                    echo  "</textarea>";
                 } else {
                     echo "<textarea pattern='[A-Za-z \,]{1,30}' style='width:400px; height:200px;' name='usuarios' id='usuarios' placeholder='(Introduce los emails con saltos de linea)'></textarea>";
                 }

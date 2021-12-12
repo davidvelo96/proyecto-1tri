@@ -2,23 +2,21 @@
 @import 'utilities/functions';
 @import 'utilities/mixins';
 
-@import 'utilities/bootstrap';
-@import 'vendors/jquery-ui';
 
 @import 'base/reset';
 @import 'base/typo';
 
 @import 'layout/navigation';
-@import 'layout/grid';
+@import 'layout/tables';
 @import 'layout/header';
 @import 'layout/footer';
-@import 'layout/forms';
+@import 'layout/comun';
+@import 'layout/tables';
+
 
 @import 'components/buttons';
-@import 'components/jumbo';
 
-@import 'pages/home';
-@import 'pages/contact';
 
-@import 'themes/theme';
-@import 'themes/admin';
+@import 'views/login';
+// @import 'views/tablaExamen';
+// @import 'views/tablaTem';
