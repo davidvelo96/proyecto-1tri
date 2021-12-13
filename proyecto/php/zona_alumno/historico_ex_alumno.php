@@ -41,6 +41,8 @@ if (!empty($usuario)) {
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../../css/historico_exa_alum.css" title="Color">
     <link rel="stylesheet" href="../../scss/css/main.css">
+    <script type="text/javascript" src="../../js/pdfExamen.js"></script>
+
 
     <title>Historico</title>
 
@@ -110,7 +112,8 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['fecha'] . "</td>";
                     echo "<td>" . DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion'])) . "/100</td>";
                     $suma += DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion']));
-                    echo "<td><a href='revisarExamen.php?exa=".$lista[$i]['id']."'>Revisar</a></td>";
+                    echo "<td><a class='links' href='revisarExamen.php?exa=".$lista[$i]['id']."'>Revisar</a>
+                             <a class='links' href='../../../pdf.php?exam=".$lista[$i]['id']."' >Descargar pdf</a></td>";
                     echo "</tr>";
                 }
 

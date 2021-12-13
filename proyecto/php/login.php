@@ -1,11 +1,11 @@
 <?php
+
+// var_dump($data['name'] ??= 'prueba de versiones');
+
+
 require_once "clases/DB.php";
 require_once "clases/sesion.php";
 
-
-// require_once "sesion.php";
-// require_once "usuario.php";
-// require_once "DB.php";
 
 // setcookie ("pepe", "", time() - 3600);
 // setcookie ("passwd", "", time() - 3600);

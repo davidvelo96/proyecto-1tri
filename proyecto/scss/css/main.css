@@ -224,11 +224,22 @@ div.center {
   cursor: pointer;
 }
 
-footer div {
-  font-size: 100%;
-  float: left;
-  padding: 0 10%;
-  width: auto;
+@media (min-width: 1920px) {
+  footer div {
+    font-size: 100%;
+    float: left;
+    margin: 0 13%;
+    width: auto;
+  }
+}
+
+@media (max-width: 1920px) {
+  footer div {
+    font-size: 100%;
+    float: left;
+    margin: 0 10%;
+    width: auto;
+  }
 }
 
 body {
@@ -240,6 +251,25 @@ input[type="submit"],
 input[type="file"],
 a {
   cursor: pointer;
+  text-decoration: none;
+}
+
+input[type="radio"].links,
+input[type="submit"].links,
+input[type="file"].links,
+a.links {
+  color: black;
+  background-color: #e2e2e2;
+  -webkit-transition: background-color 2s ease-out;
+  transition: background-color 2s ease-out;
+  padding: 8px;
+}
+
+input[type="radio"].links:hover,
+input[type="submit"].links:hover,
+input[type="file"].links:hover,
+a.links:hover {
+  background-color: #ff7575;
 }
 
 input {
@@ -252,10 +282,6 @@ input[type="password"],
 input[type="file"] {
   border: 2px solid;
   border-radius: 5px;
-}
-
-a {
-  text-decoration: none;
 }
 
 .titulos {

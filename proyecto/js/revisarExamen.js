@@ -162,55 +162,5 @@ window.addEventListener("load", function () {
     }
 
 
-    // function timer() {
-
-
-    //     var days = Math.floor(current_level / 86400);
-    //     var remainingDays = current_level - (days * 86400);
-
-    //     //if (days <= 0){
-    //     //    days = current_level;
-    //     //}
-
-    //     var hours = Math.floor(remainingDays / 3600);
-    //     var remainingHours = remainingDays - (hours * 3600);
-
-    //     //if (hours >= 24){
-    //     //     hours = 23;
-    //     //}
-
-    //     var minutes = Math.floor(remainingHours / 60);
-    //     var remainingMinutes = remainingHours - (minutes * 60);
-
-    //     //if (minutes >= 60) {
-    //     //     minutes = 59;
-    //     //}
-
-    //     var seconds = remainingMinutes;
-
-    //     if (hours < 10) {
-    //         hours = "0" + hours;
-    //     }
-    //     if (minutes < 10) {
-    //         minutes = "0" + minutes;
-    //     }
-    //     if (seconds < 10) {
-    //         seconds = "0" + seconds;
-    //     }
-    //     duracion.innerHTML = hours + ":" + minutes + ":" + seconds;
-
-    //     //if (seconds == 0) {
-    //     //    clearInterval(countdownTimer);
-    //     //     duracion.innerHTML = "Completed";
-    //     //}
-
-    //     current_level--;
-
-    //     if (current_level < 1) {
-    //         finalizarExamen();
-    //     }
-
-
-    // }
 
 })

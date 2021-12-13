@@ -71,8 +71,7 @@ if (!empty($usuario)) {
 
         <div class="botones">
         <form action="">
-            <input type="button" value="Atras">
-            <input type="button" value="Siguiente">
+
             <input type="button" id="finExamen" value="Finalizar"></form>
            
         </div>

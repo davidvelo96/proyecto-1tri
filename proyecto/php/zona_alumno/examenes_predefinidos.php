@@ -87,7 +87,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['descripcion'] . "</td>";
                     echo "<td>" . $lista[$i]['n_preguntas'] . "</td>";
                     echo "<td>" . $lista[$i]['duracion'] . "</td>";
-                    echo "<td><a href='realizarExamen.php?exam=" . $lista[$i]['id'] . "'>Realizar</a></td>";
+                    echo "<td><a class='links' href='realizarExamen.php?exam=" . $lista[$i]['id'] . "'>Realizar</a></td>";
                     echo "</tr>";
                 }
                 ?>

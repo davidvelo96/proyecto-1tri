@@ -5,8 +5,12 @@ require_once "clases/usuarios.php";
 
 sesion::iniciar();
 DB::conecta();
-
 $usuario = sesion::leer("usuario");
+
+$usu = DB::obtieneUsuario($usuario->getCorreo());
+
+sesion::escribir("usuario",$usu);
+
 if (!empty($usuario)) {
 
     if (!sesion::existe("usuario")) {
@@ -14,6 +18,7 @@ if (!empty($usuario)) {
     }
 
     $error = "";
+    $imag = "";
 
     if (isset($_POST["alta"])) {
         $resul = validar();
@@ -22,13 +27,20 @@ if (!empty($usuario)) {
                 $error = "Las contraseñas no coinciden";
             } else {
 
-                if (DB::obtieneUsuario($_POST["mail"])) {
-                    $error = "Este usuario ya existe";
-                } else {
-                    $passwd = md5($_POST["passwd"]);
-                    $usu = new usuarios("default", $_POST["mail"], $_POST["nombre"], $_POST["apellidos"], $passwd, $_POST["fechaNac"], "null", $_POST["rol"], "0");
-                    DB::editaUsuario($usu);
+                if (isset($_FILES["imagen_perfil"])) {
+                    $imag = "../img/perfil" . $usuario->getId() . ".jpg";
+                    move_uploaded_file($_FILES['imagen_perfil']['tmp_name'], $imag);
                 }
+
+                if ($_POST["passwd"]!="") {
+                    $passwd = md5($_POST["passwd"]);
+                } else {
+                    $passwd = $usuario->getPasswd();
+                }
+
+                $usu = new usuarios("default", $usuario->getCorreo(), $_POST["nombre"], $_POST["apellidos"], $passwd, $_POST["fechaNac"], $imag, $usuario->getRol());
+                DB::editaUsuario($usu);
+                header('Location: datosPersonales.php');
             }
         }
     }
@@ -40,10 +52,10 @@ if (!empty($usuario)) {
 function validar()
 {
     $error = [];
-    if (!preg_match("/^[a-zA-Z-'\s]+$/", $_POST["nombre"])) {
+    if (!preg_match("/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/", $_POST["nombre"])) {
         $error['name'] = "Solo letras y espacios";
     }
-    if (!preg_match("/^[a-zA-Z-'\s]+$/", $_POST["apellidos"])) {
+    if (!preg_match("/^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$/", $_POST["apellidos"])) {
         $error['apellidos'] = "Solo letras y espacios";
     }
 
@@ -71,7 +83,6 @@ function validar()
             <img src="../img/batman.png" width="100px" height="100px">
             <a href="datosPersonales.php">
                 <?php
-                $usuario = sesion::leer("usuario");
                 echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='100px' height='100px'> ";
                 ?>
             </a>
@@ -79,10 +90,10 @@ function validar()
 
 
         <div class="nav">
-        <?php
-                if ($usuario->getRol() == "PROFESOR") {
+            <?php
+            if ($usuario->getRol() == "PROFESOR") {
 
-                 echo   "<nav id='menu'>
+                echo   "<nav id='menu'>
                     <ul>
                         <li><a href='tablaUsuarios.php'>Usuarios</a>
                             <ul>
@@ -109,19 +120,17 @@ function validar()
                         </li>
                     </ul>
                     </nav>";
-
-                }
-                else {
-                    echo "<nav id='menu'>
+            } else {
+                echo "<nav id='menu'>
                     <ul>
                         <li><a href='zona_alumno/historico_ex_alumno.php'>Historico de examenes</a></li>
                         <li><a href='zona_alumno/examenes_predefinidos.php'>Examen predefinido</a></li>
                         <li><a href='zona_alumno/realizarExamen.php?exam=" . DB::examenAleatorio() . "'>Examen aleatorio</a></li>
                     </ul>
-                </nav>";                
+                </nav>";
             }
             ?>
-            
+
         </div>
 
     </header>
@@ -129,28 +138,27 @@ function validar()
         <div class="titulo">
             <h1>Datos personales</h1>
         </div>
-        <form action="" method="post">
+        <form action="" method="post" enctype='multipart/form-data'>
             <div class="cajaCampos">
                 <?php
-                sesion::iniciar();
-
-                $usuario = sesion::leer("usuario");
 
                 echo "    <p>Email</p>";
                 echo "    <input type='text' style='width:200px; ' disabled name='mail' value='" . $usuario->getCorreo() . "' required pattern='[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'>";
                 echo "    <p>Nombre</p>";
-                echo "    <input type='text' style='width:200px;'  name='nombre' value='" . $usuario->getNombre() . "' pattern='[A-Za-z ]{1,30}' />";
+                echo "    <input type='text' style='width:200px;'  name='nombre' value='" . $usuario->getNombre() . "' pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$' />";
                 echo "    <p>Apellidos</p>";
-                echo "    <input type='text' style='width:200px;' name='apellidos' value='" . $usuario->getApellidos() . "' pattern='[A-Za-z ]{1,30}'>";
+                echo "    <input type='text' style='width:200px;' name='apellidos' value='" . $usuario->getApellidos() . "' pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$'>";
                 echo "    <p>Contraseña</p>";
-                echo "    <input type='password' style='width:200px;' name='passwd' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' required/>";
+                echo "    <input type='password' style='width:200px;' name='passwd' pattern='(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z \u00d1]).{6,25}' title='minimo 6 caracteres'/>";
                 echo "    <p>Confirmar contraseña</p>";
-                echo "    <input type='password' style='width:200px;' name='conf_passwd' pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,25}' title='minimo 6 caracteres' />";
+                echo "    <input type='password' style='width:200px;' name='conf_passwd' pattern='(?=.*\d)(?=.*[a-z \u00f1])(?=.*[A-Z \u00d1]).{6,25}' title='minimo 6 caracteres' />";
                 echo "    <p>Fecha de nacimiento</p>";
                 echo "    <input type='date' style='width:200px;' value='" . $usuario->getFechaNac() . "' name='fechaNac' required />";
                 ?>
+                <p>Imagen de perfil</p>
+                <input type='file' name='imagen_perfil' id='imagen' accept="image/*" />
                 <div class="botonSubmit">
-                    <input type="submit" style='width:70px;' name="alta"></input>
+                    <input type="submit" style='width:70px;' name="alta" value="Guardar"></input>
                 </div>
                 <?php
                 echo "<span style='color:red;'>" . $error . "</span>";

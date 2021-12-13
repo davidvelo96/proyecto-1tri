@@ -104,7 +104,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['id'] . "</td>";
                     echo "<td>" . $lista[$i]['enunciado'] . "</td>";
                     echo "<td>" . $lista[$i]['descripcion'] . "</td>";
-                    echo "<td><a href='editaPregunta.php?id=" . $lista[$i]['id'] . "'>Editar</a><a href='tablaPreguntas.php?borrar=" . $lista[$i]['id'] . "'>Borrar</a></td>";
+                    echo "<td><a  class='links' href='editaPregunta.php?id=" . $lista[$i]['id'] . "'>Editar</a> <a class='links' href='tablaPreguntas.php?borrar=" . $lista[$i]['id'] . "'>Borrar</a></td>";
                     echo "</tr>";
                 }
                 ?>

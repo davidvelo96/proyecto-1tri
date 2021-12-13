@@ -89,7 +89,7 @@ ul {
         }
     }
     &.pagination:hover li a:hover:not(.active){
-        background-color: #004de6;
+        @include colorFondo(#004de6);
         color: white;
         cursor: pointer;
       }

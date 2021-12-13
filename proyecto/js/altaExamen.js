@@ -52,10 +52,6 @@ window.addEventListener("load", function () {
         tr.appendChild(td2);
         tr.appendChild(td3);
 
-        // tr.onclick=function(){
-        //     crearContenidoEx(this.id,this.children[1].innerHTML,this.children[2].innerHTML);
-        //     this.setAttribute("style","display:none;");
-        // }
         tabla1.appendChild(tr);
     }
 

@@ -5,12 +5,13 @@ require_once "../clases/sesion.php";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
+DB::conecta();
 if (!empty($_GET["exa"])) {
     if (!empty($usuario)) {
 
-        if ($usuario->getRol() != "PROFESOR") {
-            header('Location: datosPersonales.php');
-        }
+        // if ($usuario->getRol() != "PROFESOR") {
+        //     header('Location: datosPersonales.php');
+        // }
     } else {
         header('Location: ../login.php');
     }
@@ -43,7 +44,7 @@ if (!empty($_GET["exa"])) {
             <a href="datosPersonales.php">
                 <?php
                 $usuario = sesion::leer("usuario");
-                echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
+                echo $usuario->getFoto() == null ? " <img src='../../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='../" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
                 ?>
             </a>
         </div>
@@ -104,7 +105,6 @@ if (!empty($_GET["exa"])) {
         <div id="pregunta">
             <div id="titulo">
                 <h1 id="titulo_preg">Pregunta 1</h1>
-                <h1 id="duracion"></h1>
             </div>
 
         </div>

@@ -1,7 +1,7 @@
 <?php
 require_once "clases/usuarios.php";
 require_once "clases/sesion.php";
-require_once("clases/DB.php");
+require_once "clases/DB.php";
 
 sesion::iniciar();
 $usuario = sesion::leer("usuario");
@@ -104,7 +104,8 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['fecha'] . "</td>";
                     echo "<td>" . $lista[$i]['nombre'] . "</td>";
                     echo "<td>" . DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion'])) . "/100</td>";
-                    echo "<td><a href='zona_alumno/revisarExamen.php?exa=".$lista[$i]['id']."'>Revisar</a></td>";
+                    echo "<td><a class='links' href='zona_alumno/revisarExamen.php?exa=" . $lista[$i]['id'] . "'>Revisar</a>
+                             <a class='links' href='../../../pdf.php?exam=" . $lista[$i]['id'] . "' >Descargar pdf</a></td>";
                     echo "</tr>";
                 }
                 ?>

@@ -132,7 +132,11 @@ window.addEventListener("load", function () {
 
             imagen.setAttribute("width", "500px");
             imagen.setAttribute("height", "350px");
-            imagen.setAttribute("src", "../"+pregunta.exam[0].n_preguntas[i][3]);
+            if (pregunta.exam[0].n_preguntas[i][3] == null) {
+                imagen.setAttribute("src", "../../img/defectoPreg.jpg");
+            } else {
+                imagen.setAttribute("src", "../" + pregunta.exam[0].n_preguntas[i][3]);
+            }
 
             enunciado.setAttribute("id", "enunciado");
             enunciado.innerText = pregunta.exam[0].n_preguntas[i][1];

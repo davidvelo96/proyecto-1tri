@@ -98,7 +98,7 @@ if (!empty($usuario)) {
                 for ($i = 0; $i < count($lista); $i++) {
                     echo "<tr>";
                     echo "<td>" . $lista[$i]['descripcion'] . "</td>";
-                    echo "<td><a href='editaTematica.php?id=" . $lista[$i]['id'] . "'>Editar</a></td>";
+                    echo "<td><a class='links' href='editaTematica.php?id=" . $lista[$i]['id'] . "'>Editar</a></td>";
                     echo "</tr>";
                 }
                 ?>

@@ -299,19 +299,22 @@ class DB
                                         SET nombre = ?,
                                         apellidos = ?,
                                         passwd = ?,
-                                        fecha_nacimiento = ?
-                                        WHERE email = ?)");
-        $id = $u->getId();
+                                        fecha_nacimiento = ?,
+                                        foto = ?
+                                        WHERE email = ?");
+        $mail = $u->getCorreo();
         $nom = $u->getNombre();
         $apellidos = $u->getApellidos();
         $passwd = $u->getPasswd();
         $fechaNac = $u->getFechaNac();
+        $foto = $u->getFoto();
 
         $consulta->bindParam(1, $nom);
         $consulta->bindParam(2, $apellidos);
         $consulta->bindParam(3, $passwd);
         $consulta->bindParam(4, $fechaNac);
-        $consulta->bindParam(5, $id);
+        $consulta->bindParam(5, $foto);
+        $consulta->bindParam(6, $mail);
 
 
         $consulta->execute();

@@ -106,7 +106,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['nombre'] . " " . $lista[$i]['apellidos'] . "</td>";
                     echo "<td>" . $lista[$i]['rol'] . "</td>";
                     echo "<td>" . DB::cuentaExamenesAlum($lista[$i]['id']) . "</td>";
-                    echo "<td><a href='#'>Editar</a><a href='#'>Borrar</a></td>";
+                    echo "<td><a class='links' href='#'>Editar</a> <a class='links' href='#'>Borrar</a></td>";
                     echo "</tr>";
                 }
                 ?>

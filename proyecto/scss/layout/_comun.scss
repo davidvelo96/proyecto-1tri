@@ -6,7 +6,23 @@ input[type="submit"],
 input[type="file"],
 a {
   cursor: pointer;
+  text-decoration: none;
+  &.links {
+    @include color( rgb(0, 0, 0));
+    @include colorFondo(rgb(226, 226, 226));
+    -webkit-transition: background-color 2s ease-out;
+    -moz-transition: background-color 2s ease-out;
+    -o-transition: background-color 2s ease-out;
+    transition: background-color 2s ease-out;
+
+    padding: 8px;
+
+    &:hover {
+      @include colorFondo(rgb(255, 117, 117));
+    }
+  }
 }
+
 input {
   height: 25px;
 }
@@ -17,16 +33,12 @@ input[type="file"] {
   border: 2px solid;
   border-radius: 5px;
 }
-a {
-  text-decoration: none;
-}
 
-.titulos{
-    margin-right: 25%;
-    padding: 1%;
-
+.titulos {
+  margin-right: 25%;
+  padding: 1%;
 }
-.titulo{
+.titulo {
   text-align: left;
   padding-left: 10%;
   width: 90%;
