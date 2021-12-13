@@ -1,4 +1,3 @@
-<!--tabla usuario por dar alta ----- id usuario, id, fecha   ".DB::borraPregunta($_GET['borrar'])." -->
 <?php
 require_once "clases/usuarios.php";
 require_once "clases/sesion.php";
@@ -105,7 +104,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['fecha'] . "</td>";
                     echo "<td>" . $lista[$i]['nombre'] . "</td>";
                     echo "<td>" . DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion'])) . "/100</td>";
-                    echo "<td><a href='#'>Revisar</a></td>";
+                    echo "<td><a href='zona_alumno/revisarExamen.php?exa=".$lista[$i]['id']."'>Revisar</a></td>";
                     echo "</tr>";
                 }
                 ?>

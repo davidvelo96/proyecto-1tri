@@ -146,7 +146,7 @@ if (!empty($usuario)) {
         <div>
             <br>
             <p><a href="#">Guia de estilo</a></p>
-            <p><a href="#">Mapa del sitio web</a></p>
+            <p><a href="../../img/Website Sitemap.jpg">Mapa del sitio web</a></p>
         </div>
         <div>
             <p>Enlaces relacionados</p>
