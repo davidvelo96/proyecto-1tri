@@ -49,14 +49,12 @@ a {
   background: transparent;
 }
 
-/* change colours to suit your needs */
 ins {
   background-color: #ff9;
   color: #000;
   text-decoration: none;
 }
 
-/* change colours to suit your needs */
 mark {
   background-color: #ff9;
   color: #000;
@@ -78,7 +76,6 @@ table {
   border-spacing: 0;
 }
 
-/* change border colour to suit your needs */
 hr {
   display: block;
   height: 1px;
@@ -101,8 +98,12 @@ input, select {
 
 #menu a:hover {
   background-color: #919191;
-  -webkit-transition: border-radius 2s ease-out;
-  transition: border-radius 2s ease-out;
+  -webkit-transition-property: border-radius;
+  transition-property: border-radius;
+  -webkit-transition-duration: 2s;
+          transition-duration: 2s;
+  -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
 }
 
 #menu ul {
@@ -182,8 +183,12 @@ ul.pagination li a.active {
 
 ul.pagination li a:hover:not(.active) {
   background-color: #ddd;
-  -webkit-transition: background-color 2s ease-out;
-  transition: background-color 2s ease-out;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 2s;
+          transition-duration: 2s;
+  -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
 }
 
 ul.pagination:hover li a:hover:not(.active) {
@@ -197,11 +202,6 @@ div.center {
   margin-top: 10%;
 }
 
-.titulos {
-  margin-right: 25%;
-  padding: 1%;
-}
-
 .perfil {
   width: auto;
 }
@@ -211,11 +211,14 @@ div.center {
 }
 
 .perfil > a > img {
-  -webkit-transition: box-shadow 2s ease-out;
-  -webkit-transition: -webkit-box-shadow 2s ease-out;
-  transition: -webkit-box-shadow 2s ease-out;
-  transition: box-shadow 2s ease-out;
-  transition: box-shadow 2s ease-out, -webkit-box-shadow 2s ease-out;
+  -webkit-transition-property: -webkit-box-shadow;
+  transition-property: -webkit-box-shadow;
+  transition-property: box-shadow;
+  transition-property: box-shadow, -webkit-box-shadow;
+  -webkit-transition-duration: 2s;
+          transition-duration: 2s;
+  -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
 }
 
 .perfil > a > img:hover {
@@ -254,20 +257,18 @@ a {
   text-decoration: none;
 }
 
-input[type="radio"].links,
-input[type="submit"].links,
-input[type="file"].links,
 a.links {
   color: black;
   background-color: #e2e2e2;
-  -webkit-transition: background-color 2s ease-out;
-  transition: background-color 2s ease-out;
+  -webkit-transition-property: background-color;
+  transition-property: background-color;
+  -webkit-transition-duration: 2s;
+          transition-duration: 2s;
+  -webkit-transition-timing-function: ease-out;
+          transition-timing-function: ease-out;
   padding: 8px;
 }
 
-input[type="radio"].links:hover,
-input[type="submit"].links:hover,
-input[type="file"].links:hover,
 a.links:hover {
   background-color: #ff7575;
 }
@@ -293,6 +294,10 @@ input[type="file"] {
   text-align: left;
   padding-left: 10%;
   width: 90%;
+}
+
+.seleccion {
+  float: right;
 }
 
 .imagenInicio {

@@ -5,37 +5,10 @@
 }
 
 .cajaCampos{
-    /* padding-left: 40%; */
     margin: 0% 40%;
-    /* margin-top: 50px;
-    margin-left: 60px; */
 }
 .botonSubmit{
     margin-top: 5%;
     position: relative;
     left:200px;
 }
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-/* input{
-    height: 25px;
-}
-input[type=text],input[type=password]{
-    border: 2px solid;
-    border-radius: 5px;
-    width: 200px;
-}
-input[type=submit]{
-    border: 2px solid;
-    border-radius: 5px;
-}
-input[type=date]{
-    border: 2px solid;
-    border-radius: 5px;
-    width: 205px;
-}
-input[type="radio"] {
-    margin-left: 5%;
-    margin-top: -1px;
-    vertical-align: middle;
-  } */

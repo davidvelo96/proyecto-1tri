@@ -1,16 +1,15 @@
-.titulos {
-    margin-right: 25%;
-    padding: 1%;
-}
+// LE DAMOS ESTILO A LA FOTO DE PERFIL CON UN EFECTO DE SOMBREADO
+
 .perfil {
     width: auto;
     & > a {
         float: right;
         & > img {
-            -webkit-transition: box-shadow 2s ease-out;
-            -moz-transition: box-shadow 2s ease-out;
-            -o-transition: box-shadow 2s ease-out;
-            transition: box-shadow 2s ease-out;
+            @include transicion( box-shadow, 2s, ease-out);
+            // -webkit-transition: box-shadow 2s ease-out;
+            // -moz-transition: box-shadow 2s ease-out;
+            // -o-transition: box-shadow 2s ease-out;
+            // transition: box-shadow 2s ease-out;
             &:hover {
                 box-shadow: 5px 5px 0 #515151;
                 cursor: pointer;

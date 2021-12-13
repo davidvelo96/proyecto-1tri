@@ -36,10 +36,11 @@ margin: auto;
 }
 
 .n_preguntas{
-    width: 25%;
+    width: 30%;
+    margin: 0 35%;
     float: left;
     /* margin: auto; */
-    padding-left: 45%;
+    /* padding-left: 45%; */
     /* margin-right: 60%; */
 }
 

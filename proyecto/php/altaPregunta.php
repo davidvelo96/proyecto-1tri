@@ -19,21 +19,21 @@ if (!empty($usuario)) {
                 $con->beginTransaction();
                 $CRespuestas = DB::cuentaRespuestas();
 
-                $imag = "";
+                $imag = "null";
 
                 $resul = validar($CRespuestas);
                 if (empty($resul)) {
 
 
                     $correc = $_POST["respuesta"];
-                    $respuestas = [$_POST['ra1'], $_POST['ra2'], $_POST['ra3'], $_POST['ra4']];
+                    $respuestas = [$_POST['1'], $_POST['2'], $_POST['3'], $_POST['4']];
 
                     $pregunta = new preguntas("default", $_POST["enun"], "null", "null", $_POST["tematica"], $respuestas);
                     DB::altaPregunta($pregunta);
 
                     $cuentaPreguntas = DB::ultiPreguntas();
 
-                    if (isset($_FILES["imagen_preg"])) {
+                    if ($_FILES["imagen_preg"]["name"]!="") {
                         $imag = "../img/imagen" . $cuentaPreguntas . ".jpg";
                         move_uploaded_file($_FILES['imagen_preg']['tmp_name'], $imag);
                     }

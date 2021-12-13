@@ -67,7 +67,7 @@ window.addEventListener("load", function () {
 
         var totalfilas = Math.ceil(pregunta.exam[0].n_preguntas.length / 10)
 
-        for (let i = 0; i < totalfilas; i++) {
+        // for (let i = 0; i < totalfilas; i++) {
             var tr = document.createElement("tr");
 
             for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
@@ -84,7 +84,7 @@ window.addEventListener("load", function () {
                 tr.appendChild(td);
             }
             n_preguntas.appendChild(tr);
-        }
+        // }
     }
 
 
@@ -108,7 +108,6 @@ window.addEventListener("load", function () {
             }
 
         }
-
 
         // document.getElementById("preg"+pregunta.exam[0].n_preguntas[i][0]).style["display"];
 

@@ -1,3 +1,5 @@
+// LE DAMOS ESTILO AL MENU DE NAVEGACION Y A LA BARRA DE NAVEGACION DE LAS TABLAS CON EFECTOS Y DEMAS
+
 #menu {
     a {
         &:hover {
@@ -8,10 +10,11 @@
         }
         &:hover {
             @include colorFondo(rgb(145, 145, 145));
-            -webkit-transition: border-radius 2s ease-out;
-            -moz-transition: border-radius 2s ease-out;
-            -o-transition: border-radius 2s ease-out;
-            transition: border-radius 2s ease-out;
+            @include transicion(border-radius, 2s, ease-out);
+            // -webkit-transition: border-radius 2s ease-out;
+            // -moz-transition: border-radius 2s ease-out;
+            // -o-transition: border-radius 2s ease-out;
+            // transition: border-radius 2s ease-out;
         }
     }
 
@@ -80,10 +83,11 @@ ul {
                 }
                 &:hover:not(.active) {
                     @include colorFondo(#ddd);
-                    -webkit-transition: background-color 2s ease-out;
-                    -moz-transition: background-color 2s ease-out;
-                    -o-transition: background-color 2s ease-out;
-                    transition: background-color 2s ease-out;
+                    @include transicion(background-color, 2s, ease-out);
+                    // -webkit-transition: background-color 2s ease-out;
+                    // -moz-transition: background-color 2s ease-out;
+                    // -o-transition: background-color 2s ease-out;
+                    // transition: background-color 2s ease-out;
                 }
             }
         }
