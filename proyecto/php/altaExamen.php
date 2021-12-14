@@ -85,7 +85,7 @@ if (!empty($usuario)) {
             <br>
             <p>
                 Descripcion del examen
-                <input type='text' style='width:200px; margin-right: 5%;' id='descripcion' pattern='[A-Za-z 0-9]{1,30}''  required/>
+                <input type='text' style='width:200px; margin-right: 5%;' id='descripcion' pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$'  required/>
                     Duracion (en minutos)
                     <input type=' text' style='width:50px;' id='duracion' pattern='(\d|[1-9]\d|[1-9]\d{2}|1[0-3]\d{2}|14[0-3]\d)' maxlength="4" required />
             </p>
