@@ -4,6 +4,9 @@ require_once "proyecto/php/clases/usuarios.php";
 require_once "proyecto/php/clases/sesion.php";
 require_once "proyecto/php/clases/DB.php";
 
+sesion::iniciar();
+$usuario = sesion::leer("usuario");
+
 use Dompdf\Dompdf;
 
 DB::conecta();
@@ -22,7 +25,7 @@ for ($i = 0; $i < count($todo->n_preguntas); $i++) {
 $object->exam[] = $resp_correc;
 
 // <div style="page-break-after:always;"></div>
-$html ="";
+$html ="<body style='margin:0 0 0 30%;'>";
 
 for ($i = 0; $i < count($todo->n_preguntas); $i++) {
 
@@ -61,7 +64,7 @@ for ($i = 0; $i < count($todo->n_preguntas); $i++) {
     $html .= "</div><br></div>";
 };
 
-$html .= '<h3 style="text-align: right;">Has sacado un ' . $puntos . '/100</h3>';
+$html .= '<h3 style="text-align: right;">Has sacado un ' . $puntos . '/100</h3></body>';
 
 
 

@@ -41,8 +41,7 @@ if (!empty($usuario)) {
             }
         }
     }
-}
-else {
+} else {
     header('Location: login.php');
 }
 
@@ -67,7 +66,7 @@ function validar()
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="../scss/css/main.css">
-    <link rel="stylesheet" href="../css/altaUsuarios.css" >
+    <link rel="stylesheet" href="../css/altaUsuarios.css">
 
 
 
@@ -79,7 +78,7 @@ function validar()
 <body>
     <header>
         <div class="perfil">
-            <img src="../img/batman.png" width="100px" height="100px">
+            <img src="../img/autoescuela.png" width="100px" height="100px">
             <a href="datosPersonales.php">
                 <?php
                 $usuario = sesion::leer("usuario");

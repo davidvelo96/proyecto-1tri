@@ -32,7 +32,7 @@ if (!empty($usuario)) {
 
     <header>
         <div class="perfil">
-            <img src="../img/batman.png" width="100px" height="100px">
+        <img src="../img/autoescuela.png" width="100px" height="100px">
             <a href="datosPersonales.php">
                 <?php
                 $usuario = sesion::leer("usuario");
@@ -105,7 +105,7 @@ if (!empty($usuario)) {
                     echo "<td>" . $lista[$i]['nombre'] . "</td>";
                     echo "<td>" . DB::obtienePuntuacion(json_decode($lista[$i]['ejecucion'])) . "/100</td>";
                     echo "<td><a class='links' href='zona_alumno/revisarExamen.php?exa=" . $lista[$i]['id'] . "'>Revisar</a>
-                             <a class='links' href='../../../pdf.php?exam=" . $lista[$i]['id'] . "' >Descargar pdf</a></td>";
+                             <a class='links' href='../../pdf.php?exam=" . $lista[$i]['id'] . "' >Descargar pdf</a></td>";
                     echo "</tr>";
                 }
                 ?>

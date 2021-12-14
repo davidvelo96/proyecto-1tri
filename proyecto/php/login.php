@@ -64,7 +64,8 @@ if (sesion::existe("usuario")) {
 <body>
     <div class="cajaLogeo">
         <div class="cajaImagen">
-            <img class="imagenInicio" src="../img/batman.png" alt="Inicio">
+            <img class="imagenInicio" src="../img/autoescuela.png" alt="Inicio">
+
         </div>
         <div class="cajaCampos">
             <form action="" method="post">

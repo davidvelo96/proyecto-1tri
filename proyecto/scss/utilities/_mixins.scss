@@ -17,6 +17,12 @@
     transition-property: $proper;
     transition-duration: $dura;
     transition-timing-function: $timing;
+    -o-transition-property: $proper;
+    -o-transition-duration: $dura;
+    -o-transition-timing-function: $timing;
+    -moz-transition-duration: $proper;
+    -moz-transition-duration: $dura;
+    -moz-transition-timing-function: $timing;
 }
 
 // PARA AÑADIR UNA ANIMACION

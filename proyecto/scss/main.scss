@@ -1,19 +1,14 @@
-@import 'utilities/variables';
-@import 'utilities/functions';
-@import 'utilities/mixins';
+@import "utilities/mixins";
 
+@import "base/reset";
+@import "base/typo";
 
-@import 'base/reset';
-@import 'base/typo';
+@import "layout/navigation";
+@import "layout/header";
+@import "layout/footer";
+@import "layout/comun";
+@import "layout/forms";
 
-@import 'layout/navigation';
-@import 'layout/header';
-@import 'layout/footer';
-@import 'layout/comun';
+@import "components/buttons";
 
-
-@import 'components/buttons';
-
-
-@import 'views/login';
-
+@import "views/login";

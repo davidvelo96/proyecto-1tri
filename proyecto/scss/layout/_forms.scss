@@ -1,0 +1,24 @@
+
+// LE DAMOS AL RATON EL VALOR PARA QUE AL PASAR POR VARIOS INPUTS SE VUELVA UN PUNTERO
+
+input[type="radio"],
+input[type="submit"],
+input[type="file"],
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+// LE DAMOS BORDE REDONDEADO A VARIOS INPUTS
+
+
+input {
+    height: 25px;
+  }
+  input[type="text"],
+  input[type="submit"],
+  input[type="password"],
+  input[type="file"] {
+    border: 2px solid;
+    border-radius: 5px;
+  }

@@ -48,7 +48,7 @@ if (!empty($usuario)) {
 <body>
     <header>
         <div class="perfil">
-            <img src="../img/batman.png" width="100px" height="100px">
+        <img src="../img/autoescuela.png" width="100px" height="100px">
             <a href="datosPersonales.php"> <img src="../img/batman.png" width="100px" height="100px"></a>
         </div>
 

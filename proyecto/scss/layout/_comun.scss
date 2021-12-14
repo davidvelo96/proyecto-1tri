@@ -2,21 +2,11 @@ body {
   margin: 0px 2%;
 }
 
-// LE DAMOS RATON EL VALOR PARA QUE AL PASAR POR VARIOS INPUTS SE VUELVA UN PUNTERO
-
-input[type="radio"],
-input[type="submit"],
-input[type="file"],
-a {
-  cursor: pointer;
-  text-decoration: none;
-}
-
 // CAMBIAMOS EL COLOR DE TEXTO Y FONDO DE LOS LINKS DE LAS TABLAS, CON TRANSICIONES Y ANCHO
 
 a {
   &.links {
-    @include color( rgb(0, 0, 0));
+    @include color(rgb(0, 0, 0));
     @include colorFondo(rgb(226, 226, 226));
     @include transicion(background-color, 2s, ease-out);
 
@@ -33,19 +23,6 @@ a {
   }
 }
 
-
-
-input {
-  height: 25px;
-}
-input[type="text"],
-input[type="submit"],
-input[type="password"],
-input[type="file"] {
-  border: 2px solid;
-  border-radius: 5px;
-}
-
 // LE DAMOS TAMAÑO Y MARGENES A LOS TITULOS
 
 .titulos {
@@ -57,6 +34,6 @@ input[type="file"] {
   padding-left: 10%;
   width: 90%;
 }
-.seleccion{
+.seleccion {
   float: right;
-  }
+}

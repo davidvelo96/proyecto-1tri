@@ -33,7 +33,7 @@ if (!empty($usuario)) {
 <body>
     <header>
         <div class="perfil">
-            <img src="../img/batman.png" width="100px" height="100px">
+        <img src="../img/autoescuela.png" width="100px" height="100px">
             <a href="datosPersonales.php">
                 <?php
                 echo $usuario->getFoto() == null ? " <img src='../img/iconoperfil.jpg' width='50px' height='50px' style='margin:20%;'> " : " <img src='" . $usuario->getFoto() . "' width='50px' height='50px' style='margin:20%;'> ";
