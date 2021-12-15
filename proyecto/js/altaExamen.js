@@ -7,6 +7,7 @@ window.addEventListener("load", function () {
     var checkBox = document.getElementsByName("sel");
     var duracion = document.getElementById("duracion");
     var desc_examen = document.getElementById("descripcion");
+    var busq_tematica = document.getElementById("busq_tematica");
 
     var enviar = document.getElementById("enviar");
 
@@ -22,7 +23,6 @@ window.addEventListener("load", function () {
                 if (respuesta.preguntas.length > 0) {
                     for (let i = 0; i < respuesta.preguntas.length; i++) {
                         crearContenido(respuesta.preguntas[i].id_pregunta, respuesta.preguntas[i].enunciado, respuesta.preguntas[i].descripcion_tem);
-
                     }
                 }
             }
@@ -70,10 +70,14 @@ window.addEventListener("load", function () {
     }
 
     izquierda.onclick = function () {
-        for (let i = 0; i < tabla1.children.length; i++) {
-            tabla1.children[i].setAttribute("style", "display:;");
+        if (tabla2.children.length > 0) {
+            for (let i = 0; i < tabla1.children.length; i++) {
+                tabla1.children[i].setAttribute("style", "display:;");
+            }
+            tabla2.innerHTML = "";
+            busq_tematica.value=busq_tematica[0].value;
         }
-        tabla2.innerHTML = "";
+
     }
 
 
@@ -169,5 +173,36 @@ window.addEventListener("load", function () {
     enviar.onclick = function () {
         EnviarEx();
     }
+
+
+
+    busq_tematica.onchange = function () {
+
+        var busq = busq_tematica.value;
+
+        for (let i = 0; i < tabla1.children.length; i++) {
+            if (tabla1.children[i].children[2].innerText.search(busq.toUpperCase()) != -1) {
+
+                if (tabla2.children.length > 0) {
+                    for (let j = 0; j < tabla2.children.length; j++) {
+
+                        if (tabla1.children[i].id == tabla2.children[j].id) {
+                            tabla1.children[i].setAttribute("style", "display:none;")
+                            i++;
+                        } else {
+                            tabla1.children[i].setAttribute("style", "display:;")
+                        }
+                    }
+                } else {
+                    tabla1.children[i].setAttribute("style", "display:;")
+                }
+
+            } else {
+                tabla1.children[i].setAttribute("style", "display:none;")
+            }
+        }
+    }
+
+
 
 })

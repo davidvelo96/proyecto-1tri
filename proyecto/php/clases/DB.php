@@ -151,7 +151,7 @@ class DB
 
     public static function obtienePreguntasEx()
     {
-        $resultado = self::$con->query("SELECT preguntas.id,preguntas.enunciado,tematicas.descripcion FROM preguntas JOIN tematicas ON preguntas.tematicas_id = tematicas.id order by preguntas.id");
+        $resultado = self::$con->query("SELECT preguntas.id,preguntas.enunciado,tematicas.descripcion FROM preguntas JOIN tematicas ON preguntas.tematicas_id = tematicas.id order by preguntas.tematicas_id");
 
         return $resultado;
     }
@@ -725,6 +725,20 @@ class DB
         $consulta->execute();
 
     }
+
+    public static function obtienePreguntas_busq($busq)
+    {
+        $resultado = self::$con->query("    SELECT preguntas.id, preguntas.enunciado,tematicas.descripcion
+                                            FROM   preguntas
+                                            JOIN tematicas
+                                            ON preguntas.tematicas_id = tematicas.id
+                                            WHERE  preguntas.tematicas_id = tematicas.id 
+                                            AND tematicas.descripcion like '%$busq%' order by tematicas.descripcion"
+                                        );
+        return $resultado;
+    }
+
+
 
     // public static function existeusuario($usuario,$password)
     // {

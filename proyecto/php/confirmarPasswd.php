@@ -33,6 +33,8 @@ if (isset($_GET["confirma"])) {
                 }
             }
         }
+    }else {
+        header('Location: login.php');
     }
 } else {
     header('Location: login.php');

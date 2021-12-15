@@ -13,7 +13,7 @@ class mail
         $mail->IsSMTP();
 
         // cambiar a 0 para no ver mensajes de error
-        $mail->SMTPDebug  = 0;
+        $mail->SMTPDebug  = 2;
         $mail->SMTPAuth   = true;
         $mail->SMTPSecure = "tls";
         $mail->Host       = "smtp.gmail.com";

@@ -1,8 +1,7 @@
-<!--tabla usuario por dar alta ----- id usuario, id, fecha -->
-
 <?php
 require_once "clases/sesion.php";
 require_once "clases/usuarios.php";
+require_once "clases/DB.php";
 
 
 sesion::iniciar();
@@ -34,7 +33,7 @@ if (!empty($usuario)) {
 <body>
     <header>
         <div class="perfil">
-        <img src="../img/autoescuela.png" width="100px" height="100px">
+            <img src="../img/autoescuela.png" width="100px" height="100px">
             <a href="datosPersonales.php">
                 <?php
                 $usuario = sesion::leer("usuario");
@@ -53,7 +52,7 @@ if (!empty($usuario)) {
                             <li><a href="altaMasivaUsuarios.php">Alta masiva</a></li>
                         </ul>
                     </li>
-                    <li><a href="">Tematicas</a>
+                    <li><a href="tablaTematicas.php">Tematicas</a>
                         <ul>
                             <li><a href="altaTematica.php">Alta tematicas</a></li>
                         </ul>
@@ -85,14 +84,27 @@ if (!empty($usuario)) {
             <br>
             <p>
                 Descripcion del examen
-                <input type='text' style='width:200px; margin-right: 5%;' id='descripcion' pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$'  required/>
-                    Duracion (en minutos)
-                    <input type=' text' style='width:50px;' id='duracion' pattern='(\d|[1-9]\d|[1-9]\d{2}|1[0-3]\d{2}|14[0-3]\d)' maxlength="4" required />
+                <input type='text' style='width:200px; margin-right: 5%;' id='descripcion' pattern='^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ \u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$' required />
+                Duracion (en minutos)
+                <input type=' text' style='width:50px;' id='duracion' pattern='(\d|[1-9]\d|[1-9]\d{2}|1[0-3]\d{2}|14[0-3]\d)' maxlength="4" required />
             </p>
             <div class="cajaCampos">
 
                 <div class="titulos">
                     <span>Preguntas posibles</span> <span class="seleccion">Preguntas seleccionadas</span>
+                    <select id="busq_tematica" name="tematica" required>
+                        <option value="" selected>Seleccionar</option>
+                        <?php
+                        DB::conecta();
+                        $tematicas = "";
+                        $tematicas = DB::obtienetematicas();
+                        $count = DB::cuentatematicas();
+                        for ($i = 0; $i < $count; $i++) {
+                            echo  "<option value='" . $tematicas[$i]->getDesc() . "'>" . $tematicas[$i]->getDesc() . "</option>";
+                        }
+                        ?>
+
+                    </select>
                 </div>
                 <div id="tabla1">
                     <table border="1" class="t1">

@@ -87,6 +87,10 @@ input[type=button]:hover {
     width: 6%;
 }
 
+.t2 td:nth-child(2),.t1 td:nth-child(2),.t2 th:nth-child(2),.t1 th:nth-child(2){
+    width: 74%;
+}
+
 .t2 td:nth-child(3),.t2 th:nth-child(3){
     width: 10%;
 }
