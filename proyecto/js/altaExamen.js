@@ -12,8 +12,25 @@ window.addEventListener("load", function () {
     var enviar = document.getElementById("enviar");
 
     pedirPregunas();
+    
+    desc_examen.addEventListener("keypress", function (event) {
+        var regex = new RegExp("^[a-zA-ZÀ-ÿ \u00f1\u00d1]+$");
+        var key = event.key;
+        if (!regex.test(key) || event.repeat|| desc_examen.value.length>29) {
+            event.preventDefault();
+        }
+    });
 
-
+    duracion.addEventListener("keyup", function (event) {
+        var regex = new RegExp("^[0-9]+$");
+        var key = event.key;
+        if (!regex.test(key) || event.repeat || duracion.value.length>3) {
+            event.preventDefault();
+        }
+        if (duracion.value>1400) {
+            duracion.value=1399;
+        }
+    });
 
     function pedirPregunas() {
         const ajax = new XMLHttpRequest();

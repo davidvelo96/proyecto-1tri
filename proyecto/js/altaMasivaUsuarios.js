@@ -5,9 +5,6 @@ window.addEventListener("load", function () {
     alta.onclick = function () {
         var contenido = document.getElementById("usuarios").value;
 
-        // en js validar formato, php si existe y devolver los que estan mal
-
-
         var csv_gen_usuarios = contenido.slice(contenido.indexOf("")).split("\n");
         var error_mail = [];
 

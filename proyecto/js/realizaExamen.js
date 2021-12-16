@@ -68,48 +68,65 @@ window.addEventListener("load", function () {
         var totalfilas = Math.ceil(pregunta.exam[0].n_preguntas.length / 10)
 
         // for (let i = 0; i < totalfilas; i++) {
-            var tr = document.createElement("tr");
+        var tr = document.createElement("tr");
 
-            for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
+        for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
 
-                var td = document.createElement("td");
-                td.setAttribute("id", pregunta.exam[0].n_preguntas[i][0]);
-                td.setAttribute("class", "");
+            var td = document.createElement("td");
+            td.setAttribute("id", pregunta.exam[0].n_preguntas[i][0]);
+            td.setAttribute("class", "");
 
-                td.innerText = i + 1;
-                td.onclick = function () {
-                    cambiaPregunta(this.id, pregunta, this.innerText);
-                }
-
-                tr.appendChild(td);
+            td.innerText = i + 1;
+            td.onclick = function () {
+                cambiaPregunta(this.id, pregunta, this.innerText);
             }
-            n_preguntas.appendChild(tr);
+
+            tr.appendChild(td);
+        }
+        n_preguntas.appendChild(tr);
         // }
     }
 
 
     function cambiaPregunta(id, pregunta, tituloP) {
-        for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
-            var preg = document.getElementById("preg" + pregunta.exam[0].n_preguntas[i][0]);
-            preg.setAttribute("style", "display:none;");
-
-            var num = document.getElementsByTagName("td")[i];
-            num.setAttribute("class", "");
-        }
-
+        let k = 1;
 
         titulo.innerText = "Pregunta " + tituloP;
-        var preg = document.getElementById("preg" + id);
-        preg.setAttribute("style", "");
+
         for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
-            if (document.getElementsByTagName("td")[i].id == id) {
-                var num = document.getElementsByTagName("td")[i];
-                num.setAttribute("class", "marcado");
+            var preg = document.getElementById("preg" + pregunta.exam[0].n_preguntas[i][0]);
+            var num = document.getElementsByTagName("td")[i];
+
+            if (preg.style.display == "") {
+                while (k < 13) {
+                    if (preg.children[1].children[k].checked) {
+                        num.setAttribute("class", "resp");
+                    }
+                    k = k + 3;
+                }
+
+                // var preg = document.getElementById("preg" + pregunta.exam[0].n_preguntas[i][0]);
+                preg.setAttribute("style", "display:none;");
             }
 
+            if (num.classList.value != "resp") {
+                num.setAttribute("class", "");
+            }
         }
 
-        // document.getElementById("preg"+pregunta.exam[0].n_preguntas[i][0]).style["display"];
+        var pregid = document.getElementById("preg" + id);
+        pregid.setAttribute("style", "");
+
+
+        for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
+            for (let i = 0; i < pregunta.exam[0].n_preguntas.length; i++) {
+                if (document.getElementsByTagName("td")[i].id == id) {
+                    var num = document.getElementsByTagName("td")[i];
+                    num.setAttribute("class", "marcado");
+                }
+
+            }
+        }
 
     }
 
